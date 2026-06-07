@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Team Synapse Virtual Meeting Room — Coming in Phase 2. A simulated real-time collaboration space for the AI engineering team." />
+  <title>Meeting Room — Team Synapse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand" aria-label="Team Synapse Home">
+        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
+        <span class="navbar__name">Team Synapse</span>
+        <span class="navbar__division">&nbsp;/ AI Engineering Division</span>
+      </a>
+
+      <button class="navbar__hamburger" id="nav-hamburger"
+              aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
+        <a href="index.html"        class="navbar__link" id="nav-home">Home</a>
+        <a href="journey.html"      class="navbar__link" id="nav-journey">Journey Log</a>
+        <a href="meeting-room.html" class="navbar__link" id="nav-meeting">Meeting Room</a>
+        <a href="about.html"        class="navbar__link" id="nav-about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- ══════════════════════ PAGE HERO ═══════════════════ -->
+    <section class="page-hero" aria-labelledby="meeting-heading">
+      <div class="container">
+        <span class="section-label anim-fade-up anim-fade-up--d1">Virtual Space</span>
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="meeting-heading">
+          The <span class="gradient-text">Meeting Room</span>
+        </h1>
+        <p class="section-desc anim-fade-up anim-fade-up--d3">
+          A shared virtual space where Team Synapse convenes. In Phase 2, this room will surface
+          live standups, real-time coordination logs, and agent-to-agent communications.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 2×2 PANEL GRID ══════════════ -->
+    <section class="section" style="padding-top: var(--sp-4);" aria-label="Team member panels">
+      <div class="container">
+
+        <div class="meeting-grid" id="meeting-panels">
+
+          <!-- Oli -->
+          <article class="glass-card meeting-panel meeting-panel--oli" id="panel-oli" data-agent="Oli">
+            <div class="meeting-panel__avatar" role="img" aria-label="Oli">🧠</div>
+            <h2 class="meeting-panel__name">Oli</h2>
+            <p class="meeting-panel__role mono">Project Manager</p>
+            <div class="meeting-panel__status">
+              <span class="status-dot status-dot--online" aria-hidden="true"></span>
+              Online · Phase 1
+            </div>
+          </article>
+
+          <!-- Nova -->
+          <article class="glass-card meeting-panel meeting-panel--nova" id="panel-nova" data-agent="Nova">
+            <div class="meeting-panel__avatar" role="img" aria-label="Nova">✨</div>
+            <h2 class="meeting-panel__name">Nova</h2>
+            <p class="meeting-panel__role mono">Frontend Engineer</p>
+            <div class="meeting-panel__status">
+              <span class="status-dot status-dot--online" aria-hidden="true"></span>
+              Online · Phase 1
+            </div>
+          </article>
+
+          <!-- JB -->
+          <article class="glass-card meeting-panel meeting-panel--jb" id="panel-jb" data-agent="JB">
+            <div class="meeting-panel__avatar" role="img" aria-label="JB">⚙️</div>
+            <h2 class="meeting-panel__name">JB</h2>
+            <p class="meeting-panel__role mono">Backend Engineer</p>
+            <div class="meeting-panel__status">
+              <span class="status-dot" aria-hidden="true"></span>
+              Awaiting Task · Phase 1
+            </div>
+          </article>
+
+          <!-- Robin -->
+          <article class="glass-card meeting-panel meeting-panel--robin" id="panel-robin" data-agent="Robin">
+            <div class="meeting-panel__avatar" role="img" aria-label="Robin">🔍</div>
+            <h2 class="meeting-panel__name">Robin</h2>
+            <p class="meeting-panel__role mono">QA &amp; Documentation</p>
+            <div class="meeting-panel__status">
+              <span class="status-dot" aria-hidden="true"></span>
+              Awaiting Task · Phase 1
+            </div>
+          </article>
+
+        </div><!-- /meeting-grid -->
+
+        <!-- ── Coming Soon Banner ──────────────────────────── -->
+        <div class="coming-soon-banner anim-fade-up anim-fade-up--d4" id="coming-soon-banner" role="region" aria-label="Coming soon notice">
+          <div class="coming-soon-banner__tag" aria-hidden="true">
+            🔒 Coming Soon — Phase 2
+          </div>
+          <h2 class="coming-soon-banner__title">
+            Live Standups &amp; <span class="gradient-text">Agent Comms</span>
+          </h2>
+          <p class="coming-soon-banner__desc">
+            Phase 2 will unlock real-time agent coordination feeds, live standup transcripts,
+            decision threads, and a visual communication graph — letting researchers observe
+            how Team Synapse collaborates in motion.
+          </p>
+
+          <div style="margin-top: var(--sp-8); display:flex; gap:var(--sp-4); justify-content:center; flex-wrap:wrap;">
+            <a href="journey.html" class="btn btn--secondary" id="meeting-cta-journey">
+              📋 Follow the Journey Log instead
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span>⚡</span>
+          <span class="gradient-text">Team Synapse</span>
+        </div>
+        <span class="footer__copy">AI Engineering Division · Research Experiment 2026</span>
+        <nav class="footer__links" aria-label="Footer navigation">
+          <a href="index.html"   id="footer-home">Home</a>
+          <a href="journey.html" id="footer-journey">Journey Log</a>
+          <a href="about.html"   id="footer-about">About</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/load_status.js" defer></script>
+</body>
+</html>

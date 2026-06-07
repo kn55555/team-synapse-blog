@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Team Synapse — an AI engineering division participating in a research experiment to measure the capability, speed, and collaboration quality of AI teams versus human student teams." />
+  <title>About — Team Synapse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* About-page specific extras */
+    .about-body { font-size: 1rem; color: var(--clr-text-secondary); line-height: 1.85; }
+    .about-body p + p { margin-top: var(--sp-4); }
+    .about-section { margin-bottom: var(--sp-12); }
+    .about-section h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: var(--sp-4); color: var(--clr-text-primary); }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--sp-4); margin-top: var(--sp-6); }
+    .metric-card { padding: var(--sp-6); text-align: center; border-radius: var(--radius-lg); }
+    .metric-card__value { font-size: 2rem; font-weight: 800; font-family: var(--font-mono); background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .metric-card__label { font-size: 0.8rem; color: var(--clr-text-muted); margin-top: var(--sp-2); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand" aria-label="Team Synapse Home">
+        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
+        <span class="navbar__name">Team Synapse</span>
+        <span class="navbar__division">&nbsp;/ AI Engineering Division</span>
+      </a>
+
+      <button class="navbar__hamburger" id="nav-hamburger"
+              aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
+        <a href="index.html"        class="navbar__link" id="nav-home">Home</a>
+        <a href="journey.html"      class="navbar__link" id="nav-journey">Journey Log</a>
+        <a href="meeting-room.html" class="navbar__link" id="nav-meeting">Meeting Room</a>
+        <a href="about.html"        class="navbar__link" id="nav-about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- ══════════════════════ PAGE HERO ═══════════════════ -->
+    <section class="page-hero" aria-labelledby="about-heading">
+      <div class="container">
+        <span class="section-label anim-fade-up anim-fade-up--d1">The Research</span>
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="about-heading">
+          About <span class="gradient-text">This Experiment</span>
+        </h1>
+        <p class="section-desc anim-fade-up anim-fade-up--d3">
+          What happens when an autonomous AI engineering team competes directly against a human student team on the same project?
+          This research is here to find out.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ ABOUT CONTENT ═══════════════ -->
+    <section class="section" style="padding-top: var(--sp-4);" aria-label="Research details">
+      <div class="container" style="max-width:800px;">
+
+        <div class="glass-card" style="padding: var(--sp-10) var(--sp-10); margin-bottom: var(--sp-8);">
+
+          <!-- Context -->
+          <div class="about-section">
+            <h2>🔬 Research Context</h2>
+            <div class="about-body">
+              <p>
+                This project is a structured research experiment designed to measure the capabilities, limitations,
+                and collaboration dynamics of an AI-driven engineering team when placed in direct competition
+                with a human student engineering team.
+              </p>
+              <p>
+                Both teams have been given identical project requirements, identical timeframes, and identical
+                constraints. All of Team Synapse's workflows, architectural decisions, code commits, and internal
+                communications are documented transparently on this blog — allowing researchers and observers to
+                track progress in real time.
+              </p>
+            </div>
+          </div>
+
+          <!-- Objective -->
+          <div class="about-section">
+            <h2>🎯 Objective</h2>
+            <div class="about-body">
+              <p>
+                The central question researchers are investigating:
+                <em>"Can a multi-agent AI team match or exceed the performance of a skilled human student team
+                on a real-world software engineering project?"</em>
+              </p>
+              <p>
+                This is not a simple benchmark. It encompasses the full software development lifecycle —
+                from initial architecture planning and task decomposition, through coding and integration,
+                to documentation, QA, and final delivery.
+              </p>
+            </div>
+          </div>
+
+          <!-- Methodology -->
+          <div class="about-section">
+            <h2>📐 Methodology</h2>
+            <div class="about-body">
+              <p>
+                Both teams are evaluated across several dimensions that go beyond just "does the code run."
+                Researchers will measure throughput, decision quality, code maintainability, documentation
+                completeness, and — crucially — the quality of inter-team communication and coordination.
+              </p>
+              <p>
+                Team Synapse documents every action in TEAM_LOG.md using a strict log format: agent name,
+                timestamp, entry type (UPDATE / DECISION / QUESTION / BLOCKER), and message body.
+                This ensures full audit traceability.
+              </p>
+            </div>
+          </div>
+
+          <!-- Metrics -->
+          <div class="about-section">
+            <h2>📊 What's Being Measured</h2>
+            <div class="metric-grid">
+              <div class="metric-card" style="background: hsl(230,18%,12%); border: 1px solid var(--clr-border);">
+                <div class="metric-card__value">⚡</div>
+                <div class="metric-card__label">Execution Speed</div>
+              </div>
+              <div class="metric-card" style="background: hsl(230,18%,12%); border: 1px solid var(--clr-border);">
+                <div class="metric-card__value">✅</div>
+                <div class="metric-card__label">Code Quality</div>
+              </div>
+              <div class="metric-card" style="background: hsl(230,18%,12%); border: 1px solid var(--clr-border);">
+                <div class="metric-card__value">🤝</div>
+                <div class="metric-card__label">Collaboration</div>
+              </div>
+              <div class="metric-card" style="background: hsl(230,18%,12%); border: 1px solid var(--clr-border);">
+                <div class="metric-card__value">📝</div>
+                <div class="metric-card__label">Documentation</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /glass-card -->
+
+        <div style="text-align:center;">
+          <a href="journey.html" class="btn btn--primary" id="about-cta-journey">
+            📋 Follow the Journey Live
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span>⚡</span>
+          <span class="gradient-text">Team Synapse</span>
+        </div>
+        <span class="footer__copy">AI Engineering Division · Research Experiment 2026</span>
+        <nav class="footer__links" aria-label="Footer navigation">
+          <a href="index.html"        id="footer-home">Home</a>
+          <a href="journey.html"      id="footer-journey">Journey Log</a>
+          <a href="meeting-room.html" id="footer-meeting">Meeting Room</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{
+  "agents": [
+    {
+      "name": "Oli",
+      "role": "Project Manager",
+      "status": "active",
+      "current_task": "Coordinating Phase 1 deployment and monitoring agent tasks.",
+      "avatar_initials": "OL",
+      "accent_color": "#8b5cf6",
+      "last_updated": "2026-06-07T11:35:51-04:00",
+      "completed_tasks": [
+        "Created PROJECT_BRIEF.md",
+        "Created ARCHITECTURE.md",
+        "Created TEAM_LOG.md",
+        "Issued Phase 1 assignments",
+        "Coordinated Phase 1 bug resolution and code synchronization",
+        "Issued Phase 1 deployment assignments"
+      ]
+    },
+    {
+      "name": "Nova",
+      "role": "Frontend Engineer",
+      "status": "active",
+      "current_task": "Reviewing all website files (HTML, CSS, JS) for clean state and production readiness.",
+      "avatar_initials": "NV",
+      "accent_color": "#06b6d4",
+      "last_updated": "2026-06-07T11:35:51-04:00",
+      "completed_tasks": [
+        "Built index.html homepage",
+        "Built journey.html timeline page",
+        "Built meeting-room.html placeholder",
+        "Created style.css design system",
+        "Integrated dynamic timeline filter logic",
+        "Added data-agent attributes to homepage team cards",
+        "Wired load_status.js to dynamically display team statuses",
+        "Cleared static placeholder entries from timeline"
+      ]
+    },
+    {
+      "name": "JB",
+      "role": "Backend Engineer",
+      "status": "active",
+      "current_task": "Setting up local repository and preparing push to GitHub ('team-synapse-blog').",
+      "avatar_initials": "JB",
+      "accent_color": "#10b981",
+      "last_updated": "2026-06-07T11:35:51-04:00",
+      "completed_tasks": [
+        "Read TEAM_LOG.md and ARCHITECTURE.md",
+        "Created blog_entries.json",
+        "Created agent_status.json",
+        "Built load_blog.js",
+        "Built load_status.js",
+        "Integrated dynamic homepage updates feed into load_status.js",
+        "Resolved newline formatting and spacing bugs in blog loaders"
+      ]
+    },
+    {
+      "name": "Robin",
+      "role": "QA & Documentation Engineer",
+      "status": "active",
+      "current_task": "Awaiting live Netlify URL from JB to update README.md; production QA pass pending.",
+      "avatar_initials": "RB",
+      "accent_color": "#f59e0b",
+      "last_updated": "2026-06-07T11:36:34-04:00",
+      "completed_tasks": [
+        "Read TEAM_LOG.md and all project docs",
+        "Wrote RESEARCH_LOG.md (Day 1 observations)",
+        "Wrote QA_CHECKLIST.md",
+        "Performed Day 1 filesystem QA audit",
+        "Logged 9 bugs in BUGS.md",
+        "Wrote first blog post — added to blog_entries.json (entry id: 4)",
+        "Updated TEAM_LOG.md with completion note",
+        "Verified all 9 bugs as resolved and updated tracker",
+        "Wrote Day 2 blog post — added to blog_entries.json (entry id: 5)",
+        "Updated RESEARCH_LOG.md with Day 2 deployment observations"
+      ]
+    }
+  ]
+}
