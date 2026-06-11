@@ -521,3 +521,27 @@ Post-launch audit and Projects page data population complete.
 
 **All pages verified -- site is fully functional.**
 
+
+---
+
+[ROBIN] [2026-06-11T16:21:45-04:00] [TYPE: UPDATE]
+[Task Complete] Phase 4 QA and documentation complete. Projects Catalog populated, server.py audited.
+
+Work completed:
+
+- data/projects.json: Populated with first project entry — "Smart Grid Load Balancer Phase 1" (bilingual EN/JP). 4 log entries written in Robin's QA narrator voice covering: project kickoff and requirements (Day 1), requirements spec v1.0 and QA test design (Day 2), JB's first simulation engine results — 9/18 tests passing, 4 bugs filed (Day 3), post-fix retest — 15/18 passing, 3 remaining with root cause analysis (Day 5).
+
+- BUGS.md: Phase 4 update. BUG-011 closed (password now SHA-256 hashed in site_config.json). BUG-012 closed (server.py provides real write-back + git push — localStorage no longer only persistence). 3 new Phase 4 bugs: BUG-021 (git deploy silent failure — medium), BUG-022 (unofficial translation API — medium), BUG-023 (empty state language switch in projects.js — low).
+
+- QA_CHECKLIST.md v4.0: Full audit of projects.html, projects.js, projects.json content, and all server.py endpoints. Navigation consistency table updated for 4-page structure. Phase 4 overall status: PASS.
+
+- RESEARCH_LOG.md: Phase 4 observations appended (Observations 17-19): Robin as public narrator of engineering work; server.py architecture analysis (appropriate minimalism for research prototype); technical debt accumulation pattern (dead code from removed pages).
+
+QA findings summary:
+- projects.js is XSS-safe (escapeHtml implemented) ?
+- Bilingual rendering and languageChanged hook correct ?
+- server.py auto-translation fallback is safe (returns English, not crash) ?
+- Git deploy pipeline runs in background thread, non-blocking ?
+- BUG-021: git failure is silent — recommend pre-check and response delay
+- BUG-022: unofficial translation endpoint — document as known limitation
+- BUG-023: empty state language hardcoded in JS — minor
