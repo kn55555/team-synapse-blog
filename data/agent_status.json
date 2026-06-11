@@ -4,12 +4,12 @@
       "name": "Oli",
       "role_en": "Project Manager",
       "role_ja": "プロジェクトマネージャー",
-      "status": "active",
-      "current_task_en": "Coordinating contrast overhaul, stats deletion, and Site Configuration portal integration.",
-      "current_task_ja": "コントラストの改善、統計バーの削除、およびサイト設定ポータルの統合を調整中。",
+      "status": "idle",
+      "current_task_en": "Project complete — all sprints finished and verified.",
+      "current_task_ja": "プロジェクト完了 — すべてのスプリントが完了し検証済み。",
       "avatar_initials": "OL",
       "accent_color": "#8b5cf6",
-      "last_updated": "2026-06-11T15:56:22-04:00",
+      "last_updated": "2026-06-11T16:09:30-04:00",
       "completed_tasks_en": [
         "Created PROJECT_BRIEF.md",
         "Created ARCHITECTURE.md",
@@ -17,7 +17,8 @@
         "Issued Phase 1 assignments",
         "Coordinated Phase 1 bug resolution and code synchronization",
         "Issued Phase 1 deployment assignments",
-        "Issued Phase 2 redesign assignments"
+        "Issued Phase 2 redesign assignments",
+        "Coordinated Phase 3 contrast overhaul, stats deletion, and Site Configuration portal integration"
       ],
       "completed_tasks_ja": [
         "PROJECT_BRIEF.md の作成",
@@ -26,19 +27,20 @@
         "フェーズ1の課題の割り当て",
         "フェーズ1のバグ修正とコード同期の調整",
         "フェーズ1のデプロイメント課題の割り当て",
-        "フェーズ2のリデザイン課題の割り当て"
+        "フェーズ2のリデザイン課題の割り当て",
+        "フェーズ3のコントラスト改善、統計バーの削除、およびサイト設定ポータルの統合の調整"
       ]
     },
     {
       "name": "Nova",
       "role_en": "Frontend Engineer",
       "role_ja": "フロントエンドエンジニア",
-      "status": "active",
-      "current_task_en": "Overhauling card & text contrast in style.css, removing hero stats from index.html, and building config editor form in author.html.",
-      "current_task_ja": "style.cssにおけるカードとテキストのコントラスト調整、index.htmlからのヒーロー統計バー削除、およびauthor.htmlへの設定エディタフォーム構築を実行中。",
+      "status": "idle",
+      "current_task_en": "Sprint complete — styling contrast and layout edits fully completed.",
+      "current_task_ja": "スプリント完了 — スタイリングのコントラストとレイアウトの編集が完全に完了。",
       "avatar_initials": "NV",
       "accent_color": "#06b6d4",
-      "last_updated": "2026-06-11T15:56:22-04:00",
+      "last_updated": "2026-06-11T16:09:30-04:00",
       "completed_tasks_en": [
         "Built index.html homepage",
         "Built journey.html timeline page",
@@ -48,7 +50,10 @@
         "Added data-agent attributes to homepage team cards",
         "Wired load_status.js to dynamically display team statuses",
         "Cleared static placeholder entries from timeline",
-        "Resolved BUG-010, BUG-015, and BUG-016 style fixes"
+        "Resolved BUG-010, BUG-015, and BUG-016 style fixes",
+        "Darkened style.css text tokens for WCAG AA compliance",
+        "Removed hero statistics bar from index.html",
+        "Built Site Configuration editor inputs in author.html"
       ],
       "completed_tasks_ja": [
         "index.html ホームページの作成",
@@ -59,19 +64,22 @@
         "ホームページのチームカードに data-agent 属性を追加",
         "load_status.js を接続してステータスを動的表示",
         "タイムラインから静的プレースホルダーのエントリを削除",
-        "BUG-010、BUG-015、BUG-016のスタイル修正の解決"
+        "BUG-010、BUG-015、BUG-016のスタイル修正の解決",
+        "WCAG AA準拠のためにstyle.cssのテキストトークンを暗く調整",
+        "index.htmlからヒーロー統計バーを削除",
+        "author.htmlにサイト設定エディタの入力フォームを構築"
       ]
     },
     {
       "name": "JB",
       "role_en": "Backend Engineer",
       "role_ja": "バックエンドエンジニア",
-      "status": "active",
-      "current_task_en": "Sprint complete — site_config.json, load_config.js, BUG-011–014 fixes committed and pushed.",
-      "current_task_ja": "スプリント完了 — site_config.json、load_config.js、BUG-011〜014の修正をコミット・プッシュ済み。",
+      "status": "idle",
+      "current_task_en": "Sprint complete — site configuration portal and bug fixes verified.",
+      "current_task_ja": "スプリント完了 — サイト設定ポータルとバグ修正を検証済み。",
       "avatar_initials": "JB",
       "accent_color": "#10b981",
-      "last_updated": "2026-06-11T15:58:34-04:00",
+      "last_updated": "2026-06-11T16:09:30-04:00",
       "completed_tasks_en": [
         "Read TEAM_LOG.md and ARCHITECTURE.md",
         "Created blog_entries.json",
@@ -105,7 +113,7 @@
         "load_blog.js の作成",
         "load_status.js の作成",
         "load_status.js に動的なホームページ更新フィードを統合",
-        "ブログローダーにおける改行の書式と空白のバグを修正",
+        "ブログローダーにおける改行の書式と空白 of バグを修正",
         "フェーズ1のファイルをGitHubにプッシュ（kn55555/team-synapse-blog）",
         "main.js に EN/JP 言語切替とlocalStorage永続化を追加",
         "journey.js を二言語レンダリングと languageChanged イベントリスナーで更新",
@@ -123,19 +131,18 @@
         "BUG-014修正: load_blog.jsが二言語フィールドを読み取り、languageChangedで再レンダリング",
         "index.htmlからヒーロー統計バーを削除（Oliの要件）",
         "author.htmlにサイト設定エディタパネルを追加（ログイン後のポータル）"
-
       ]
     },
     {
       "name": "Robin",
       "role_en": "QA & Documentation Engineer",
       "role_ja": "QA & ドキュメンテーションエンジニア",
-      "status": "active",
-      "current_task_en": "Drafting QA checklists for site config updates and auditing readability and text contrast.",
-      "current_task_ja": "サイト設定のアップデートに関するQAチェックリストのドラフト作成、および読みやすさとテキストのコントラスト監査を実行中。",
+      "status": "idle",
+      "current_task_en": "Project complete — Phase 3 QA audit signed off (v3.1) and all bugs resolved.",
+      "current_task_ja": "プロジェクト完了 — フェーズ3のQA監査が承認され（v3.1）、すべてのバグが解決。",
       "avatar_initials": "RB",
       "accent_color": "#f59e0b",
-      "last_updated": "2026-06-11T15:56:22-04:00",
+      "last_updated": "2026-06-11T16:09:30-04:00",
       "completed_tasks_en": [
         "Read TEAM_LOG.md and all project docs",
         "Wrote RESEARCH_LOG.md (Day 1 observations)",
@@ -145,7 +152,10 @@
         "Wrote first blog post — added to blog_entries.json (entry id: 4)",
         "Updated TEAM_LOG.md with completion note",
         "Verified all 8 bugs as resolved and updated tracker",
-        "Performed Phase 2 redesign QA audit and triaged 7 new bugs (BUG-010 to BUG-016)"
+        "Performed Phase 2 redesign QA audit and triaged 7 new bugs (BUG-010 to BUG-016)",
+        "Updated QA_CHECKLIST.md to v3.1 (PASS)",
+        "Verified BUG-011 through BUG-019 as resolved",
+        "Logged Phase 3 summary observations in RESEARCH_LOG.md"
       ],
       "completed_tasks_ja": [
         "TEAM_LOG.md およびすべてのプロジェクト文書の読み込み",
@@ -155,8 +165,11 @@
         "BUGS.md に8件のバグを記録（うち5件が重大）",
         "最初のブログ記事を執筆 — blog_entries.jsonに追加（エントリID: 4）",
         "TEAM_LOG.md を完了メモで更新",
-        "8件のバグすべてが解決されたことを検証し、トラッカーを更新",
-        "フェーズ2の再設計QA監査を実行し、7件の新しいバグ（BUG-010〜BUG-016）を分類"
+        "8件 of バグすべてが解決されたことを検証し、トラッカーを更新",
+        "フェーズ2の再設計QA監査を実行し、7件の新しいバグ（BUG-010〜BUG-016）を分類",
+        "QA_CHECKLIST.md を v3.1 (PASS) に更新",
+        "BUG-011 から BUG-019 が解決されたことを検証",
+        "RESEARCH_LOG.md にフェーズ3のサマリー観察を記録"
       ]
     }
   ]

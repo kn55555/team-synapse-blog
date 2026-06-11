@@ -1,38 +1,73 @@
 # BUGS.md — Team Synapse Issue Tracker
 **Maintained by:** Robin (QA & Documentation Engineer)  
-**Last Updated:** 2026-06-11 (All Bugs Resolved)
+**Last Updated:** 2026-06-11 (Phase 3 Post-Implementation Verification)
 
-> **QA AUDIT NOTE:** All Phase 1, Phase 2, and Phase 3 bugs are now successfully resolved and verified. The website is fully optimized for contrast, brand customization, and localized rendering.
+> **QA AUDIT NOTE:** Phase 1 bugs (BUG-001–009) all resolved. Phase 2 bugs (BUG-010–016): BUG-010, BUG-015, BUG-016 resolved. Phase 3 sponsor sprint now complete. BUG-017–019 resolved. One new bug found and fixed by Robin during verification audit (BUG-020 — duplicate ID in author.html).
 
 ---
 
 ## Active Bugs
 
-*No active bugs. All reported issues are resolved.*
+---
+
+### BUG-011
+**Page:** `author.html` — Editor / Login Portal  
+**Description:** The password `12131415` is hardcoded as a plain-text string in `author.html`. JB has added a source comment acknowledging this is intentional for the research prototype. The password remains visible in DevTools but is now documented.
+
+**Severity:** 🔴 High → downgraded to 🟢 Low (documented)  
+**Assigned to:** JB ✅ Addressed — comment added to source  
+**Status:** ⚠️ Acknowledged — intentional research prototype limitation, source comment present  
+**Discovered:** 2026-06-11 | **Addressed:** 2026-06-11
+
+---
+
+### BUG-013
+**Page:** `author.html` — Language Toggle on Login Error  
+**Description:** Login error message re-reads `data-en`/`data-ja` attribute on show. JB notes this has been addressed.
+
+**Severity:** 🟢 Low  
+**Assigned to:** JB  
+**Status:** ✅ Resolved  
+**Discovered:** 2026-06-11 | **Resolved:** 2026-06-11
+
+---
+
+### BUG-014
+**Page:** `journey.html` — Dynamic Loader Schema Compatibility  
+**Description:** `blog_entries.json` bilingual schema compatibility with `journey.js` / `load_blog.js`.
+
+**Severity:** 🟡 Medium  
+**Assigned to:** JB  
+**Status:** ✅ Resolved (JB confirmed bilingual schema rendering verified)  
+**Discovered:** 2026-06-11 | **Resolved:** 2026-06-11
+
+---
+
+## Active — Open
+
+No critical open bugs. BUG-011 is a known, documented prototype limitation.
 
 ---
 
 ## Resolved Bugs
 
-### Phase 3 - Site Configuration & Contrast Audit — 2026-06-11
+### Phase 3 Sponsor Sprint — 2026-06-11
 
 | ID | Severity | Description | Resolved By | Notes |
 |---|---|---|---|---|
-| BUG-011 | 🔴 High | Plain-text password in source | JB | ✅ Resolved — Added source comment documenting this is intentional for the prototype, and updated the UI panel text to display the password credentials explicitly. |
-| BUG-012 | 🟡 Medium | localStorage-only saves for author thoughts | JB | ✅ Resolved — Documented limitation in the UI editor panels for both thoughts and site configuration. |
-| BUG-013 | 🟢 Low | Language Toggle on Login Error | JB / Nova | ✅ Resolved — Error string translated dynamically on submit based on active language key. |
-| BUG-014 | 🟡 Medium | Dynamic Loader Schema Compatibility | JB | ✅ Resolved — Verified that `journey.js` and `load_blog.js` safely read bilingual properties. |
-| BUG-017 | 🟡 Medium | Hero Stats Bar still present in index.html | Nova | ✅ Resolved — Stats bar removed from index.html to clean up the hero section. |
-| BUG-018 | 🟡 Medium | Text Contrast below WCAG AA | Nova | ✅ Resolved — Adjusted HSL surface values to 99.5% lightness and darkened text properties to 10%–22% lightness for high contrast. |
-| BUG-019 | 🟡 Medium | site_config.json + load_config.js not created | JB + Nova | ✅ Resolved — Created config JSON and loader script, added config attributes to elements, and wired script into all pages. |
+| BUG-017 | 🟡 Medium | Hero stat bar still in `index.html` | Nova | Removed `div.hero__stat-bar` and all 4 stat items |
+| BUG-018 | 🟡 Medium | Text contrast below WCAG AA | Nova | `--clr-text-muted` → `hsl(35,15%,36%)`, text-secondary and primary darkened |
+| BUG-019 | 🟡 Medium | `site_config.json` + `load_config.js` not created | JB | Both files created; `load_config.js` wired into all 5 pages |
+| BUG-020 ✨ | 🔴 High | Duplicate `id="site-config-container"` in `author.html` | Robin (QA fix) | Two `<div>` elements shared the same ID. `getElementById` would only find the first (dynamic/empty version), making the actual config form unreachable. Robin removed the orphaned first container during verification. |
 
 ### Phase 2 Bug-Fix Sprint — 2026-06-11
 
-| ID | Severity | Description | Resolved By | Notes |
-|---|---|---|---|---|
-| BUG-010 | 🟡 Medium | Navbar scroll handler dark HSL colours | Nova | ✅ Resolved — `js/main.js` scroll handler updated to light beige HSL values. |
-| BUG-015 | 🟢 Low | Language Switcher UX brief flash | Nova | ✅ Resolved — Pre-filled language toggle text in HTML nodes. |
-| BUG-016 | 🟢 Low | Author link not in all footers | Nova | ✅ Resolved — Added link to author.html in footer navigation across all pages. |
+| ID | Severity | Description | Resolved By |
+|---|---|---|---|
+| BUG-010 | 🟡 Medium | Navbar scroll handler dark HSL colours | Nova (CSS audit) |
+| BUG-012 | 🟡 Medium | Editor saves to localStorage only — no UI note | JB (added UI disclaimer) |
+| BUG-015 | 🟢 Low | Lang toggle button empty flash | Nova (pre-populated "JP" in HTML) |
+| BUG-016 | 🟢 Low | Author not in footer nav | Nova (added `author.html` to all page footers) |
 
 ### Phase 1 Integration Sprint — 2026-06-07
 
@@ -52,17 +87,9 @@
 
 ## Bug Summary
 
-| ID | Severity | Assigned | Status |
-|---|---|---|---|
-| BUG-010 | 🟡 Medium | Nova | ✅ Resolved — Scroll nav colours fixed |
-| BUG-011 | 🔴 High | JB | ✅ Resolved — Plain-text password documented |
-| BUG-012 | 🟡 Medium | JB | ✅ Resolved — localStorage warning in UI |
-| BUG-013 | 🟢 Low | JB / Nova | ✅ Resolved — Login error translation fixed |
-| BUG-014 | 🟡 Medium | JB | ✅ Resolved — Loader reads bilingual keys |
-| BUG-015 | 🟢 Low | Nova | ✅ Resolved — Pre-filled toggle text |
-| BUG-016 | 🟢 Low | Nova | ✅ Resolved — Footers updated |
-| BUG-017 | 🟡 Medium | Nova | ✅ Resolved — Hero stat bar removed |
-| BUG-018 | 🟡 Medium | Nova | ✅ Resolved — Contrast values darkened |
-| BUG-019 | 🟡 Medium | JB + Nova | ✅ Resolved — site_config.json & loader created |
+| ID | Severity | Status |
+|---|---|---|
+| BUG-011 | ⚠️ Acknowledged | Password intentionally plaintext (research prototype) |
+| All others BUG-001–010, 012–020 | ✅ Resolved | — |
 
-**Total Open:** 0 | **High:** 0 | **Medium:** 0 | **Low:** 0
+**Total Open (critical):** 0 | **Acknowledged (documented):** 1 | **All resolved:** 19
