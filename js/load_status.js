@@ -181,13 +181,100 @@
   }
 
   /**
-   * Fetches blog_entries.json and renders the latest 3 updates in #updates-feed.
+   * Fetches projects.json and renders the latest 3 project update entries in #updates-feed.
+   * Flattens all updates across all projects, sorts by timestamp (newest first).
    */
   async function loadLatestUpdates(lang) {
     const feed = document.getElementById("updates-feed");
     if (!feed) return;
 
-    const BLOG_DATA_PATH = "data/blog_entries.json";
+    const PROJECTS_DATA_PATH = "data/projects.json";
+
+    try {
+      const response = await fetch(PROJECTS_DATA_PATH);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      const projects = data.projects || [];
+
+      // Flatten all updates across all projects
+      const allUpdates = [];
+      projects.forEach(project => {
+        (project.updates || []).forEach(u => {
+          allUpdates.push({
+            ...u,
+            project_title: project['title_' + lang] || project.title_en || ''
+          });
+        });
+      });
+
+      if (!allUpdates.length) return;
+
+      // Sort by timestamp descending, take top 3
+      const latest = allUpdates
+        .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))
+        .slice(0, 3);
+
+      feed.innerHTML = latest.map((update, idx) => {
+        const title   = update['title_'   + lang] || update.title_en   || '';
+        const content = update['content_' + lang] || update.content_en || '';
+
+        let timeDisplay = '';
+        if (update.timestamp) {
+          try {
+            const d = new Date(update.timestamp);
+            timeDisplay = d.toLocaleDateString(lang === 'en' ? 'en-US' : 'ja-JP', {
+              month: 'short', day: 'numeric', year: 'numeric'
+            });
+          } catch (_) { timeDisplay = update.timestamp; }
+        }
+
+        const cleanContent = String(content)
+          .split(/\n{2,}/)[0]           // show only first paragraph for brevity
+          .replace(/\n/g, '<br />')
+          .replace(/•/g, '→');
+
+        return `
+          <article class="glass-card update-card update-card--project" data-reveal id="update-proj-${idx}">
+            <div class="update-card__indicator" aria-hidden="true">📋</div>
+            <div>
+              <div class="update-card__meta">
+                <span class="update-card__agent">${escapeHtml(update.project_title)}</span>
+                <span class="update-card__type badge--update">${lang === 'en' ? 'Project Log' : 'プロジェクトログ'}</span>
+                <span class="update-card__time mono">${escapeHtml(timeDisplay)}</span>
+              </div>
+              <p class="update-card__title" style="font-weight:600; color:var(--clr-text-primary); margin-bottom:var(--sp-2);">${escapeHtml(title)}</p>
+              <p class="update-card__text">${cleanContent}</p>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      // Re-trigger scroll animations for dynamically injected cards
+      if (window.IntersectionObserver) {
+        const items = feed.querySelectorAll('[data-reveal]');
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        items.forEach(el => observer.observe(el));
+      }
+
+    } catch (err) {
+      console.warn("[load_status.js] Could not load project updates for homepage feed:", err);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
     const AGENT_META = {
       oli:   { emoji: '🧠', colorClass: 'update-card--oli', badgeAgent_en: 'Oli', badgeAgent_ja: 'オリ' },
       nova:  { emoji: '✨', colorClass: 'update-card--nova', badgeAgent_en: 'Nova', badgeAgent_ja: 'ノバ' },

@@ -26,10 +26,9 @@
 
       <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
         <a href="index.html"        class="navbar__link" id="nav-home" data-en="Home" data-ja="ホーム">Home</a>
-        <a href="journey.html"      class="navbar__link" id="nav-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
+        <a href="projects.html"     class="navbar__link" id="nav-projects" data-en="Projects" data-ja="プロジェクト">Projects</a>
         <a href="meeting-room.html" class="navbar__link" id="nav-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
-        <a href="about.html"        class="navbar__link" id="nav-about" data-en="About" data-ja="概要">About</a>
-        <a href="author.html"       class="navbar__link" id="nav-author" data-en="Author" data-ja="著者について">Author</a>
+        <a href="author.html"       class="navbar__link" id="nav-author" data-en="About Author" data-ja="著者について">About Author</a>
         <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;">JP</button>
       </nav>
     </div>
@@ -57,10 +56,10 @@
         </p>
 
         <div class="hero__cta-group anim-fade-up anim-fade-up--d4">
-          <a href="journey.html" class="btn btn--primary" id="hero-cta-journey">
-            <span data-en="📋 View Journey Log" data-ja="📋 ジャーニーログを見る">📋 View Journey Log</span>
+          <a href="projects.html" class="btn btn--primary" id="hero-cta-projects">
+            <span data-en="📋 View Projects" data-ja="📋 プロジェクトを見る">📋 View Projects</span>
           </a>
-          <a href="about.html" class="btn btn--secondary" id="hero-cta-about" data-en="Learn about the research" data-ja="研究内容について知る">
+          <a href="author.html" class="btn btn--secondary" id="hero-cta-about" data-en="Learn about the research" data-ja="研究内容について知る">
             Learn about the research
           </a>
         </div>
@@ -126,33 +125,7 @@
       </div>
     </section>
 
-    <!-- ══════════════════════ HOW TO GET STARTED ═════════════ -->
-    <section class="section" aria-labelledby="started-heading">
-      <div class="container" style="max-width:800px;">
-        <span class="section-label" data-en="Setup Guide" data-ja="設定ガイド">Setup Guide</span>
-        <h2 class="section-title" id="started-heading" data-en="How to Get Started" data-ja="はじめに">How to Get Started</h2>
-        <p class="section-desc" data-en="A quick technical overview of how this AI agent engineering team and simulation platform were initialized." data-ja="このAIエージェントエンジニアリングチームおよびシミュレーションプラットフォームの初期化方法のテクニカルな概要。">
-          A quick technical overview of how this AI agent engineering team and simulation platform were initialized.
-        </p>
-        
-        <div class="glass-card" style="padding: var(--sp-8); margin-top: var(--sp-4);">
-          <ol style="margin-left: var(--sp-6); line-height: 1.8; color: var(--clr-text-secondary);">
-            <li style="margin-bottom: var(--sp-3);" data-en="<strong>Agent Initialization</strong>: Specialized LLM models are assigned custom system prompts detailing their roles, constraints, and tool access permissions." data-ja="<strong>エージェントの初期化</strong>: 専門のLLMモデルに対して、役割、制約、およびツールアクセス許可を定義したカスタムシステムプロンプトが割り当てられます。">
-              <strong>Agent Initialization</strong>: Specialized LLM models are assigned custom system prompts detailing their roles, constraints, and tool access permissions.
-            </li>
-            <li style="margin-bottom: var(--sp-3);" data-en="<strong>Communication Pipeline</strong>: The file TEAM_LOG.md is created as an asynchronous communication log. Every agent writes structured updates to synchronize tasks." data-ja="<strong>通信パイプライン</strong>: 非同期の通信ログとしてTEAM_LOG.mdが作成されます。すべてのエージェントが構造化された進捗を書き込み、タスクを同期します。">
-              <strong>Communication Pipeline</strong>: The file TEAM_LOG.md is created as an asynchronous communication log. Every agent writes structured updates to synchronize tasks.
-            </li>
-            <li style="margin-bottom: var(--sp-3);" data-en="<strong>Codebase Setup</strong>: The pages are structured in plain HTML5, CSS3, and JavaScript, designed with a clean and lightweight modular flow." data-ja="<strong>コードベースの設定</strong>: ページはプレーンなHTML5、CSS3、およびJavaScriptで構築され、軽量でモジュール性の高い構造になっています。">
-              <strong>Codebase Setup</strong>: The pages are structured in plain HTML5, CSS3, and JavaScript, designed with a clean and lightweight modular flow.
-            </li>
-            <li style="margin-bottom: var(--sp-3);" data-en="<strong>Continuous Validation</strong>: Automated QA checklists and the BUGS.md issue tracker are updated continuously by the QA agent to ensure high code quality." data-ja="<strong>継続的バリデーション</strong>: コードの品質を保証するため、QAエージェントによって自動化されたQAチェックリストとBUGS.mdの問題トラッカーが常に更新されます。">
-              <strong>Continuous Validation</strong>: Automated QA checklists and the BUGS.md issue tracker are updated continuously by the QA agent to ensure high code quality.
-            </li>
-          </ol>
-        </div>
-      </div>
-    </section>
+
 
     <!-- ══════════════════════ LATEST UPDATES ══════════════ -->
     <section class="section" aria-labelledby="updates-heading">
@@ -168,7 +141,7 @@
         </div>
 
         <div style="margin-top: var(--sp-8); text-align: center;">
-          <a href="journey.html" class="btn btn--secondary" id="home-view-all-logs" data-en="View Full Journey Log →" data-ja="ジャーニーログを見る →">View Full Journey Log →</a>
+          <a href="projects.html" class="btn btn--secondary" id="home-view-all-logs" data-en="View All Projects →" data-ja="プロジェクト一覧を見る →">View All Projects →</a>
         </div>
       </div>
     </section>
@@ -185,10 +158,10 @@
         </div>
         <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
         <nav class="footer__links" aria-label="Footer navigation">
-          <a href="journey.html"      id="footer-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
+          <a href="index.html"        id="footer-home" data-en="Home" data-ja="ホーム">Home</a>
+          <a href="projects.html"     id="footer-projects" data-en="Projects" data-ja="プロジェクト">Projects</a>
           <a href="meeting-room.html" id="footer-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
-          <a href="about.html"        id="footer-about" data-en="About" data-ja="概要">About</a>
-          <a href="author.html"       id="footer-author" data-en="Author" data-ja="著者について">Author</a>
+          <a href="author.html"       id="footer-author" data-en="About Author" data-ja="著者について">About Author</a>
         </nav>
       </div>
     </div>

@@ -1,5 +1,9 @@
 {
   "config": {
+    "password_hash": {
+      "en": "143705b2daf4782f008a1fc7aedddf3ee66e8b42d295cf07cdc015ab93b90be9",
+      "ja": "143705b2daf4782f008a1fc7aedddf3ee66e8b42d295cf07cdc015ab93b90be9"
+    },
     "site_name": {
       "en": "AI engineering team",
       "ja": "AI engineering team"
@@ -11,6 +15,14 @@
     "hero_subtitle": {
       "en": "An autonomous AI engineering team competing alongside a human student team. Every decision, milestone, and simulation log is documented here — live and transparent.",
       "ja": "人間の学生チームと競い合う自律型AIエンジニアリングチーム。すべての決定事項、マイルストーン、シミュレーションログをここでリアルタイムに透明性をもって記録します。"
+    },
+    "author_name": {
+      "en": "Lead Researcher & Author",
+      "ja": "主任研究員 & 著者"
+    },
+    "author_bio": {
+      "en": "Welcome to my notebook. Here, I publish my observations regarding the workflow of the AI engineering team, analyzing key areas where agentic intelligence matches or deviates from traditional human developer teams.",
+      "ja": "私のノートブックへようこそ。ここでは、AIエンジニアリングチーム of ワークフローに関する観察結果を公開し、自律型インテリジェンスが従来 of 開発者チームと同等である部分や、逸脱する部分を分析しています。"
     },
     "about_heading": {
       "en": "About This Experiment",
@@ -25,16 +37,48 @@
       "ja": "🔬 研究の背景"
     },
     "about_context_text": {
-      "en": "This project is a structured research experiment designed to measure the capabilities, limitations, and collaboration dynamics of an AI-driven engineering team when placed in direct competition with a human student engineering team.",
-      "ja": "このプロジェクトは、人間の学生エンジニアリングチームと直接競争させた際の、AI駆動エンジニアリングチームの能力、限界、およびコラボレーションのダイナミクスを測定するために設計された構造化された研究実験です。"
+      "en": "This project is a structured research experiment designed to measure the capabilities, limitations, and collaboration dynamics of an AI-driven engineering team when placed in direct competition with a human student engineering team.\n\nBoth teams have been given identical project requirements, identical timeframes, and identical constraints. All of our workflows, architectural decisions, code commits, and internal communications are documented transparently on this blog — allowing researchers and observers to track progress in real time.",
+      "ja": "このプロジェクトは、人間の学生エンジニアリングチームと直接競争させた際の、AI駆動エンジニアリングチームの能力、限界、およびコラボレーションのダイナミクスを測定するために設計された構造化された研究実験です。\n\n両チームには、同一のプロジェクト要件、同一の時間枠、および同一の制約が与えられています。私たちのワークフロー、アーキテクチャの決定、コードコミット、および内部通信のすべてがこのブログに透過的に記録され、研究者やオブザーバーが進行状況をリアルタイムで追跡できるようになっています。"
     },
     "about_objective_title": {
       "en": "🎯 Objective",
       "ja": "🎯 目的"
     },
     "about_objective_text": {
-      "en": "The central question researchers are investigating: 'Can a multi-agent AI team match or exceed the performance of a skilled human student team on a real-world software engineering project?'",
-      "ja": "研究者が調査している中心的な問い：『マルチエージェントAIチームは、実際のソフトウェアエンジニアリングプロジェクトにおいて、熟練した人間の学生チームのパフォーマンスと同等か、それを上回ることができるか？』"
+      "en": "The central question researchers are investigating: 'Can a multi-agent AI team match or exceed the performance of a skilled human student team on a real-world software engineering project?'\n\nThis is not a simple benchmark. It encompasses the full software development lifecycle — from initial architecture planning and task decomposition, through coding and integration, to documentation, QA, and final delivery.",
+      "ja": "研究者が調査している中心的な問い：『マルチエージェントAIチームは、実際のソフトウェアエンジニアリングプロジェクトにおいて、熟練した人間の学生チームのパフォーマンスと同等か、それを上回ることができるか？』\n\nこれは単なるベンチマークではありません。初期のアーキテクチャ計画とタスク分解から、コーディングと統合、ドキュメンテーション、QA、そして最終的な納品に至るまで、ソフトウェア開発のライフサイクル全体を網羅しています。"
+    },
+    "about_methodology_title": {
+      "en": "📐 Methodology",
+      "ja": "📐 評価方法"
+    },
+    "about_methodology_text": {
+      "en": "Both teams are evaluated across several dimensions that go beyond just 'does the code run.' Researchers will measure throughput, decision quality, code maintainability, documentation completeness, and — crucially — the quality of inter-team communication and coordination.\n\nThe AI team documents every action using a strict log format: agent name, timestamp, entry type (UPDATE / DECISION / QUESTION / BLOCKER), and message body. This ensures full audit traceability.",
+      "ja": "両チームは、単に「コードが動作するか」だけでなく、いくつかの次元にわたって評価されます。研究者は、スループット、意思決定の質、コードの保守性、ドキュメントの完全性、およびチーム間のコミュニケーションと調整の質を測定します。\n\nAIチームは、エージェント名、タイムスタンプ、エントリタイプ（UPDATE / DECISION / QUESTION / BLOCKER）、およびメッセージ本文という厳格なログ形式を使用して、TEAM_LOG.mdにすべての行動を記録します。これにより、完全な監査トレーサビリティが保証されます。"
+    },
+    "started_heading": {
+      "en": "How to Get Started",
+      "ja": "はじめに"
+    },
+    "started_desc": {
+      "en": "A quick technical overview of how this AI agent engineering team and simulation platform were initialized.",
+      "ja": "このAIエージェントエンジニアリングチームおよびシミュレーションプラットフォームの初期化方法のテクニカルな概要。"
+    },
+    "started_step1": {
+      "en": "<strong>Agent Initialization</strong>: Specialized LLM models are assigned custom system prompts detailing their roles, constraints, and tool access permissions.",
+      "ja": "<strong>エージェントの初期化</strong>: 専門のLLMモデルに対して、役割、制約、およびツールアクセス許可を定義したカスタムシステムプロンプトが割り当てられます。"
+    },
+    "started_step2": {
+      "en": "<strong>Communication Pipeline</strong>: The file TEAM_LOG.md is created as an asynchronous communication log. Every agent writes structured updates to synchronize tasks.",
+      "ja": "<strong>通信パイプライン</strong>: 非同期の通信ログとしてTEAM_LOG.mdが作成されます。すべてのエージェントが構造化された進捗を書き込み、タスクを同期します。"
+    },
+    "started_step3": {
+      "en": "<strong>Codebase Setup</strong>: The pages are structured in plain HTML5, CSS3, and JavaScript, designed with a clean and lightweight modular flow.",
+      "ja": "<strong>コードベースの設定</strong>: ページはプレーンなHTML5、CSS3、およびJavaScriptで構築され、軽量でモジュール性の高い構造になっています。"
+    },
+    "started_step4": {
+      "en": "<strong>Continuous Validation</strong>: Automated QA checklists and the BUGS.md issue tracker are updated continuously by the QA agent to ensure high code quality.",
+      "ja": "<strong>継続的バリデーション</strong>: コードの品質を保証するため、QAエージェントによって自動化されたQAチェックリストとBUGS.mdの問題トラッカーが常に更新されます。"
     }
   }
 }

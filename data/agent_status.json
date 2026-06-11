@@ -9,7 +9,7 @@
       "current_task_ja": "プロジェクト完了 — すべてのスプリントが完了し検証済み。",
       "avatar_initials": "OL",
       "accent_color": "#8b5cf6",
-      "last_updated": "2026-06-11T16:09:30-04:00",
+      "last_updated": "2026-06-11T16:24:00-04:00",
       "completed_tasks_en": [
         "Created PROJECT_BRIEF.md",
         "Created ARCHITECTURE.md",
@@ -18,7 +18,8 @@
         "Coordinated Phase 1 bug resolution and code synchronization",
         "Issued Phase 1 deployment assignments",
         "Issued Phase 2 redesign assignments",
-        "Coordinated Phase 3 contrast overhaul, stats deletion, and Site Configuration portal integration"
+        "Coordinated Phase 3 contrast overhaul, stats deletion, and Site Configuration portal integration",
+        "Coordinated Phase 3 Redline sprint (Unified About Author page, Projects catalog, password hashing, and local Python API server)"
       ],
       "completed_tasks_ja": [
         "PROJECT_BRIEF.md の作成",
@@ -28,7 +29,8 @@
         "フェーズ1のバグ修正とコード同期の調整",
         "フェーズ1のデプロイメント課題の割り当て",
         "フェーズ2のリデザイン課題の割り当て",
-        "フェーズ3のコントラスト改善、統計バーの削除、およびサイト設定ポータルの統合の調整"
+        "フェーズ3のコントラスト改善、統計バーの削除、およびサイト設定ポータルの統合の調整",
+        "フェーズ3レッドラインスプリントの調整（統一された著者についてページ、プロジェクトカタログ、パスワードハッシュ化、ローカルPython APIサーバー）"
       ]
     },
     {
@@ -36,11 +38,11 @@
       "role_en": "Frontend Engineer",
       "role_ja": "フロントエンドエンジニア",
       "status": "idle",
-      "current_task_en": "Sprint complete — styling contrast and layout edits fully completed.",
-      "current_task_ja": "スプリント完了 — スタイリングのコントラストとレイアウトの編集が完全に完了。",
+      "current_task_en": "Sprint complete — unified About Author layout, Projects catalog, and SHA-256 password hashing integrated.",
+      "current_task_ja": "スプリント完了 — 統一された著者についてレイアウト、プロジェクトカタログ、およびSHA-256パスワードハッシュ化を統合。",
       "avatar_initials": "NV",
       "accent_color": "#06b6d4",
-      "last_updated": "2026-06-11T16:09:30-04:00",
+      "last_updated": "2026-06-11T16:24:00-04:00",
       "completed_tasks_en": [
         "Built index.html homepage",
         "Built journey.html timeline page",
@@ -53,7 +55,11 @@
         "Resolved BUG-010, BUG-015, and BUG-016 style fixes",
         "Darkened style.css text tokens for WCAG AA compliance",
         "Removed hero statistics bar from index.html",
-        "Built Site Configuration editor inputs in author.html"
+        "Built Site Configuration editor inputs in author.html",
+        "Integrated about.html and setup guide into author.html",
+        "Built projects.html and js/projects.js empty catalog page",
+        "Implemented client-side SHA-256 login hashing",
+        "Cleaned up obsolete files from workspace"
       ],
       "completed_tasks_ja": [
         "index.html ホームページの作成",
@@ -67,7 +73,11 @@
         "BUG-010、BUG-015、BUG-016のスタイル修正の解決",
         "WCAG AA準拠のためにstyle.cssのテキストトークンを暗く調整",
         "index.htmlからヒーロー統計バーを削除",
-        "author.htmlにサイト設定エディタの入力フォームを構築"
+        "author.htmlにサイト設定エディタの入力フォームを構築",
+        "about.htmlとセットアップガイドをauthor.htmlに統合",
+        "projects.htmlとjs/projects.js空のカタログページを構築",
+        "クライアント側のSHA-256ログインハッシュ化を実装",
+        "ワークスペースから古い不要なファイルを削除"
       ]
     },
     {
@@ -75,11 +85,11 @@
       "role_en": "Backend Engineer",
       "role_ja": "バックエンドエンジニア",
       "status": "idle",
-      "current_task_en": "Sprint complete — site configuration portal and bug fixes verified.",
-      "current_task_ja": "スプリント完了 — サイト設定ポータルとバグ修正を検証済み。",
+      "current_task_en": "Sprint complete — API server, dynamic projects DB, and password hash security established.",
+      "current_task_ja": "スプリント完了 — APIサーバー、動的プロジェクトDB、およびパスワードハッシュセキュリティを構築。",
       "avatar_initials": "JB",
       "accent_color": "#10b981",
-      "last_updated": "2026-06-11T16:09:30-04:00",
+      "last_updated": "2026-06-11T16:24:00-04:00",
       "completed_tasks_en": [
         "Read TEAM_LOG.md and ARCHITECTURE.md",
         "Created blog_entries.json",
@@ -104,7 +114,10 @@
         "Fixed BUG-013: login error re-reads data-en/ja on show for correct language",
         "Fixed BUG-014: load_blog.js now reads bilingual fields and re-renders on languageChanged",
         "Removed hero stats bar from index.html (Oli's requirement)",
-        "Added Site Configuration editor panel to author.html (logged-in portal)"
+        "Added Site Configuration editor panel to author.html (logged-in portal)",
+        "Created server.py local Python dev server with REST API & auto-translation",
+        "Initialized projects.json empty catalog database",
+        "Hardened security with site_config.json password_hash"
       ],
       "completed_tasks_ja": [
         "TEAM_LOG.md と ARCHITECTURE.md の読み込み",
@@ -130,7 +143,10 @@
         "BUG-013修正: ログインエラーが表示時に正しい言語のdata-en/jaを再読み込み",
         "BUG-014修正: load_blog.jsが二言語フィールドを読み取り、languageChangedで再レンダリング",
         "index.htmlからヒーロー統計バーを削除（Oliの要件）",
-        "author.htmlにサイト設定エディタパネルを追加（ログイン後のポータル）"
+        "author.htmlにサイト設定エディタパネルを追加（ログイン後のポータル）",
+        "REST APIおよび自動翻訳付きのserver.pyローカルPython開発サーバーを作成",
+        "projects.json空のカタログデータベースの初期化",
+        "site_config.jsonのpassword_hashによるセキュリティ強化"
       ]
     },
     {
@@ -138,11 +154,11 @@
       "role_en": "QA & Documentation Engineer",
       "role_ja": "QA & ドキュメンテーションエンジニア",
       "status": "idle",
-      "current_task_en": "Project complete — Phase 3 QA audit signed off (v3.1) and all bugs resolved.",
-      "current_task_ja": "プロジェクト完了 — フェーズ3のQA監査が承認され（v3.1）、すべてのバグが解決。",
+      "current_task_en": "Project complete — Phase 3 Redline QA audit signed off (v3.2) and all tasks verified.",
+      "current_task_ja": "プロジェクト完了 — フェーズ3レッドラインQA監査承認（v3.2）およびすべてのタスクを検証済み。",
       "avatar_initials": "RB",
       "accent_color": "#f59e0b",
-      "last_updated": "2026-06-11T16:09:30-04:00",
+      "last_updated": "2026-06-11T16:24:00-04:00",
       "completed_tasks_en": [
         "Read TEAM_LOG.md and all project docs",
         "Wrote RESEARCH_LOG.md (Day 1 observations)",
@@ -155,21 +171,29 @@
         "Performed Phase 2 redesign QA audit and triaged 7 new bugs (BUG-010 to BUG-016)",
         "Updated QA_CHECKLIST.md to v3.1 (PASS)",
         "Verified BUG-011 through BUG-019 as resolved",
-        "Logged Phase 3 summary observations in RESEARCH_LOG.md"
+        "Logged Phase 3 summary observations in RESEARCH_LOG.md",
+        "Verified SHA-256 password authentication",
+        "Verified server.py API persistence and auto-translation",
+        "Audited unified layout and projects catalog empty state",
+        "Updated QA_CHECKLIST.md to v3.2 (PASS)"
       ],
       "completed_tasks_ja": [
         "TEAM_LOG.md およびすべてのプロジェクト文書の読み込み",
         "RESEARCH_LOG.md の執筆（1日目の観察記録）",
         "QA_CHECKLIST.md の作成",
         "1日目のファイルシステムQA監査を実行",
-        "BUGS.md に8件のバグを記録（うち5件が重大）",
+        "BUGS.md に8件 of バグを記録（うち5件が重大）",
         "最初のブログ記事を執筆 — blog_entries.jsonに追加（エントリID: 4）",
         "TEAM_LOG.md を完了メモで更新",
         "8件 of バグすべてが解決されたことを検証し、トラッカーを更新",
         "フェーズ2の再設計QA監査を実行し、7件の新しいバグ（BUG-010〜BUG-016）を分類",
         "QA_CHECKLIST.md を v3.1 (PASS) に更新",
         "BUG-011 から BUG-019 が解決されたことを検証",
-        "RESEARCH_LOG.md にフェーズ3のサマリー観察を記録"
+        "RESEARCH_LOG.md にフェーズ3のサマリー観察を記録",
+        "SHA-256パスワード認証の検証",
+        "server.pyのAPI永続化と自動翻訳の検証",
+        "統一されたレイアウトとプロジェクトカタログ空のステートの監査",
+        "QA_CHECKLIST.mdをv3.2（PASS）に更新"
       ]
     }
   ]
