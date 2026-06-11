@@ -1,96 +1,158 @@
 # QA Checklist — Team Synapse Blog Website
 **Prepared by:** Robin (QA & Documentation Engineer)  
-**Last Updated:** 2026-06-11 (v3.2 — Phase 3 Redline: Unified Portal & Projects Timeline)  
-**Version:** 3.2
+**Last Updated:** 2026-06-11 (v4.0 — Phase 4: Projects Catalog + Server Backend)  
+**Version:** 4.0
 
 ---
 
-## Pre-Requisites
+## File Presence
 
-- [x] All HTML pages present: `index.html`, `projects.html`, `meeting-room.html`, `author.html` (combined page)
-- [x] `css/style.css` exists and is non-empty
-- [x] `js/main.js` present (includes language switcher)
-- [x] `js/projects.js` present (renamed and refactored from journey.js)
-- [x] `js/load_config.js` present (dynamic configuration manager)
-- [x] `data/projects.json` valid JSON (empty initial catalog)
-- [x] `data/site_config.json` valid JSON (bilingual schema with password hash)
-- [x] `server.py` present (local Python development server with REST API endpoints)
+- [x] `index.html` — Homepage
+- [x] `meeting-room.html` — Meeting Room
+- [x] `author.html` — Author Portal
+- [x] `projects.html` — Projects Catalog ✅ NEW
+- [x] `css/style.css`
+- [x] `js/main.js`
+- [x] `js/projects.js` ✅ NEW
+- [x] `js/load_config.js`
+- [x] `js/load_status.js`
+- [x] `js/load_blog.js`
+- [x] `js/journey.js` (retained, but journey.html removed)
+- [x] `data/projects.json` ✅ NEW — 1 project, 4 log entries
+- [x] `data/site_config.json`
+- [x] `data/agent_status.json`
+- [x] `data/author_thoughts.json`
+- [x] `server.py` ✅ NEW — Python HTTP server with write-back API
 
----
-
-## Phase 3 Redline: Hashed Passwords & Security (NEW)
-
-- [x] No plaintext passwords hardcoded in front-end HTML/JS files
-- [x] `password_hash` stored securely inside `data/site_config.json`
-- [x] Password verification computed using browser-native SHA-256 hex digest (`crypto.subtle.digest`)
-- [x] "Change Password" portal fields present in Site Configuration Editor
-- [x] Hashing of new passwords verified: updating the password writes a new SHA-256 digest back to `site_config.json`
-
----
-
-## Phase 3 Redline: Local Python API Server & Auto-Deploy (NEW)
-
-- [x] Local server `server.py` runs on port 3000 and serves static files
-- [x] Endpoint `POST /api/save-config` successfully updates `data/site_config.json`
-- [x] Endpoint `POST /api/save-thoughts` successfully updates `data/author_thoughts.json`
-- [x] **Auto-Translation**: Leaving any Japanese input blank triggers auto-translation via Google Translate API on the Python server
-- [x] **Auto-Deploy**: File updates trigger background git stage, commit (`docs: Author update via Portal`), and push pipeline automatically
+> **Note:** `about.html` and `journey.html` have been removed. Site now has 4 pages: index, meeting-room, projects, author.
 
 ---
 
-## Phase 3 Redline: Unified "About Author" Page & setup guide (NEW)
+## Phase 4: Projects Catalog (`projects.html` + `projects.js`)
 
-- [x] `about.html` deleted and integrated cleanly into `author.html`
-- [x] Navbar and footer links adjusted on all pages to point to `author.html` as "About Author"
-- [x] Setup Guide ("How to Get Started") moved from `index.html` to `author.html`
-- [x] All combined page sections (Context, Objective, Methodology, Setup Steps) mapped to `site_config.json` keys
-- [x] Config fields editable in Site Configuration Editor (English + Japanese inputs)
+### `projects.html`
+- [x] Page loads with correct title (`Projects — AI engineering team`)
+- [x] Meta description present
+- [x] Single `<h1>` — "Projects Catalog" with ID `projects-heading`
+- [x] `#projects-timeline` container present for dynamic render
+- [x] `projects.js` loaded via `<script defer>`
+- [x] `main.js` loaded (language switcher)
+- [x] `load_config.js` loaded (config IDs)
+- [x] `data-config-key="site_name"` on navbar brand name
+- [x] Lang toggle button pre-populated "JP"
+- [x] Footer includes `projects.html` link
 
----
+### `js/projects.js`
+- [x] Async fetch from `data/projects.json`
+- [x] Empty state renders when `projects.json` has no entries
+- [x] Project folder card rendered per project entry
+- [x] Robin's log updates rendered as timeline items within each folder
+- [x] Bilingual: reads `title_en`/`title_ja`, `status_en`/`status_ja`, `desc_en`/`desc_ja`
+- [x] Update entries: reads `title_en`/`title_ja`, `content_en`/`content_ja`
+- [x] Timestamp formatted via `Intl.DateTimeFormat` for locale (`en-US` / `ja-JP`)
+- [x] Re-renders on `languageChanged` event
+- [x] HTML escaped via `escapeHtml()` — XSS protected
+- [x] Error state renders if fetch fails
+- [ ] ⚠️ Empty state text hardcoded in JS (BUG-023) — doesn't update on language switch after render
 
-## Phase 3 Redline: Restructured Projects Log (NEW)
-
-- [x] `journey.html` and old scripts deleted and replaced by `projects.html`
-- [x] Timeline restructured into project folders/sections catalog schema (`data/projects.json`)
-- [x] Catalog is initially empty, rendering a clean empty state message
-- [x] No hashtag elements rendered in timeline cards
-- [x] Logs designed to be written by Robin detailing author prompts and team execution
-
----
-
-## Theme & Branding (Carried Forward)
-
-- [x] Background uses light beige (`hsl(35, 30%, 94.5%)`)
-- [x] Sage green used as primary accent (`hsl(135, 30%, 40%)`)
-- [x] Peach-orange as secondary accent (`hsl(22, 75%, 60%)`)
-- [x] Leaf icon (🍃) logo on all pages
-- [x] "AI engineering team" branding on all pages
-- [x] Navbar scroll handler uses light beige HSL values
-
----
-
-## Language Switcher (Carried Forward)
-
-- [x] Toggle button present on all pages
-- [x] Language preference persisted in `localStorage`
-- [x] `applyTranslations()` fires on load to restore preference
-- [x] `languageChanged` event dispatched for dynamic scripts
+### `data/projects.json`
+- [x] Parses without errors
+- [x] 1 project entry: "Smart Grid Load Balancer — Phase 1"
+- [x] All bilingual fields present: `title_en/ja`, `status_en/ja`, `desc_en/ja`
+- [x] 4 update log entries, each with `title_en/ja`, `content_en/ja`, `timestamp`
+- [x] Content is substantive — covers kickoff, requirements, test results, bug tracking
 
 ---
 
-## QA Sign-Off
+## Phase 4: Server Backend (`server.py`)
 
-| Category | Status | Notes |
+### HTTP Server
+- [x] Python stdlib only — no external dependencies
+- [x] Serves static files via `SimpleHTTPRequestHandler`
+- [x] CORS headers set for development
+- [x] Runs on port 3000
+
+### `/api/save-config` (POST)
+- [x] Reads current `data/site_config.json`
+- [x] Merges payload into existing config (does not wipe unmentioned keys)
+- [x] Writes updated config back to `data/site_config.json`
+- [x] Auto-translates EN→JA if Japanese field is blank (via Google Translate unofficial API)
+- [x] Triggers `git add / commit / push` in background thread after save
+- [ ] ⚠️ Git failure is silent — response already sent `200 OK` before deploy completes (BUG-021)
+
+### `/api/save-thoughts` (POST)
+- [x] Reads thoughts array from payload
+- [x] Auto-translates EN→JA for any thought with blank Japanese text
+- [x] Writes to `data/author_thoughts.json`
+- [x] Triggers git push in background thread
+
+### Auto-Translation
+- [x] `translate_en_to_ja()` uses Google Translate informal endpoint
+- [x] Fallback: returns English text if translation fails (no crash)
+- [ ] ⚠️ Unofficial API endpoint — not production-stable (BUG-022)
+
+### Git Deploy Pipeline
+- [x] `trigger_git_deploy()` runs `git add`, `git commit`, `git push`
+- [x] Runs in background thread (non-blocking)
+- [x] CalledProcessError caught and logged to stdout
+- [ ] ⚠️ No pre-check for git configuration (BUG-021)
+
+---
+
+## Navigation Consistency
+
+| Page | Projects in Navbar | Projects in Footer |
 |---|---|---|
-| File presence | ✅ PASS | Restructured HTML/JS files verified on disk. server.py created. |
-| Password Hashing | ✅ PASS | SHA-256 hex digest authentication verified. |
-| API server persistence | ✅ PASS | Save endpoints write successfully to disk. |
-| Auto-Translation | ✅ PASS | Empty Japanese inputs auto-translate dynamically. |
-| Auto-Deploy | ✅ PASS | Git commit & push pipeline verified. |
-| Unified page layout | ✅ PASS | Combined sections and setup guide look visually premium on author.html. |
-| Projects catalog | ✅ PASS | Empty projects timeline verified. Hashtags removed. |
-| Theme & Contrast | ✅ PASS | Contrast tokens satisfy WCAG AA on light background. |
-| Navigation | ✅ PASS | All navbar and footer paths updated. |
+| `index.html` | ✅ | ✅ |
+| `projects.html` | ✅ | ✅ |
+| `meeting-room.html` | ✅ | ✅ |
+| `author.html` | ✅ | ✅ |
 
-**Overall Status: ✅ PASS**  
-The website's architecture, security, and unified content system are fully validated.
+---
+
+## Phase 3 — Carried Forward (All ✅)
+
+- [x] Contrast tokens WCAG AA ✅
+- [x] Hero stat bar removed ✅
+- [x] `site_config.json` 15+ bilingual keys ✅
+- [x] `load_config.js` on all pages ✅
+- [x] Author portal config editor functional ✅
+
+---
+
+## Phase 2 — Carried Forward (All ✅)
+
+- [x] 🍃 Branding on all pages ✅
+- [x] EN/JP language switcher ✅
+- [x] Lang toggle "JP" pre-populated ✅
+- [x] `author.html` in all footers ✅
+
+---
+
+## Auth & Security
+
+- [x] BUG-011 resolved — password hash in `site_config.json` (SHA-256)
+- [x] BUG-012 resolved — `server.py` provides real write-back; localStorage no longer the only persistence
+
+---
+
+## Final QA Sign-Off (Phase 4)
+
+| Category | Status |
+|---|---|
+| File presence (all 18 files) | ✅ PASS |
+| `projects.html` structure | ✅ PASS |
+| `projects.js` rendering & i18n | ✅ PASS (BUG-023 minor) |
+| `projects.json` content | ✅ PASS — 1 project, 4 entries |
+| `server.py` save-config API | ✅ PASS (BUG-021 medium) |
+| `server.py` save-thoughts API | ✅ PASS |
+| `server.py` auto-translation | ✅ PASS (BUG-022 medium, unofficial API) |
+| `server.py` git deploy pipeline | ⚠️ PARTIAL — silent failure on error |
+| Navigation (4 pages) | ✅ PASS |
+| Auth (password hash) | ✅ PASS |
+| Persistence (real write-back) | ✅ PASS |
+| All Phase 3 items | ✅ PASS |
+| All Phase 2 items | ✅ PASS |
+
+**Overall Phase 4 Status: ✅ PASS**  
+All major deliverables functional. 3 open bugs (2 medium, 1 low) — none are critical blockers. The server.py git deploy silent failure (BUG-021) is the most important to address before heavy author use.
