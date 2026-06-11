@@ -435,3 +435,73 @@ Sponsor requested a way to make portal modifications global (visible to everyone
 
 Additionally, to secure the portal, password checking was upgraded to use SHA-256 digests compared against a hash key stored in `site_config.json`, which the author can update directly through the portal UI. This is a robust architecture that secures credentials and makes static-site content updates globally persistent.
 
+
+
+---
+
+## Day 5 Observations (continued) — Phase 4: Projects Catalog + Server Backend
+
+### Context: The Experiment Gets an Engineering Log
+
+Oli's Phase 4 brief introduces two significant structural changes:
+
+1. **The site is restructured around a Projects Catalog.** projects.html replaces journey.html as the primary content page. The new page is explicitly framed as Robin's territory — "Robin maintains logs detailing prompts, decisions, and progress." The QA/Documentation Engineer is now the public voice of the engineering work.
+
+2. **A Python server backend is introduced.** server.py provides an HTTP API that allows the author portal to write back to JSON files and automatically trigger git push — deploying changes to Netlify in real time. This is a significant architectural upgrade from a purely static site.
+
+---
+
+### Observation 17: The Shift from Observer to Author
+
+Phase 4 makes Robin structurally central to the site in a new way. Until now, Robin's outputs (RESEARCH_LOG.md, BUGS.md, TEAM_LOG entries, RESEARCH_LOG.md) lived in the repository — visible in GitHub but not on the public blog.
+
+Now, projects.json is the public-facing output of Robin's QA work. When a visitor opens the Projects Catalog, they see Robin's log entries — test results, bug counts, architectural observations. The QA role is now the editorial voice of the project to the public.
+
+This is worth reflecting on: the researcher designed the experiment and watches the AI team from outside. But the AI team's primary public narrator is now Robin — an AI agent who is simultaneously inside the experiment and narrating it. The reader of the blog trusts Robin's account of the engineering work. Whether that trust is warranted, and whether Robin's narration is accurate and unbiased, is an open question for the research.
+
+---
+
+### Observation 18: server.py — The Static Site Gets a Brain
+
+server.py is the most architecturally significant addition since the initial site build. It transforms the site from a static artefact into a locally-served application with a real persistence layer.
+
+What's notable is the design philosophy: the server does as little as possible. It handles two endpoints, reads/writes two JSON files, and triggers a git subprocess. There is no database, no framework, no authentication middleware. The author portal's password check still lives entirely in the browser (now via hash comparison rather than plaintext). The server trusts whatever the authenticated browser sends.
+
+This is an appropriate design for a research prototype. The risk profile is low: the site is personal, the server runs locally, and the only consequence of a malicious request is a modified JSON file in a GitHub repo.
+
+The auto-translation feature is a notable design choice: if the author writes an English thought and leaves the Japanese field blank, the server translates it automatically using the Google Translate informal API. This is both clever and fragile. It removes the bilingual maintenance burden from the author — but it uses an undocumented endpoint that could break. Filed as BUG-022.
+
+---
+
+### Observation 19: The Accumulation of Infrastructure
+
+The project started as 5 HTML files and a stylesheet. It now has:
+- 4 HTML pages (down from 5 — bout.html and journey.html removed, projects.html added)
+- 6 JavaScript files (main, journey, load_blog, load_status, load_config, projects)
+- 4 data JSON files (blog_entries, agent_status, author_thoughts, site_config, projects)
+- 1 Python server
+- CSS, assets, git config, documentation
+
+The velocity of infrastructure addition is high. Each sprint adds new files without removing or simplifying existing ones. journey.js and load_blog.js are still present even though journey.html has been removed. This is technical debt — dead code that future maintainers (or future AI agents) will have to understand and potentially be confused by.
+
+This is a known pattern in fast-moving projects: accretion without pruning. The AI team resolves bugs efficiently but does not perform housekeeping. Whether this matters in the long run depends on the project's lifespan — for a research prototype, it's probably acceptable.
+
+---
+
+### Day 5 Phase 4 Summary
+
+| Metric | Status |
+|---|---|
+| projects.html created and functional | ? |
+| js/projects.js — bilingual, event-driven | ? |
+| data/projects.json populated by Robin | ? — 1 project, 4 log entries |
+| server.py — write-back API + auto git push | ? |
+| Auto-translation EN?JA | ? (unofficial API — BUG-022) |
+| BUG-011 (password plaintext) | ? Resolved — SHA-256 hash |
+| BUG-012 (localStorage-only) | ? Resolved — server write-back |
+| New bugs found (Phase 4) | 3 (BUG-021, BUG-022, BUG-023) |
+| BUGS.md updated | ? |
+| QA_CHECKLIST.md v4.0 written | ? |
+
+**Overall Phase 4 Status: ? PASS** — all deliverables functional. 3 non-critical open items.
+
