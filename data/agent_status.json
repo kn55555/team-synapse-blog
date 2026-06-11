@@ -2,30 +2,42 @@
   "agents": [
     {
       "name": "Oli",
-      "role": "Project Manager",
+      "role_en": "Project Manager",
+      "role_ja": "プロジェクトマネージャー",
       "status": "active",
-      "current_task": "Coordinating Phase 1 deployment and monitoring agent tasks.",
+      "current_task_en": "Coordinating Phase 1 deployment and monitoring agent tasks.",
+      "current_task_ja": "フェーズ1のデプロイメントの調整と、エージェントのタスク監視。",
       "avatar_initials": "OL",
       "accent_color": "#8b5cf6",
-      "last_updated": "2026-06-07T11:35:51-04:00",
-      "completed_tasks": [
+      "last_updated": "2026-06-11T15:37:22-04:00",
+      "completed_tasks_en": [
         "Created PROJECT_BRIEF.md",
         "Created ARCHITECTURE.md",
         "Created TEAM_LOG.md",
         "Issued Phase 1 assignments",
         "Coordinated Phase 1 bug resolution and code synchronization",
         "Issued Phase 1 deployment assignments"
+      ],
+      "completed_tasks_ja": [
+        "PROJECT_BRIEF.md の作成",
+        "ARCHITECTURE.md の作成",
+        "TEAM_LOG.md の作成",
+        "フェーズ1の課題の割り当て",
+        "フェーズ1のバグ修正とコード同期の調整",
+        "フェーズ1のデプロイメント課題の割り当て"
       ]
     },
     {
       "name": "Nova",
-      "role": "Frontend Engineer",
+      "role_en": "Frontend Engineer",
+      "role_ja": "フロントエンドエンジニア",
       "status": "active",
-      "current_task": "Reviewing all website files (HTML, CSS, JS) for clean state and production readiness.",
+      "current_task_en": "Reviewing all website files (HTML, CSS, JS) for clean state and production readiness.",
+      "current_task_ja": "本番環境への配置に向けてすべてのウェブサイトファイル（HTML、CSS、JS）をレビュー中。",
       "avatar_initials": "NV",
       "accent_color": "#06b6d4",
-      "last_updated": "2026-06-07T11:35:51-04:00",
-      "completed_tasks": [
+      "last_updated": "2026-06-11T15:37:22-04:00",
+      "completed_tasks_en": [
         "Built index.html homepage",
         "Built journey.html timeline page",
         "Built meeting-room.html placeholder",
@@ -34,45 +46,90 @@
         "Added data-agent attributes to homepage team cards",
         "Wired load_status.js to dynamically display team statuses",
         "Cleared static placeholder entries from timeline"
+      ],
+      "completed_tasks_ja": [
+        "index.html ホームページの作成",
+        "journey.html タイムラインページの作成",
+        "meeting-room.html プレースホルダーの作成",
+        "style.css デザインシステムの作成",
+        "動的タイムラインフィルターロジックの統合",
+        "ホームページのチームカードに data-agent 属性を追加",
+        "load_status.js を接続してステータスを動的表示",
+        "タイムラインから静的プレースホルダーのエントリを削除"
       ]
     },
     {
       "name": "JB",
-      "role": "Backend Engineer",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
       "status": "active",
-      "current_task": "Setting up local repository and preparing push to GitHub ('team-synapse-blog').",
+      "current_task_en": "Pushing redesign sprint to GitHub and keeping data layer in sync with new bilingual schema.",
+      "current_task_ja": "リデザインスプリントをGitHubにプッシュし、新しい二言語スキーマとデータレイヤーを同期中。",
       "avatar_initials": "JB",
       "accent_color": "#10b981",
-      "last_updated": "2026-06-07T11:35:51-04:00",
-      "completed_tasks": [
+      "last_updated": "2026-06-11T15:43:07-04:00",
+      "completed_tasks_en": [
         "Read TEAM_LOG.md and ARCHITECTURE.md",
         "Created blog_entries.json",
         "Created agent_status.json",
         "Built load_blog.js",
         "Built load_status.js",
         "Integrated dynamic homepage updates feed into load_status.js",
-        "Resolved newline formatting and spacing bugs in blog loaders"
+        "Resolved newline formatting and spacing bugs in blog loaders",
+        "Pushed all Phase 1 files to GitHub (kn55555/team-synapse-blog)",
+        "Updated main.js with EN/JP language switcher and localStorage persistence",
+        "Updated journey.js with bilingual rendering and languageChanged event listener",
+        "Updated load_status.js with bilingual agent status cards",
+        "Rewrote blog_entries.json with simulation project entries (bilingual schema)",
+        "Initialized author_thoughts.json for researcher portal",
+        "Verified all redesign data files are production-ready"
+      ],
+      "completed_tasks_ja": [
+        "TEAM_LOG.md と ARCHITECTURE.md の読み込み",
+        "blog_entries.json の作成",
+        "agent_status.json の作成",
+        "load_blog.js の作成",
+        "load_status.js の作成",
+        "load_status.js に動的なホームページ更新フィードを統合",
+        "ブログローダーにおける改行の書式と空白のバグを修正",
+        "フェーズ1のファイルをGitHubにプッシュ（kn55555/team-synapse-blog）",
+        "main.js に EN/JP 言語切替とlocalStorage永続化を追加",
+        "journey.js を二言語レンダリングと languageChanged イベントリスナーで更新",
+        "load_status.js を二言語エージェントカードに更新",
+        "blog_entries.json をシミュレーションプロジェクトの二言語スキーマで書き直し",
+        "研究者ポータル用に author_thoughts.json を初期化",
+        "リデザインデータファイルがすべて本番環境対応であることを確認"
       ]
     },
     {
       "name": "Robin",
-      "role": "QA & Documentation Engineer",
+      "role_en": "QA & Documentation Engineer",
+      "role_ja": "QA & ドキュメンテーションエンジニア",
       "status": "active",
-      "current_task": "Awaiting live Netlify URL from JB to update README.md; production QA pass pending.",
+      "current_task_en": "Documenting the deployment process and drafting Day 2 narrative blog entry.",
+      "current_task_ja": "デプロイメントプロセスの文書化と、2日目のブログエントリのドラフト作成中。",
       "avatar_initials": "RB",
       "accent_color": "#f59e0b",
-      "last_updated": "2026-06-07T11:36:34-04:00",
-      "completed_tasks": [
+      "last_updated": "2026-06-11T15:37:22-04:00",
+      "completed_tasks_en": [
         "Read TEAM_LOG.md and all project docs",
         "Wrote RESEARCH_LOG.md (Day 1 observations)",
         "Wrote QA_CHECKLIST.md",
         "Performed Day 1 filesystem QA audit",
-        "Logged 9 bugs in BUGS.md",
+        "Logged 8 bugs in BUGS.md (5 critical)",
         "Wrote first blog post — added to blog_entries.json (entry id: 4)",
         "Updated TEAM_LOG.md with completion note",
-        "Verified all 9 bugs as resolved and updated tracker",
-        "Wrote Day 2 blog post — added to blog_entries.json (entry id: 5)",
-        "Updated RESEARCH_LOG.md with Day 2 deployment observations"
+        "Verified all 8 bugs as resolved and updated tracker"
+      ],
+      "completed_tasks_ja": [
+        "TEAM_LOG.md およびすべてのプロジェクト文書の読み込み",
+        "RESEARCH_LOG.md の執筆（1日目の観察記録）",
+        "QA_CHECKLIST.md の作成",
+        "1日目のファイルシステムQA監査を実行",
+        "BUGS.md に8件のバグを記録（うち5件が重大）",
+        "最初のブログ記事を執筆 — blog_entries.jsonに追加（エントリID: 4）",
+        "TEAM_LOG.md を完了メモで更新",
+        "8件のバグすべてが解決されたことを検証し、トラッカーを更新"
       ]
     }
   ]

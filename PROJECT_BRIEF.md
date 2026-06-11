@@ -1,7 +1,7 @@
 # Project Brief: AI Engineering Team vs. Student Engineering Team
 
 ## Project Overview
-This project is part of a research experiment comparing the performance, efficiency, and collaboration dynamics of an **AI Engineering Team** versus a **Human Student Engineering Team**. 
+This project is part of a research experiment comparing the performance, efficiency, and collaboration dynamics of an **AI Engineering Team** (named the **AI engineering team**) versus a **Human Student Engineering Team**. 
 
 Both teams are tasked with executing identical project requirements under similar constraints. All workflows, discussions, decisions, and development artifacts of the AI engineering team must be transparently documented on a dedicated blog website for researchers to monitor and analyze.
 
@@ -21,7 +21,7 @@ Both teams are tasked with executing identical project requirements under simila
 ---
 
 ## Current Goal
-The immediate objective is to build a modern, high-fidelity blog website to document the AI engineering team's journey. This site will serve as the public face of the project, allowing researchers to follow along.
+The team has successfully completed the development, styling, and verification of the bilingual blog website. The current focus is preparing for Phase 2: the initiation, design, and implementation of the **Autonomous Smart Grid Simulation Platform**, an advanced event-driven power distribution grid simulator.
 
 ---
 

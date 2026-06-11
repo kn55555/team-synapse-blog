@@ -8,32 +8,32 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
-  /* Palette */
-  --clr-bg-0:          hsl(230, 22%, 6%);
-  --clr-bg-1:          hsl(230, 18%, 9%);
-  --clr-bg-2:          hsl(230, 16%, 12%);
-  --clr-bg-3:          hsl(230, 14%, 16%);
-  --clr-surface:       hsl(230, 16%, 13%);
-  --clr-border:        hsl(230, 20%, 20%);
+  /* Palette - Soft Light Pastel Green, Orange, Brown and Beige */
+  --clr-bg-0:          hsl(35, 35%, 94%);       /* Light beige main background */
+  --clr-bg-1:          hsl(35, 25%, 90%);       /* Slightly darker beige */
+  --clr-bg-2:          hsl(35, 20%, 86%);       /* Medium beige */
+  --clr-bg-3:          hsl(35, 15%, 82%);       /* Darker beige border/shade */
+  --clr-surface:       hsl(35, 45%, 98%);       /* Soft light cream beige surface card */
+  --clr-border:        hsl(35, 20%, 82%);       /* Warm brown-beige border */
 
-  --clr-cyan:          hsl(186, 100%, 58%);
-  --clr-cyan-dim:      hsl(186, 80%, 40%);
-  --clr-cyan-glow:     hsl(186, 100%, 58%, 0.18);
-  --clr-purple:        hsl(267, 90%, 68%);
-  --clr-purple-dim:    hsl(267, 70%, 50%);
-  --clr-purple-glow:   hsl(267, 90%, 68%, 0.18);
-  --clr-pink:          hsl(320, 80%, 65%);
+  --clr-cyan:          hsl(135, 30%, 42%);      /* Sage green primary accent */
+  --clr-cyan-dim:      hsl(135, 25%, 35%);
+  --clr-cyan-glow:     hsla(135, 30%, 42%, 0.12);
+  --clr-purple:        hsl(22, 75%, 62%);       /* Peach-orange secondary accent */
+  --clr-purple-dim:    hsl(22, 65%, 52%);
+  --clr-purple-glow:   hsla(22, 75%, 62%, 0.12);
+  --clr-pink:          hsl(22, 70%, 55%);
 
-  --clr-text-primary:  hsl(220, 30%, 94%);
-  --clr-text-secondary:hsl(220, 15%, 65%);
-  --clr-text-muted:    hsl(220, 10%, 42%);
+  --clr-text-primary:  hsl(35, 25%, 15%);       /* Deep charcoal-brown for readability */
+  --clr-text-secondary:hsl(35, 15%, 38%);       /* Warm charcoal-gray for descriptions */
+  --clr-text-muted:    hsl(35, 10%, 52%);       /* Muted brown-gray for labels */
 
-  /* Gradients */
-  --grad-hero:         linear-gradient(135deg, hsl(186,100%,58%,0.08) 0%, hsl(267,90%,68%,0.10) 100%);
-  --grad-card:         linear-gradient(145deg, hsl(230,18%,13%) 0%, hsl(230,16%,10%) 100%);
-  --grad-cyan:         linear-gradient(135deg, var(--clr-cyan), hsl(186,100%,78%));
-  --grad-purple:       linear-gradient(135deg, var(--clr-purple), var(--clr-pink));
-  --grad-text:         linear-gradient(90deg, var(--clr-cyan), var(--clr-purple));
+  /* Gradients Overrides - Mapping to solid colors as requested */
+  --grad-hero:         var(--clr-bg-1);
+  --grad-card:         var(--clr-surface);
+  --grad-cyan:         var(--clr-cyan);
+  --grad-purple:       var(--clr-purple);
+  --grad-text:         var(--clr-text-primary);
 
   /* Typography */
   --font-sans:         'Outfit', system-ui, sans-serif;
@@ -60,12 +60,12 @@
   --radius-xl:   32px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm:   0 2px 8px  hsl(230,30%,3%,0.4);
-  --shadow-md:   0 8px 24px hsl(230,30%,3%,0.5);
-  --shadow-lg:   0 16px 48px hsl(230,30%,3%,0.6);
-  --shadow-cyan: 0 0 24px hsl(186,100%,58%,0.25), 0 0 48px hsl(186,100%,58%,0.10);
-  --shadow-purple:0 0 24px hsl(267,90%,68%,0.25), 0 0 48px hsl(267,90%,68%,0.10);
+  /* Shadows - Tweak for light theme readability */
+  --shadow-sm:   0 2px 8px  rgba(35, 15, 5, 0.08);
+  --shadow-md:   0 8px 24px rgba(35, 15, 5, 0.10);
+  --shadow-lg:   0 16px 48px rgba(35, 15, 5, 0.12);
+  --shadow-cyan: 0 4px 12px rgba(135, 30, 42, 0.15);
+  --shadow-purple:0 4px 12px rgba(22, 75, 62, 0.15);
 
   /* Transitions */
   --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
@@ -116,10 +116,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .gradient-text {
-  background: var(--grad-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--clr-cyan);
+  /* Solid accent color for light theme — gradient approach invisible with solid --grad-text token */
 }
 
 .mono { font-family: var(--font-mono); }
@@ -142,8 +140,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(hsl(220,20%,50%,0.015) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(220,20%,50%,0.015) 1px, transparent 1px);
+    linear-gradient(hsl(35,20%,40%,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(35,20%,40%,0.06) 1px, transparent 1px);
   background-size: 40px 40px;
   z-index: 0;
 }
@@ -158,9 +156,9 @@ body::before {
   z-index: 100;
   display: flex;
   align-items: center;
-  background: hsl(230,22%,6%,0.75);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  background: hsl(35, 30%, 92%, 0.82);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom: 1px solid var(--clr-border);
   transition: background var(--dur-base) var(--ease-smooth);
 }

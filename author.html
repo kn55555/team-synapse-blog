@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Author — Research notes and thoughts from the creator of the AI engineering team simulation." />
+  <title data-en="About Author — AI engineering team" data-ja="著者について — AI engineering team">About Author — AI engineering team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .author-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-8);
+      margin-bottom: var(--sp-8);
+    }
+    .author-profile {
+      display: flex;
+      gap: var(--sp-6);
+      align-items: center;
+      margin-bottom: var(--sp-6);
+      flex-wrap: wrap;
+    }
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      background: var(--clr-bg-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      border: 2px solid var(--clr-border);
+    }
+    .author-info h2 {
+      font-size: 1.5rem;
+      color: var(--clr-text-primary);
+    }
+    .author-info p {
+      color: var(--clr-text-muted);
+      font-size: 0.9rem;
+    }
+    .thoughts-section h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--sp-3);
+      color: var(--clr-text-primary);
+      border-bottom: 2px solid var(--clr-border);
+      padding-bottom: var(--sp-1);
+    }
+    .thought-item {
+      padding: var(--sp-4);
+      background: var(--clr-bg-0);
+      border-left: 4px solid var(--clr-cyan);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--sp-4);
+    }
+    .thought-meta {
+      font-size: 0.75rem;
+      color: var(--clr-text-muted);
+      margin-bottom: var(--sp-2);
+      font-family: var(--font-mono);
+    }
+    .login-box {
+      margin-top: var(--sp-8);
+      padding: var(--sp-6);
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      max-width: 400px;
+      margin-inline: auto;
+    }
+    .login-box h4 {
+      margin-bottom: var(--sp-4);
+      color: var(--clr-text-primary);
+    }
+    .form-group {
+      margin-bottom: var(--sp-4);
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: var(--sp-2);
+      font-size: 0.85rem;
+      color: var(--clr-text-secondary);
+    }
+    .form-control {
+      width: 100%;
+      padding: var(--sp-2) var(--sp-3);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--clr-border);
+      background: var(--clr-bg-0);
+      color: var(--clr-text-primary);
+      font-family: inherit;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--clr-cyan);
+    }
+    .editor-section {
+      margin-top: var(--sp-8);
+      padding: var(--sp-6);
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+    }
+    .editor-section h4 {
+      margin-bottom: var(--sp-4);
+      color: var(--clr-text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand" aria-label="AI engineering team Home">
+        <div class="navbar__logo-icon" aria-hidden="true">🍃</div>
+        <span class="navbar__name">AI engineering team</span>
+      </a>
+
+      <button class="navbar__hamburger" id="nav-hamburger"
+              aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
+        <a href="index.html"        class="navbar__link" id="nav-home" data-en="Home" data-ja="ホーム">Home</a>
+        <a href="journey.html"      class="navbar__link" id="nav-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
+        <a href="meeting-room.html" class="navbar__link" id="nav-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
+        <a href="about.html"        class="navbar__link" id="nav-about" data-en="About" data-ja="概要">About</a>
+        <a href="author.html"       class="navbar__link" id="nav-author" data-en="Author" data-ja="著者について">Author</a>
+        <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;"></button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- ══════════════════════ PAGE HERO ═══════════════════ -->
+    <section class="page-hero" aria-labelledby="author-heading">
+      <div class="container">
+        <span class="section-label anim-fade-up anim-fade-up--d1" data-en="Researcher Portal" data-ja="研究者ポータル">Researcher Portal</span>
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="author-heading" data-en="About the Author" data-ja="著者について">
+          About the Author
+        </h1>
+        <p class="section-desc anim-fade-up anim-fade-up--d3" data-en="Personal logs, project rationales, and field notes written directly by the creator of the simulation." data-ja="シミュレーションの作成者によって直接書かれた個人のログ、プロジェクトの理論的根拠、およびフィールドノート。">
+          Personal logs, project rationales, and field notes written directly by the creator of the simulation.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ PORTAL CONTENT ═══════════════ -->
+    <section class="section" style="padding-top: var(--sp-4);" aria-label="Author profile and thoughts">
+      <div class="container" style="max-width:800px;">
+
+        <!-- Profile Card -->
+        <div class="author-card">
+          <div class="author-profile">
+            <div class="author-avatar" aria-hidden="true">👤</div>
+            <div class="author-info">
+              <h2 data-en="Lead Researcher &amp; Author" data-ja="主任研究員 &amp; 著者">Lead Researcher &amp; Author</h2>
+              <p data-en="Creator of the AI Agent Engineering Simulation Experiment" data-ja="AIエージェントエンジニアリングシミュレーション実験の作成者">Creator of the AI Agent Engineering Simulation Experiment</p>
+            </div>
+          </div>
+          <p style="color:var(--clr-text-secondary); line-height: 1.85;" data-en="Welcome to my notebook. Here, I publish my observations regarding the workflow of the AI engineering team, analyzing key areas where agentic intelligence matches or deviates from traditional human developer teams." data-ja="私のノートブックへようこそ。ここでは、AIエンジニアリングチームのワークフローに関する観察結果を公開し、自律型インテリジェンスが従来の開発者チームと同等である部分や、逸脱する部分を分析しています。">
+            Welcome to my notebook. Here, I publish my observations regarding the workflow of the AI engineering team, analyzing key areas where agentic intelligence matches or deviates from traditional human developer teams.
+          </p>
+        </div>
+
+        <!-- Thoughts Feed -->
+        <div class="author-card thoughts-section">
+          <h3 data-en="Author's Field Notes" data-ja="著者のフィールドノート">Author's Field Notes</h3>
+          <div id="thoughts-feed">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Login Panel -->
+        <div class="login-box" id="login-container">
+          <h4 data-en="Author Log In" data-ja="著者ログイン">Author Log In</h4>
+          <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);" data-en="Log in to write and update field notes. Robin will review edits." data-ja="フィールドノートを執筆および更新するためにログインします。Robinが編集内容を確認します。"></p>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="password" data-en="Enter Password" data-ja="パスワードを入力">Enter Password</label>
+              <input type="password" id="password" class="form-control" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="btn btn--primary" style="width:100%;" data-en="Log In" data-ja="ログイン">Log In</button>
+            <p id="login-error" style="color:#ef4444;font-size:0.8rem;margin-top:var(--sp-2);display:none;" data-en="Incorrect password." data-ja="パスワードが正しくありません。"></p>
+          </form>
+        </div>
+
+        <!-- Editor Console (Initially Hidden) -->
+        <div class="editor-section" id="editor-container" style="display: none;">
+          <h4 data-en="Edit Author Field Notes" data-ja="フィールドノートの編集">Edit Author Field Notes</h4>
+          <form id="edit-form">
+            <div class="form-group">
+              <label for="edit-text-en" data-en="Thoughts (English)" data-ja="ノート（英語）">Thoughts (English)</label>
+              <textarea id="edit-text-en" class="form-control" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="edit-text-ja" data-en="Thoughts (Japanese)" data-ja="ノート（日本語）">Thoughts (Japanese)</label>
+              <textarea id="edit-text-ja" class="form-control" rows="5" required></textarea>
+            </div>
+            <div style="display:flex;gap:var(--sp-3);">
+              <button type="submit" class="btn btn--primary" data-en="Save Changes" data-ja="変更を保存">Save Changes</button>
+              <button type="button" id="logout-btn" class="btn btn--secondary" data-en="Log Out" data-ja="ログアウト">Log Out</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span>🍃</span>
+          <span class="gradient-text">AI engineering team</span>
+        </div>
+        <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
+        <nav class="footer__links" aria-label="Footer navigation">
+          <a href="index.html"        id="footer-home" data-en="Home" data-ja="ホーム">Home</a>
+          <a href="journey.html"      id="footer-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
+          <a href="about.html"        id="footer-about" data-en="About" data-ja="概要">About</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+  <script>
+    'use strict';
+
+    const DATA_URL = 'data/author_thoughts.json';
+    const AUTH_PASS = '12131415';
+
+    // UI Elements
+    const thoughtsFeed = document.getElementById('thoughts-feed');
+    const loginContainer = document.getElementById('login-container');
+    const editorContainer = document.getElementById('editor-container');
+    const loginForm = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password');
+    const loginError = document.getElementById('login-error');
+    const editForm = document.getElementById('edit-form');
+    const editTextEn = document.getElementById('edit-text-en');
+    const editTextJa = document.getElementById('edit-text-ja');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    let defaultThoughts = [];
+
+    // Load thoughts
+    async function loadThoughts() {
+      const lang = localStorage.getItem('lang') || 'en';
+      
+      // Check local storage draft first
+      const stored = localStorage.getItem('author_thoughts');
+      if (stored) {
+        try {
+          const list = JSON.parse(stored);
+          renderThoughts(list, lang);
+          return;
+        } catch (_) {}
+      }
+
+      // Fallback to fetching file
+      try {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        defaultThoughts = data.thoughts || [];
+        renderThoughts(defaultThoughts, lang);
+      } catch (_) {
+        thoughtsFeed.innerHTML = `<p style="color:var(--clr-text-muted);">${lang === 'en' ? 'Could not load thoughts.' : 'ノートを読み込めませんでした。'}</p>`;
+      }
+    }
+
+    function renderThoughts(list, lang) {
+      if (!list.length) {
+        thoughtsFeed.innerHTML = `<p style="color:var(--clr-text-muted);">${lang === 'en' ? 'No notes published yet.' : '公開されたノートはありません。'}</p>`;
+        return;
+      }
+
+      thoughtsFeed.innerHTML = list.map(item => {
+        const textVal = item['text_' + lang] || item.text_en || '';
+        const d = new Date(item.timestamp);
+        const timeDisplay = d.toLocaleString(lang === 'en' ? 'en-US' : 'ja-JP', {
+          year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        return `
+          <div class="thought-item">
+            <div class="thought-meta">📅 ${timeDisplay}</div>
+            <p style="color:var(--clr-text-secondary); line-height: 1.85;">
+              ${textVal.replace(/\n/g, '<br />')}
+            </p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Check login state on load
+    function checkLoginState() {
+      const isLoggedIn = sessionStorage.getItem('author_logged');
+      if (isLoggedIn === 'true') {
+        loginContainer.style.display = 'none';
+        editorContainer.style.display = 'block';
+        populateEditor();
+      } else {
+        loginContainer.style.display = 'block';
+        editorContainer.style.display = 'none';
+      }
+    }
+
+    function populateEditor() {
+      const stored = localStorage.getItem('author_thoughts');
+      let currentItem = { text_en: '', text_ja: '' };
+      if (stored) {
+        try {
+          const list = JSON.parse(stored);
+          if (list.length) currentItem = list[0];
+        } catch (_) {}
+      } else if (defaultThoughts.length) {
+        currentItem = defaultThoughts[0];
+      }
+      editTextEn.value = currentItem.text_en || '';
+      editTextJa.value = currentItem.text_ja || '';
+    }
+
+    // Handlers
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (passwordInput.value === AUTH_PASS) {
+        sessionStorage.setItem('author_logged', 'true');
+        loginError.style.display = 'none';
+        passwordInput.value = '';
+        checkLoginState();
+      } else {
+        loginError.style.display = 'block';
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('author_logged');
+      checkLoginState();
+    });
+
+    editForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const updated = [
+        {
+          id: 1,
+          timestamp: new Date().toISOString(),
+          text_en: editTextEn.value,
+          text_ja: editTextJa.value
+        }
+      ];
+      localStorage.setItem('author_thoughts', JSON.stringify(updated));
+      const lang = localStorage.getItem('lang') || 'en';
+      renderThoughts(updated, lang);
+      
+      // Smooth scroll back to thoughts
+      document.querySelector('.thoughts-section').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Re-render thoughts on language change
+    window.addEventListener('languageChanged', () => {
+      loadThoughts();
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadThoughts();
+      checkLoginState();
+    });
+  </script>
+</body>
+</html>

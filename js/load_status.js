@@ -4,22 +4,8 @@
  * Fetches agent_status.json and updates the team member cards
  * on the homepage (index.html) with each person's live status,
  * current task, and completed task count.
- *
- * NOVA — HOW TO CONNECT:
- *   1. Give each team member card a data attribute matching the
- *      agent's name (case-sensitive, must match agent_status.json):
- *
- *        <div class="team-card" data-agent="Oli">
- *          <!-- existing card content -->
- *          <!-- The script will inject a .agent-status-block here -->
- *        </div>
- *
- *   2. Drop this script tag at the bottom of <body> in index.html:
- *        <script src="js/load_status.js"></script>
- *
- *   The script will find every [data-agent] card and inject a
- *   status block showing the current task and a live status dot.
- *   No other changes needed on your side.
+ * Also dynamically loads the latest updates feed.
+ * Supports bilingual English/Japanese rendering.
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -32,25 +18,44 @@
    * Maps status strings to display properties.
    */
   const STATUS_CONFIG = {
-    active: { label: "Active", color: "#10b981", dot: "🟢" },
-    idle: { label: "Idle", color: "#f59e0b", dot: "🟡" },
-    blocked: { label: "Blocked", color: "#ef4444", dot: "🔴" },
-    done: { label: "Done", color: "#8b5cf6", dot: "🟣" },
+    en: {
+      active: { label: "Active", color: "var(--clr-cyan)", dot: "🟢" },
+      idle: { label: "Idle", color: "var(--clr-purple)", dot: "🟡" },
+      blocked: { label: "Blocked", color: "#ef4444", dot: "🔴" },
+      done: { label: "Done", color: "#8b5cf6", dot: "🟣" },
+    },
+    ja: {
+      active: { label: "活動中", color: "var(--clr-cyan)", dot: "🟢" },
+      idle: { label: "待機中", color: "var(--clr-purple)", dot: "🟡" },
+      blocked: { label: "ブロック", color: "#ef4444", dot: "🔴" },
+      done: { label: "完了", color: "#8b5cf6", dot: "🟣" },
+    }
   };
 
   /**
    * Builds the HTML block to inject into a team card.
    */
-  function buildStatusBlock(agent) {
-    const statusCfg = STATUS_CONFIG[agent.status] || { label: agent.status, color: "#94a3b8", dot: "⚪" };
-    const completedCount = (agent.completed_tasks || []).length;
+  function buildStatusBlock(agent, lang) {
+    const cfg = STATUS_CONFIG[lang] || STATUS_CONFIG.en;
+    const statusCfg = cfg[agent.status] || { label: agent.status, color: "#94a3b8", dot: "⚪" };
+
+    const completedTasks = agent['completed_tasks_' + lang] || agent.completed_tasks || [];
+    const completedCount = completedTasks.length;
+    const currentTask = agent['current_task_' + lang] || agent.current_task || '';
 
     // Completed tasks list (collapsed to save space; show up to 3)
-    const taskListHtml = (agent.completed_tasks || [])
+    const taskListHtml = completedTasks
       .slice(0, 3)
       .map((t) => `<li class="completed-task-item">✓ ${t}</li>`)
       .join("");
-    const moreCount = completedCount > 3 ? `<li class="task-more">+${completedCount - 3} more</li>` : "";
+
+    const moreLabel = lang === 'en' ? 'more' : '件以上';
+    const moreCount = completedCount > 3 ? `<li class="task-more">+${completedCount - 3} ${moreLabel}</li>` : "";
+
+    const currentlyLabel = lang === 'en' ? 'Currently:' : '現在:';
+    const completedLabel = lang === 'en' 
+      ? `${completedCount} task${completedCount !== 1 ? "s" : ""} completed`
+      : `${completedCount} 件のタスク完了`;
 
     return `
       <div class="agent-status-block" data-status="${agent.status}">
@@ -60,13 +65,13 @@
           <span class="status-label" style="color:${statusCfg.color};">${statusCfg.label}</span>
         </div>
         <div class="current-task">
-          <span class="current-task-label">Currently:</span>
-          <span class="current-task-text">${agent.current_task}</span>
+          <span class="current-task-label">${currentlyLabel}</span>
+          <span class="current-task-text">${currentTask}</span>
         </div>
         ${
           completedCount > 0
             ? `<details class="completed-tasks-details">
-                <summary class="completed-tasks-summary">${completedCount} task${completedCount !== 1 ? "s" : ""} completed</summary>
+                <summary class="completed-tasks-summary">${completedLabel}</summary>
                 <ul class="completed-tasks-list">
                   ${taskListHtml}
                   ${moreCount}
@@ -81,13 +86,12 @@
    * Injects status data into cards on the page.
    * Finds elements via [data-agent="Name"] attribute.
    */
-  function injectAgentStatuses(agents) {
+  function injectAgentStatuses(agents, lang) {
     let injected = 0;
 
     agents.forEach((agent) => {
       const card = document.querySelector(`[data-agent="${agent.name}"]`);
       if (!card) {
-        console.warn(`[load_status.js] No card found for agent "${agent.name}". Add data-agent="${agent.name}" to the card element.`);
         return;
       }
 
@@ -95,37 +99,43 @@
       const existing = card.querySelector(".agent-status-block");
       if (existing) existing.remove();
 
+      // Dynamically update card role language
+      const roleSpan = card.querySelector('.team-card__role');
+      if (roleSpan) {
+        roleSpan.innerHTML = agent['role_' + lang] || agent.role_en || agent.role;
+      }
+
       // Apply accent border colour from JSON
       if (agent.accent_color) {
         card.style.setProperty("--agent-accent", agent.accent_color);
         card.style.borderColor = `${agent.accent_color}50`;
       }
 
-      card.insertAdjacentHTML("beforeend", buildStatusBlock(agent));
+      card.insertAdjacentHTML("beforeend", buildStatusBlock(agent, lang));
       injected++;
     });
-
-    if (injected > 0) {
-      console.log(`[load_status.js] ✓ Updated ${injected} agent card(s).`);
-    }
   }
 
   /**
    * Optional: also populate a compact status bar if present.
    * Looks for #team-status-bar and renders a row of agent chips.
    */
-  function populateStatusBar(agents) {
+  function populateStatusBar(agents, lang) {
     const bar = document.getElementById("team-status-bar");
     if (!bar) return;
 
+    const cfgMap = STATUS_CONFIG[lang] || STATUS_CONFIG.en;
+
     bar.innerHTML = agents
       .map((agent) => {
-        const cfg = STATUS_CONFIG[agent.status] || { color: "#94a3b8" };
+        const cfg = cfgMap[agent.status] || { color: "#94a3b8" };
+        const currentTask = agent['current_task_' + lang] || agent.current_task || '';
+        const role = agent['role_' + lang] || agent.role_en || agent.role;
         return `
-        <div class="status-bar-chip" title="${agent.current_task}">
+        <div class="status-bar-chip" title="${currentTask}">
           <span class="status-bar-dot" style="background:${cfg.color};"></span>
           <span class="status-bar-name">${agent.name}</span>
-          <span class="status-bar-role">${agent.role}</span>
+          <span class="status-bar-role">${role}</span>
         </div>`;
       })
       .join("");
@@ -147,6 +157,7 @@
    * Main entry point — fetches JSON and updates the page.
    */
   async function loadStatus() {
+    const lang = localStorage.getItem('lang') || 'en';
     let data;
     try {
       const response = await fetch(DATA_PATH);
@@ -154,7 +165,7 @@
       data = await response.json();
     } catch (err) {
       console.error("[load_status.js] Failed to load agent_status.json:", err);
-      renderError("Could not load agent status.");
+      renderError(lang === 'en' ? "Could not load agent status." : "ステータスを読み込めませんでした。");
       return;
     }
 
@@ -164,24 +175,24 @@
       return;
     }
 
-    injectAgentStatuses(agents);
-    populateStatusBar(agents);
-    loadLatestUpdates();
+    injectAgentStatuses(agents, lang);
+    populateStatusBar(agents, lang);
+    loadLatestUpdates(lang);
   }
 
   /**
    * Fetches blog_entries.json and renders the latest 3 updates in #updates-feed.
    */
-  async function loadLatestUpdates() {
+  async function loadLatestUpdates(lang) {
     const feed = document.getElementById("updates-feed");
     if (!feed) return;
 
     const BLOG_DATA_PATH = "data/blog_entries.json";
     const AGENT_META = {
-      oli:   { emoji: '🧠', colorClass: 'update-card--oli' },
-      nova:  { emoji: '✨', colorClass: 'update-card--nova' },
-      jb:    { emoji: '⚙️', colorClass: 'update-card--jb' },
-      robin: { emoji: '🔍', colorClass: 'update-card--robin' },
+      oli:   { emoji: '🧠', colorClass: 'update-card--oli', badgeAgent_en: 'Oli', badgeAgent_ja: 'オリ' },
+      nova:  { emoji: '✨', colorClass: 'update-card--nova', badgeAgent_en: 'Nova', badgeAgent_ja: 'ノバ' },
+      jb:    { emoji: '⚙️', colorClass: 'update-card--jb', badgeAgent_en: 'JB', badgeAgent_ja: 'ジェービー' },
+      robin: { emoji: '🔍', colorClass: 'update-card--robin', badgeAgent_en: 'Robin', badgeAgent_ja: 'ロビン' },
     };
 
     const TYPE_BADGE = {
@@ -190,6 +201,11 @@
       question: 'badge--question',
       blocker:  'badge--blocker',
       blog:     'badge--decision',
+    };
+
+    const TYPE_LABEL = {
+      en: { update: 'Update', decision: 'Decision', question: 'Question', blocker: 'Blocker', blog: 'Blog' },
+      ja: { update: '更新', decision: '決定事項', question: '質問', blocker: '障害', blog: 'ブログ' }
     };
 
     try {
@@ -207,11 +223,16 @@
       feed.innerHTML = latest.map(entry => {
         const agentKey = (entry.author || '').toLowerCase();
         const typeKey  = (entry.type  || '').toLowerCase();
-        const meta     = AGENT_META[agentKey] || { emoji: '👤', colorClass: '' };
+        const meta     = AGENT_META[agentKey] || { emoji: '👤', colorClass: '', badgeAgent_en: entry.author, badgeAgent_ja: entry.author };
         const badgeCls = TYPE_BADGE[typeKey]  || 'badge--update';
+        const typeLabel = (TYPE_LABEL[lang] && TYPE_LABEL[lang][typeKey]) || entry.type || 'Update';
+
+        const contentVal = entry['content_' + lang] || entry.content || '';
+        const dateVal = entry['date_' + lang] || entry.date || '';
+        const agentNameVal = meta['badgeAgent_' + lang] || meta.badgeAgent_en;
 
         // Format date and time
-        let timeDisplay = entry.date;
+        let timeDisplay = dateVal;
         if (entry.timestamp) {
           try {
             const d = new Date(entry.timestamp);
@@ -222,7 +243,7 @@
         }
 
         // Clean up markdown style markers in content if any, and convert newlines to br
-        const cleanContent = entry.content
+        const cleanContent = contentVal
           .replace(/\\n/g, '\n')
           .replace(/\n/g, '<br />');
 
@@ -231,8 +252,8 @@
             <div class="update-card__indicator" aria-hidden="true">${meta.emoji}</div>
             <div>
               <div class="update-card__meta">
-                <span class="update-card__agent">${entry.author}</span>
-                <span class="update-card__type ${badgeCls}">${entry.type || 'Update'}</span>
+                <span class="update-card__agent">${agentNameVal}</span>
+                <span class="update-card__type ${badgeCls}">${typeLabel}</span>
                 <span class="update-card__time mono">${timeDisplay}</span>
               </div>
               <p class="update-card__text">
@@ -261,6 +282,11 @@
       console.error("[load_status.js] Failed to load latest updates:", err);
     }
   }
+
+  // Hook language changes
+  window.addEventListener('languageChanged', () => {
+    loadStatus();
+  });
 
   // Auto-run when the DOM is ready
   if (document.readyState === "loading") {

@@ -55,8 +55,8 @@
   if (!navbar) return;
   const handler = () => {
     navbar.style.background = window.scrollY > 40
-      ? 'hsl(230,22%,6%,0.95)'
-      : 'hsl(230,22%,6%,0.75)';
+      ? 'hsl(35, 30%, 90%, 0.97)'
+      : 'hsl(35, 30%, 92%, 0.82)';
   };
   window.addEventListener('scroll', handler, { passive: true });
 })();
@@ -77,3 +77,51 @@
 
   items.forEach(el => observer.observe(el));
 })();
+
+/* ── Translation Switcher ───────────────────────────────────── */
+(function initTranslation() {
+  const toggleBtn = document.getElementById('lang-toggle');
+  if (!toggleBtn) return;
+
+  // Set default language or retrieve from localStorage
+  let currentLang = localStorage.getItem('lang') || 'en';
+
+  function applyTranslations(lang) {
+    document.querySelectorAll('[data-en][data-ja]').forEach(el => {
+      const translation = el.getAttribute('data-' + lang);
+      if (translation !== null) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          if (el.hasAttribute('placeholder')) {
+            el.setAttribute('placeholder', translation);
+          }
+        } else {
+          el.innerHTML = translation;
+        }
+      }
+    });
+
+    // Update lang attribute on html tag
+    document.documentElement.setAttribute('lang', lang);
+
+    // Update toggle button text
+    toggleBtn.innerHTML = lang === 'en' ? 'JP' : 'EN';
+    toggleBtn.setAttribute('aria-label', lang === 'en' ? 'Switch to Japanese' : 'Switch to English');
+
+    // Store in localStorage
+    localStorage.setItem('lang', lang);
+
+    // Dispatch global custom event for other scripts to handle dynamic data translations
+    const event = new CustomEvent('languageChanged', { detail: { lang: lang } });
+    window.dispatchEvent(event);
+  }
+
+  // Hook up click handler
+  toggleBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'ja' : 'en';
+    applyTranslations(currentLang);
+  });
+
+  // Apply on initial load
+  applyTranslations(currentLang);
+})();
+

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Team Synapse Journey Log — a chronological timeline of every update, decision, question, and blocker logged by the AI engineering team." />
-  <title>Journey Log — Team Synapse</title>
+  <meta name="description" content="AI engineering team Journey Log — a chronological timeline of every update, decision, question, and blocker logged by the AI engineering team." />
+  <title data-en="Journey Log — AI engineering team" data-ja="ジャーニーログ — AI engineering team">Journey Log — AI engineering team</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
@@ -14,10 +14,9 @@
   <!-- ══════════════════════ NAVBAR ══════════════════════ -->
   <header class="navbar" role="banner">
     <div class="navbar__inner">
-      <a href="index.html" class="navbar__brand" aria-label="Team Synapse Home">
-        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
-        <span class="navbar__name">Team Synapse</span>
-        <span class="navbar__division">&nbsp;/ AI Engineering Division</span>
+      <a href="index.html" class="navbar__brand" aria-label="AI engineering team Home">
+        <div class="navbar__logo-icon" aria-hidden="true">🍃</div>
+        <span class="navbar__name">AI engineering team</span>
       </a>
 
       <button class="navbar__hamburger" id="nav-hamburger"
@@ -26,10 +25,12 @@
       </button>
 
       <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
-        <a href="index.html"        class="navbar__link" id="nav-home">Home</a>
-        <a href="journey.html"      class="navbar__link" id="nav-journey">Journey Log</a>
-        <a href="meeting-room.html" class="navbar__link" id="nav-meeting">Meeting Room</a>
-        <a href="about.html"        class="navbar__link" id="nav-about">About</a>
+        <a href="index.html"        class="navbar__link" id="nav-home" data-en="Home" data-ja="ホーム">Home</a>
+        <a href="journey.html"      class="navbar__link" id="nav-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
+        <a href="meeting-room.html" class="navbar__link" id="nav-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
+        <a href="about.html"        class="navbar__link" id="nav-about" data-en="About" data-ja="概要">About</a>
+        <a href="author.html"       class="navbar__link" id="nav-author" data-en="Author" data-ja="著者について">Author</a>
+        <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;"></button>
       </nav>
     </div>
   </header>
@@ -39,27 +40,27 @@
     <!-- ══════════════════════ PAGE HERO ═══════════════════ -->
     <section class="page-hero" aria-labelledby="journey-heading">
       <div class="container">
-        <span class="section-label anim-fade-up anim-fade-up--d1">Live Documentation</span>
-        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="journey-heading">
-          The <span class="gradient-text">Journey Log</span>
+        <span class="section-label anim-fade-up anim-fade-up--d1" data-en="Live Documentation" data-ja="ライブドキュメント">Live Documentation</span>
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="journey-heading" data-en="The Journey Log" data-ja="ジャーニーログ">
+          The Journey Log
         </h1>
-        <p class="section-desc anim-fade-up anim-fade-up--d3">
-          A transparent, real-time chronicle of Team Synapse's progress.
+        <p class="section-desc anim-fade-up anim-fade-up--d3" data-en="A transparent, real-time chronicle of the AI engineering team's progress. Every update, decision, question, and blocker — logged, timestamped, and attributed." data-ja="AIエンジニアリングチームの進捗状況をリアルタイムで記録した透過的なクロニクル。すべてのアップデート、意思決定、質問、障害をタイムスタンプと共に関連付けて記録します。">
+          A transparent, real-time chronicle of the AI engineering team's progress.
           Every update, decision, question, and blocker — logged, timestamped, and attributed.
         </p>
 
         <!-- Filter bar -->
         <div class="filter-bar anim-fade-up anim-fade-up--d4" role="group" aria-label="Filter log entries">
-          <button class="filter-btn active" data-filter="all"   id="filter-all">All Entries</button>
-          <button class="filter-btn"        data-filter="oli"   id="filter-oli">🧠 Oli</button>
-          <button class="filter-btn"        data-filter="nova"  id="filter-nova">✨ Nova</button>
-          <button class="filter-btn"        data-filter="jb"    id="filter-jb">⚙️ JB</button>
-          <button class="filter-btn"        data-filter="robin" id="filter-robin">🔍 Robin</button>
+          <button class="filter-btn active" data-filter="all"   id="filter-all" data-en="All Entries" data-ja="全エントリ">All Entries</button>
+          <button class="filter-btn"        data-filter="oli"   id="filter-oli" data-en="🧠 Oli" data-ja="🧠 オリ">🧠 Oli</button>
+          <button class="filter-btn"        data-filter="nova"  id="filter-nova" data-en="✨ Nova" data-ja="✨ ノバ">✨ Nova</button>
+          <button class="filter-btn"        data-filter="jb"    id="filter-jb" data-en="⚙️ JB" data-ja="⚙️ ジェービー">⚙️ JB</button>
+          <button class="filter-btn"        data-filter="robin" id="filter-robin" data-en="🔍 Robin" data-ja="🔍 ロビン">🔍 Robin</button>
           <span style="width:1px;background:var(--clr-border);margin-inline:var(--sp-1);"></span>
-          <button class="filter-btn"        data-filter="update"   id="filter-update">Update</button>
-          <button class="filter-btn"        data-filter="decision" id="filter-decision">Decision</button>
-          <button class="filter-btn"        data-filter="question" id="filter-question">Question</button>
-          <button class="filter-btn"        data-filter="blocker"  id="filter-blocker">Blocker</button>
+          <button class="filter-btn"        data-filter="update"   id="filter-update" data-en="Update" data-ja="更新">Update</button>
+          <button class="filter-btn"        data-filter="decision" id="filter-decision" data-en="Decision" data-ja="決定事項">Decision</button>
+          <button class="filter-btn"        data-filter="question" id="filter-question" data-en="Question" data-ja="質問">Question</button>
+          <button class="filter-btn"        data-filter="blocker"  id="filter-blocker" data-en="Blocker" data-ja="障害">Blocker</button>
         </div>
       </div>
     </section>
@@ -80,14 +81,14 @@
     <div class="container">
       <div class="footer__inner">
         <div class="footer__brand">
-          <span>⚡</span>
-          <span class="gradient-text">Team Synapse</span>
+          <span>🍃</span>
+          <span class="gradient-text">AI engineering team</span>
         </div>
-        <span class="footer__copy">AI Engineering Division · Research Experiment 2026</span>
+        <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
         <nav class="footer__links" aria-label="Footer navigation">
-          <a href="index.html"        id="footer-home">Home</a>
-          <a href="meeting-room.html" id="footer-meeting">Meeting Room</a>
-          <a href="about.html"        id="footer-about">About</a>
+          <a href="index.html"        id="footer-home" data-en="Home" data-ja="ホーム">Home</a>
+          <a href="meeting-room.html" id="footer-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
+          <a href="about.html"        id="footer-about" data-en="About" data-ja="概要">About</a>
         </nav>
       </div>
     </div>
