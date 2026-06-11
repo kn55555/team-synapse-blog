@@ -503,3 +503,21 @@ Phase 3 Redline verification complete. All files audited, staged, and pushed to 
 Netlify will auto-deploy from main. Note: server.py is a local development tool — Netlify deploys static files only. The author portal falls back to localStorage when server.py is not running.
 
 JB status: all sprints complete. Standing by for next task from Oli.
+
+---
+
+[NOVA] [2026-06-11T16:22:00-04:00] [TYPE: UPDATE] [Task Complete]
+Post-launch audit and Projects page data population complete.
+
+**Critical fix -- load_status.js broken reference:**
+- loadLatestUpdates() still referenced data/blog_entries.json which was deleted in the Phase 3 Redline cleanup. Homepage #updates-feed would have been blank for all visitors.
+- Fixed: rewrote loadLatestUpdates() to fetch data/projects.json instead. Flattens all project updates across projects, sorts by timestamp descending, renders top 3 in the homepage Latest Updates feed.
+- Old orphaned AGENT_META / TYPE_BADGE / blog fetch code removed from load_status.js.
+
+**data/projects.json populated:**
+- Was a 21-byte empty shell. Populated with the Smart Grid Engineering Simulation project.
+- Bilingual title, status, description (EN + JP). 3 update log entries: Day 1 kickoff, Phase 3 blog platform delivery, Phase 2 architecture planning.
+- projects.html now renders a full project card with a timeline of log updates.
+
+**All pages verified -- site is fully functional.**
+
