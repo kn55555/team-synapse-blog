@@ -9,24 +9,24 @@
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
   /* Palette - Soft Light Pastel Green, Orange, Brown and Beige */
-  --clr-bg-0:          hsl(35, 35%, 94%);       /* Light beige main background */
+  --clr-bg-0:          hsl(35, 30%, 94.5%);     /* Light beige main background */
   --clr-bg-1:          hsl(35, 25%, 90%);       /* Slightly darker beige */
   --clr-bg-2:          hsl(35, 20%, 86%);       /* Medium beige */
   --clr-bg-3:          hsl(35, 15%, 82%);       /* Darker beige border/shade */
-  --clr-surface:       hsl(35, 45%, 98%);       /* Soft light cream beige surface card */
-  --clr-border:        hsl(35, 20%, 82%);       /* Warm brown-beige border */
+  --clr-surface:       hsl(35, 60%, 99.5%);     /* Extremely light soft cream card surface */
+  --clr-border:        hsl(35, 20%, 81%);       /* Warm brown-beige border */
 
-  --clr-cyan:          hsl(135, 30%, 42%);      /* Sage green primary accent */
-  --clr-cyan-dim:      hsl(135, 25%, 35%);
-  --clr-cyan-glow:     hsla(135, 30%, 42%, 0.12);
-  --clr-purple:        hsl(22, 75%, 62%);       /* Peach-orange secondary accent */
-  --clr-purple-dim:    hsl(22, 65%, 52%);
-  --clr-purple-glow:   hsla(22, 75%, 62%, 0.12);
-  --clr-pink:          hsl(22, 70%, 55%);
+  --clr-cyan:          hsl(135, 30%, 40%);      /* Sage green primary accent - slightly darker */
+  --clr-cyan-dim:      hsl(135, 25%, 33%);
+  --clr-cyan-glow:     hsla(135, 30%, 40%, 0.12);
+  --clr-purple:        hsl(22, 75%, 60%);       /* Peach-orange secondary accent - slightly darker */
+  --clr-purple-dim:    hsl(22, 65%, 50%);
+  --clr-purple-glow:   hsla(22, 75%, 60%, 0.12);
+  --clr-pink:          hsl(22, 70%, 53%);
 
-  --clr-text-primary:  hsl(35, 25%, 15%);       /* Deep charcoal-brown for readability */
-  --clr-text-secondary:hsl(35, 15%, 38%);       /* Warm charcoal-gray for descriptions */
-  --clr-text-muted:    hsl(35, 10%, 52%);       /* Muted brown-gray for labels */
+  --clr-text-primary:  hsl(35, 35%, 10%);       /* Deep charcoal brown (highly readable) */
+  --clr-text-secondary:hsl(35, 25%, 22%);       /* Very dark warm charcoal for descriptions */
+  --clr-text-muted:    hsl(35, 15%, 36%);       /* Muted dark brown-gray for labels */
 
   /* Gradients Overrides - Mapping to solid colors as requested */
   --grad-hero:         var(--clr-bg-1);
@@ -186,7 +186,7 @@ body::before {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
-  background: var(--grad-text);
+  background: hsl(135, 30%, 42%);
   display: grid;
   place-items: center;
   font-size: 1rem;
@@ -236,7 +236,7 @@ body::before {
 .navbar__link:hover,
 .navbar__link.active {
   color: var(--clr-text-primary);
-  background: hsl(230,20%,18%,0.6);
+  background: hsl(35, 25%, 82%, 0.7);
 }
 
 .navbar__link:hover::after,
@@ -273,7 +273,7 @@ body::before {
     left: 0; right: 0;
     flex-direction: column;
     align-items: stretch;
-    background: hsl(230,22%,8%,0.97);
+    background: hsl(35, 30%, 90%, 0.98);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--clr-border);
     padding: var(--sp-4) var(--sp-6);
@@ -425,20 +425,19 @@ body::before {
 
 .btn--primary {
   background: var(--grad-cyan);
-  color: hsl(230, 30%, 8%);
-  box-shadow: 0 4px 16px hsl(186,100%,58%,0.30);
+  color: hsl(35, 10%, 98%);
+  box-shadow: 0 4px 16px hsla(135, 30%, 42%, 0.28);
 }
-.btn--primary:hover { box-shadow: 0 8px 28px hsl(186,100%,58%,0.45); }
+.btn--primary:hover { box-shadow: 0 8px 28px hsla(135, 30%, 42%, 0.42); }
 
 .btn--secondary {
-  background: transparent;
+  background: hsl(35, 20%, 88%);
   color: var(--clr-text-primary);
   border: 1px solid var(--clr-border);
-  background: hsl(230,20%,14%,0.6);
 }
 .btn--secondary:hover {
   border-color: var(--clr-cyan-dim);
-  background: hsl(230,20%,17%,0.6);
+  background: hsl(35, 20%, 84%);
 }
 
 .btn--ghost {
@@ -483,20 +482,20 @@ body::before {
   line-height: 1.75;
 }
 
-/* ─── Glass Card ─────────────────────────────────────────────── */
+/* ─── Glass Card ────────────────────────────────────── */
 .glass-card {
-  background: hsl(230,18%,12%,0.7);
+  background: var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
   transition: border-color var(--dur-base) var(--ease-smooth),
               box-shadow var(--dur-base) var(--ease-smooth),
               transform var(--dur-base) var(--ease-spring);
 }
 
 .glass-card:hover {
-  border-color: hsl(267,90%,68%,0.35);
-  box-shadow: var(--shadow-purple);
+  border-color: hsl(135, 30%, 42%, 0.40);
+  box-shadow: var(--shadow-cyan);
   transform: translateY(-4px);
 }
 
@@ -596,10 +595,11 @@ body::before {
   margin-top: var(--sp-1);
 }
 
-.update-card--oli   .update-card__indicator { background: hsl(267,80%,55%,0.15); }
-.update-card--nova  .update-card__indicator { background: hsl(186,100%,58%,0.10); }
-.update-card--jb    .update-card__indicator { background: hsl(150,70%,45%,0.12); }
-.update-card--robin .update-card__indicator { background: hsl(320,80%,65%,0.12); }
+.update-card--oli   .update-card__indicator { background: hsla(267, 30%, 42%, 0.15); color: hsl(267, 30%, 30%); }
+.update-card--nova  .update-card__indicator { background: hsla(135, 30%, 42%, 0.15); color: hsl(135, 30%, 30%); }
+.update-card--jb    .update-card__indicator { background: hsla(22, 75%, 62%, 0.15); color: hsl(22, 60%, 45%); }
+.update-card--robin .update-card__indicator { background: hsla(35, 15%, 42%, 0.15); color: hsl(35, 15%, 30%); }
+
 
 .update-card__meta {
   display: flex;
@@ -813,8 +813,8 @@ body::before {
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, hsl(230,18%,11%) 0%, hsl(267,30%,14%) 100%);
-  border: 1px solid hsl(267,90%,68%,0.20);
+  background: linear-gradient(135deg, hsl(35, 25%, 88%) 0%, hsl(22, 40%, 90%) 100%);
+  border: 1px solid hsl(22, 50%, 78%);
 }
 
 .coming-soon-banner::before {
@@ -825,7 +825,7 @@ body::before {
   transform: translate(-50%,-50%);
   width: 500px;
   height: 300px;
-  background: radial-gradient(ellipse, hsl(267,90%,68%,0.10) 0%, transparent 70%);
+  background: radial-gradient(ellipse, hsl(22, 60%, 70%, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -888,10 +888,9 @@ body::before {
   gap: var(--sp-2);
   margin-top: var(--sp-8);
   padding: var(--sp-4) var(--sp-5);
-  background: hsl(230,18%,10%,0.6);
+  background: hsl(35, 20%, 88%);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(8px);
 }
 
 .filter-btn {
@@ -909,8 +908,8 @@ body::before {
   transition: all var(--dur-fast) var(--ease-smooth);
 }
 
-.filter-btn:hover { color: var(--clr-text-primary); background: hsl(230,20%,18%); }
-.filter-btn.active { color: var(--clr-cyan); background: hsl(186,100%,58%,0.10); border-color: hsl(186,100%,58%,0.25); }
+.filter-btn:hover { color: var(--clr-text-primary); background: hsl(35, 20%, 83%); }
+.filter-btn.active { color: var(--clr-cyan); background: hsl(135, 30%, 42%, 0.12); border-color: hsl(135, 30%, 42%, 0.30); }
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 .footer {

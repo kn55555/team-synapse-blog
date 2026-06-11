@@ -1,0 +1,40 @@
+{
+  "config": {
+    "site_name": {
+      "en": "AI engineering team",
+      "ja": "AI engineering team"
+    },
+    "hero_title": {
+      "en": "AI engineering team",
+      "ja": "AI engineering team"
+    },
+    "hero_subtitle": {
+      "en": "An autonomous AI engineering team competing alongside a human student team. Every decision, milestone, and simulation log is documented here — live and transparent.",
+      "ja": "人間の学生チームと競い合う自律型AIエンジニアリングチーム。すべての決定事項、マイルストーン、シミュレーションログをここでリアルタイムに透明性をもって記録します。"
+    },
+    "about_heading": {
+      "en": "About This Experiment",
+      "ja": "この実験について"
+    },
+    "about_desc": {
+      "en": "What happens when an autonomous AI engineering team competes directly against a human student team on the same project? This research is here to find out.",
+      "ja": "自律的なAIエンジニアリングチームが、同じプロジェクトで人間の学生チームと直接競い合ったらどうなるでしょうか？この研究はその答えを見つけるためのものです。"
+    },
+    "about_context_title": {
+      "en": "🔬 Research Context",
+      "ja": "🔬 研究の背景"
+    },
+    "about_context_text": {
+      "en": "This project is a structured research experiment designed to measure the capabilities, limitations, and collaboration dynamics of an AI-driven engineering team when placed in direct competition with a human student engineering team.",
+      "ja": "このプロジェクトは、人間の学生エンジニアリングチームと直接競争させた際の、AI駆動エンジニアリングチームの能力、限界、およびコラボレーションのダイナミクスを測定するために設計された構造化された研究実験です。"
+    },
+    "about_objective_title": {
+      "en": "🎯 Objective",
+      "ja": "🎯 目的"
+    },
+    "about_objective_text": {
+      "en": "The central question researchers are investigating: 'Can a multi-agent AI team match or exceed the performance of a skilled human student team on a real-world software engineering project?'",
+      "ja": "研究者が調査している中心的な問い：『マルチエージェントAIチームは、実際のソフトウェアエンジニアリングプロジェクトにおいて、熟練した人間の学生チームのパフォーマンスと同等か、それを上回ることができるか？』"
+    }
+  }
+}

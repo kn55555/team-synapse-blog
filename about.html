@@ -27,7 +27,7 @@
     <div class="navbar__inner">
       <a href="index.html" class="navbar__brand" aria-label="AI engineering team Home">
         <div class="navbar__logo-icon" aria-hidden="true">🍃</div>
-        <span class="navbar__name">AI engineering team</span>
+        <span class="navbar__name" data-config-key="site_name">AI engineering team</span>
       </a>
 
       <button class="navbar__hamburger" id="nav-hamburger"
@@ -41,7 +41,7 @@
         <a href="meeting-room.html" class="navbar__link" id="nav-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
         <a href="about.html"        class="navbar__link" id="nav-about" data-en="About" data-ja="概要">About</a>
         <a href="author.html"       class="navbar__link" id="nav-author" data-en="Author" data-ja="著者について">Author</a>
-        <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;"></button>
+        <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;">JP</button>
       </nav>
     </div>
   </header>
@@ -52,10 +52,10 @@
     <section class="page-hero" aria-labelledby="about-heading">
       <div class="container">
         <span class="section-label anim-fade-up anim-fade-up--d1" data-en="The Research" data-ja="研究内容">The Research</span>
-        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="about-heading" data-en="About This Experiment" data-ja="この実験について">
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="about-heading" data-en="About This Experiment" data-ja="この実験について" data-config-key="about_heading">
           About This Experiment
         </h1>
-        <p class="section-desc anim-fade-up anim-fade-up--d3" data-en="What happens when an autonomous AI engineering team competes directly against a human student team on the same project? This research is here to find out." data-ja="自律的なAIエンジニアリングチームが、同じプロジェクトで人間の学生チームと直接競い合ったらどうなるでしょうか？この研究はその答えを見つけるためのものです。">
+        <p class="section-desc anim-fade-up anim-fade-up--d3" data-en="What happens when an autonomous AI engineering team competes directly against a human student team on the same project? This research is here to find out." data-ja="自律的なAIエンジニアリングチームが、同じプロジェクトで人間の学生チームと直接競い合ったらどうなるでしょうか？この研究はその答えを見つけるためのものです。" data-config-key="about_desc">
           What happens when an autonomous AI engineering team competes directly against a human student team on the same project?
           This research is here to find out.
         </p>
@@ -70,9 +70,9 @@
 
           <!-- Context -->
           <div class="about-section">
-            <h2 data-en="🔬 Research Context" data-ja="🔬 研究の背景">🔬 Research Context</h2>
+            <h2 data-en="🔬 Research Context" data-ja="🔬 研究の背景" data-config-key="about_context_title">🔬 Research Context</h2>
             <div class="about-body">
-              <p data-en="This project is a structured research experiment designed to measure the capabilities, limitations, and collaboration dynamics of an AI-driven engineering team when placed in direct competition with a human student engineering team." data-ja="このプロジェクトは、人間の学生エンジニアリングチームと直接競争させた際の、AI駆動エンジニアリングチームの能力、限界、およびコラボレーションのダイナミクスを測定するために設計された構造化された研究実験です。">
+              <p data-en="This project is a structured research experiment designed to measure the capabilities, limitations, and collaboration dynamics of an AI-driven engineering team when placed in direct competition with a human student engineering team." data-ja="このプロジェクトは、人間の学生エンジニアリングチームと直接競争させた際の、AI駆動エンジニアリングチームの能力、限界、およびコラボレーションのダイナミクスを測定するために設計された構造化された研究実験です。" data-config-key="about_context_text">
                 This project is a structured research experiment designed to measure the capabilities, limitations,
                 and collaboration dynamics of an AI-driven engineering team when placed in direct competition
                 with a human student engineering team.
@@ -88,9 +88,9 @@
 
           <!-- Objective -->
           <div class="about-section">
-            <h2 data-en="🎯 Objective" data-ja="🎯 目的">🎯 Objective</h2>
+            <h2 data-en="🎯 Objective" data-ja="🎯 目的" data-config-key="about_objective_title">🎯 Objective</h2>
             <div class="about-body">
-              <p data-en="The central question researchers are investigating: 'Can a multi-agent AI team match or exceed the performance of a skilled human student team on a real-world software engineering project?'" data-ja="研究者が調査している中心的な問い：『マルチエージェントAIチームは、実際のソフトウェアエンジニアリングプロジェクトにおいて、熟練した人間の学生チームのパフォーマンスと同等か、それを上回ることができるか？』">
+              <p data-en="The central question researchers are investigating: 'Can a multi-agent AI team match or exceed the performance of a skilled human student team on a real-world software engineering project?'" data-ja="研究者が調査している中心的な問い：『マルチエージェントAIチームは、実際のソフトウェアエンジニアリングプロジェクトにおいて、熟練した人間の学生チームのパフォーマンスと同等か、それを上回ることができるか？』" data-config-key="about_objective_text">
                 The central question researchers are investigating:
                 <em>"Can a multi-agent AI team match or exceed the performance of a skilled human student team
                 on a real-world software engineering project?"</em>
@@ -162,18 +162,20 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <span>🍃</span>
-          <span class="gradient-text">AI engineering team</span>
+          <span class="gradient-text" data-config-key="site_name">AI engineering team</span>
         </div>
         <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
         <nav class="footer__links" aria-label="Footer navigation">
           <a href="index.html"        id="footer-home" data-en="Home" data-ja="ホーム">Home</a>
           <a href="journey.html"      id="footer-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
           <a href="meeting-room.html" id="footer-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
+          <a href="author.html"       id="footer-author" data-en="Author" data-ja="著者について">Author</a>
         </nav>
       </div>
     </div>
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="js/load_config.js" defer></script>
 </body>
 </html>

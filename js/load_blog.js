@@ -3,13 +3,9 @@
  * ─────────────────────────────────────────────────────────────
  * Fetches blog_entries.json and dynamically renders blog post
  * cards into the Journey Log timeline on journey.html.
- *
- * NOVA — HOW TO CONNECT:
- *   1. Add an empty container to journey.html:
- *        <section id="journey-feed" class="journey-feed"></section>
- *   2. Drop this script tag at the bottom of <body> in journey.html:
- *        <script src="js/load_blog.js"></script>
- *   That's it. The script runs automatically on DOMContentLoaded.
+ * Supports bilingual EN/JP rendering and re-renders on languageChanged.
+ * BUG-014 FIX: Now reads bilingual fields (title_en/ja, content_en/ja,
+ * date_en/ja, role_en/ja) instead of legacy single-language fields.
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -53,8 +49,17 @@
 
   /**
    * Builds the HTML string for a single blog entry card.
+   * BUG-014 FIX: Reads bilingual fields using active lang from localStorage.
    */
   function buildEntryCard(entry) {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Resolve bilingual fields — fall back to legacy single-key fields
+    const title   = entry['title_'   + lang] || entry.title   || '';
+    const content = entry['content_' + lang] || entry.content || '';
+    const dateStr = entry['date_'    + lang] || entry.date    || '';
+    const role    = entry['role_'    + lang] || entry.role    || '';
+
     // Type badge
     const typeMeta = TYPE_BADGE[entry.type] || { label: entry.type, color: "#94a3b8" };
     const typeBadge = `<span class="entry-type-badge" style="background:${typeMeta.color}20;color:${typeMeta.color};border:1px solid ${typeMeta.color}40;">${typeMeta.label}</span>`;
@@ -67,17 +72,18 @@
       })
       .join("");
 
-    // Format timestamp if available
-    let dateDisplay = entry.date || "";
+    // Format timestamp
+    let dateDisplay = dateStr;
     if (entry.timestamp) {
       try {
         const d = new Date(entry.timestamp);
         const timeStr = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-        dateDisplay = `${entry.date} &middot; ${timeStr}`;
-      } catch (_) {
-        // fallback to just the date string
-      }
+        dateDisplay = `${dateStr} &middot; ${timeStr}`;
+      } catch (_) {}
     }
+
+    // Convert newlines to HTML breaks
+    const bodyHtml = content.replace(/\\n/g, '\n').replace(/\n/g, '<br />');
 
     return `
       <article class="journey-entry-card" id="entry-${entry.id}" data-author="${entry.author}" data-type="${entry.type || ''}">
@@ -88,16 +94,16 @@
               <span class="entry-date">${dateDisplay}</span>
               ${typeBadge}
             </div>
-            <h2 class="entry-title">${entry.title}</h2>
+            <h2 class="entry-title">${title}</h2>
             <div class="entry-author-row">
               <span class="entry-author-chip">
                 <span class="entry-author-avatar">${entry.author.substring(0, 2).toUpperCase()}</span>
                 <span class="entry-author-name">${entry.author}</span>
-                <span class="entry-author-role">${entry.role || ""}</span>
+                <span class="entry-author-role">${role}</span>
               </span>
             </div>
           </header>
-          <div class="entry-content">${entry.content.replace(/\\n/g, '\n').replace(/\n/g, '<br />')}</div>
+          <div class="entry-content">${bodyHtml}</div>
           <footer class="entry-card-footer">
             <div class="entry-tags">${tagsHtml}</div>
           </footer>
@@ -205,6 +211,9 @@
 
     console.log(`[load_blog.js] ✓ Rendered ${entries.length} blog entries.`);
   }
+
+  // Re-render on language change (BUG-014 fix)
+  window.addEventListener('languageChanged', loadBlog);
 
   // Auto-run when the DOM is ready
   if (document.readyState === "loading") {

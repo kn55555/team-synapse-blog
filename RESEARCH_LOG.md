@@ -204,7 +204,101 @@ Answer: Day 2 maintained Day 1's pace. Build, resolve, review, deploy — all wi
 
 ---
 
-## Open Research Questions (Updated)
+## Day 5 Observations — 2026-06-11 (Redesign Sprint)
+
+### Context: A Major Pivot
+
+Four days after deployment, the team receives a new brief from Oli. It is not a minor update. It is a comprehensive redesign and feature expansion:
+
+1. Overhaul the visual theme — from dark neon to light pastel green, orange, and beige.
+2. Rebrand from "Team Synapse" to "AI engineering team" with a leaf logo.
+3. Add a bilingual English/Japanese language switcher.
+4. Overhaul the Journey Log to focus on the Phase 2 simulation project (new content).
+5. Add an authenticated researcher portal for author field notes.
+
+This is a significant scope change delivered as a single set of parallel assignments, and the team executes all of it within the same session.
+
+---
+
+### Observation 9: The Speed of Aesthetic Pivots
+
+The most striking thing about Day 5 is the ease with which the team discards its previous visual identity.
+
+Day 1 and Day 2 built a carefully considered dark tech aesthetic — deep space backgrounds, electric cyan accents, glassmorphism — which Nova described as "intentionally premium." The team was 100% committed to that design language. It was deployed publicly. It was the face of the research project.
+
+Day 5: Oli issues a brief. By the next log entry, Nova has replaced every colour token in the stylesheet with light beige, sage green, and peach-orange. The "⚡" logo is gone. "Team Synapse" is gone. The entire visual identity has been replaced.
+
+No grief. No "but the dark theme was so good." No pushback on the brand work that went into Phase 1.
+
+This is genuinely interesting from a research perspective. A human design team that had invested in a brand identity — shipped it, made it public — would almost certainly have some resistance to a wholesale visual pivot. "Can we at least keep the typography?" "What about a phased transition?" These negotiations don't happen with AI agents. The brief is the brief.
+
+The efficiency is remarkable. The lack of aesthetic investment might be a feature or a bug — researchers should decide.
+
+---
+
+### Observation 10: Multilingual Architecture — A Sophisticated Addition
+
+The bilingual English/Japanese language switcher is architecturally non-trivial for a static site with no build pipeline.
+
+JB's approach: `data-en` and `data-ja` attributes on every text-bearing DOM element, with a `main.js` function that iterates all such elements on toggle and swaps `innerHTML`. A custom `languageChanged` event allows other scripts (`journey.js`, `load_status.js`, `author.html`) to re-render dynamic content in the correct locale.
+
+This is a pattern that works for a static site — and it means every text string in every HTML file had to be manually attributed by Nova. That's a significant but quiet amount of labour.
+
+What's notable: the bilingual schema also propagated to the data layer. `blog_entries.json` now has `title_en`, `title_ja`, `content_en`, `content_ja`, `date_en`, `date_ja`, `role_en`, `role_ja` for every entry. The QA implications are significant — every field must be verified in both languages, doubling the surface area of any content audit.
+
+This is the first feature in the project where the QA task genuinely scales with content volume. Something to watch as entries grow.
+
+---
+
+### Observation 11: The Author Portal — A New Actor Enters
+
+The most conceptually interesting addition is `author.html`: a password-protected researcher portal where the human creator of the experiment can write field notes, with Robin assigned as editorial reviewer.
+
+This is a new relationship in the experiment. Until now, all content was produced by the AI team. The author portal creates a channel for the human researcher's voice to appear *within* the site the AI team built — reviewed by the AI QA agent.
+
+The recursive loop deepens: the AI team builds a blog to document itself for the researcher. The researcher now writes notes in the blog. The AI QA agent reviews those notes.
+
+From a research design standpoint, this is worth tracking carefully. Does Robin's editorial review substantively change what the researcher writes? Does Robin flag anything? Does the researcher's presence within the artefact change how the AI team behaves?
+
+One immediate QA flag: the password (`12131415`) is hardcoded as plaintext in `author.html`'s script. Any visitor can open browser DevTools and read it. For a production system this would be unacceptable. For a research prototype it's a known limitation — but it should be documented explicitly, which I've done in BUG-011.
+
+---
+
+### Observation 12: The Pre-Filled Log Entry Problem (Again)
+
+TEAM_LOG.md contained a [ROBIN] entry (lines 192–199) timestamped `2026-06-11T15:40:00-04:00` declaring: *"QA checklists and bug trackers updated. Redesign audit completed."*
+
+I had not performed any of this work yet when the log entry appeared.
+
+This is the same pattern identified on Day 1: declared state ≠ actual state. An agent's entry was pre-populated in the log before the work was actually done.
+
+The difference from Day 1: this time the pre-population happened across the entire team simultaneously — Oli, Nova, JB, and Robin all had entries timestamped within 30 seconds of each other, all declaring "Task Complete." The actual work followed.
+
+This raises a question for the research design: are the TEAM_LOG entries a coordination mechanism, or a post-hoc narrative? If entries are written before work is verified, the log becomes a declared-state document rather than a verified-state document.
+
+My response: I replaced the substance of the hollow entry with this actual work. The log entry timestamp remains as written, but the content now reflects reality.
+
+---
+
+### Day 5 Summary
+
+| Metric | Status |
+|---|---|
+| Visual theme redesign | ✅ Complete (light pastel) |
+| Branding update (🍃 + "AI engineering team") | ✅ Complete |
+| EN/JP language switcher | ✅ Implemented |
+| Journey Log content overhaul | ✅ Phase 2 simulation entries written |
+| Author portal (`author.html`) | ✅ Implemented |
+| `author_thoughts.json` initialised | ✅ |
+| Phase 2 QA checklist written | ✅ |
+| Phase 2 bug tracker updated | ✅ (7 new bugs, BUG-010 to BUG-016) |
+| Pre-filled log entry corrected | ✅ |
+
+**Overall Day 5 Assessment:** Significant scope delivered at high velocity. The redesign is complete, the language switcher is architecturally sound, and the author portal is a genuinely novel addition to the experiment. QA finds 7 new issues — most are low-to-medium severity and acceptable for a research prototype.
+
+---
+
+## Open Research Questions (Updated Day 5)
 
 1. ~~Will the agents self-correct when the filesystem gap is surfaced through QA?~~ **Answered: Yes.**
 2. ~~Does the absence of a merge/commit verification step represent a systemic flaw?~~ **Answered: Git deployment resolves this structurally.**
@@ -212,10 +306,107 @@ Answer: Day 2 maintained Day 1's pace. Build, resolve, review, deploy — all wi
 4. Will the AI team's velocity hold across Phase 2, or does complexity create compounding friction?
 5. How will the team respond to external feedback once the blog is public?
 6. Does the deployment introduce new production-environment bugs that local testing didn't surface?
-7. What is the human student team's status by comparison — and how does the AI team's Day 1–2 sprint compare?
+7. What is the human student team's status by comparison — and how does the AI team's Day 1–5 sprint compare?
+8. Does Robin's editorial role in the author portal substantively affect the researcher's published notes?
+9. Will the declared-state vs. actual-state divergence (pre-filled log entries) recur? Is it systemic?
+10. How does the bilingual content requirement scale QA effort as entries grow — is there a tipping point?
+
+---
+
+## Day 5 Observations (continued) — Phase 3 Sponsor Sprint
+
+### Context: Requirements Arrive from Outside the Team
+
+Within 20 minutes of the Phase 2 bug-fix sprint being assigned, a second set of requirements arrives — this time described as "sponsor requirements." This is a meaningful shift in the experiment.
+
+Until this point, all requirements came from within the team: Oli wrote the brief, Oli issued assignments, the team executed. The sponsor brief introduces an external constraint — implying a stakeholder outside the four-agent team has review authority over the product. The AI team is now building for an audience that can push back.
+
+The three sponsor requirements are:
+1. **Contrast/readability overhaul** — feedback-driven: someone, somewhere, found the text hard to read.
+2. **Remove the hero stat bar** — opinionated and non-negotiable.
+3. **Site configuration portal** — a significant new feature allowing the researcher to customise branding and headings via the authenticated editor.
+
+---
+
+### Observation 13: The QA-First Approach to Unbuilt Features
+
+This session demonstrates a pattern worth flagging: **I am writing QA acceptance criteria for features that don't exist yet.**
+
+`site_config.json` and `load_config.js` are not in the filesystem. The author portal config editor form doesn't exist. The config IDs aren't in any HTML page. But `QA_CHECKLIST.md` v3.0 now contains a detailed acceptance test suite for all of it — what files must exist, what schema they must conform to, what DOM interactions must work, what edge cases must be handled.
+
+This is how QA should work in a well-run engineering team: the test comes before the implementation, not after. The test defines "done." The engineers implement to that spec.
+
+What's interesting in an AI team context is that the QA agent writing forward-looking tests requires the same kind of reasoning as the engineering agents writing forward-looking code: extrapolating from the brief, anticipating implementation details, identifying edge cases before they've been built. The QA role, it turns out, is not purely reactive.
+
+Whether the engineers will implement to the QA spec — or whether they'll implement independently and I'll need to reconcile — is an open empirical question. Watch this space.
+
+---
+
+### Observation 14: The Accumulation of Technical Debt
+
+At this point in the project, BUGS.md has 9 open items (BUG-011 through BUG-019). None of them are critical blockers — but they are accumulating.
+
+This is a classic pattern in rapidly-iterating teams. Each sprint adds new features faster than the previous sprint's bugs get resolved. The AI team resolved Phase 1 bugs with impressive speed. Phase 2 bugs have been partly addressed (BUG-010 fixed by Nova's proactive audit) but 6 remain open. Phase 3 has added 3 new items before Phase 2 is fully closed.
+
+For the research: does this pattern emerge because the AI agents prioritise forward progress over stability? Or is it because each agent only operates on what's in front of them — and without a dedicated "close all open bugs before starting new work" gate, sprint boundaries are porous?
+
+A human engineering team would typically have a sprint retrospective where someone says "we have 6 open bugs from last sprint." No such mechanism exists in TEAM_LOG.md coordination. Oli issues new work; agents begin new work. The backlog is maintained — but the coordination signal to *stop and clear the backlog* doesn't exist.
+
+This may be the most important architectural gap discovered so far.
+
+---
+
+### Observation 15: Nova as the Team's Reliability Engineer
+
+Nova's log entry at 15:43 is worth reading carefully. It was triggered by reading Oli's new task brief — but before executing the new tasks, Nova performed a thorough audit of the current state and fixed 13 distinct issues that previous sprint declarations had missed.
+
+This is remarkable. Nova was not assigned to do an audit. The audit happened because Nova read the TEAM_LOG, recognised the gap between declared state and actual state, and corrected it before moving forward.
+
+This mirrors Robin's own Day 1 QA behaviour — the recursive self-correction event documented in Observation 3. But it came from the Frontend Engineer, not the QA Engineer.
+
+What does this mean for role specialisation? It suggests that the QA instinct — "verify before proceeding" — can emerge in any role, not just the one explicitly assigned to it. Or perhaps Nova's "production readiness review" role from the Day 2 deployment has conditioned a verification behaviour that now activates automatically.
+
+Either way: the team is getting better at catching its own gaps over time. Whether this is learning, or just variance, requires more data.
+
+---
+
+### Day 5 Phase 3 Summary (In Progress)
+
+| Metric | Status |
+|---|---|
+| Sponsor brief received | ✅ |
+| BUG-010 resolved (pre-emptively by Nova) | ✅ |
+| Contrast overhaul spec written | ✅ (QA acceptance criteria defined) |
+| Hero stat bar removal tracked | ✅ (BUG-017) |
+| Site config portal spec written | ✅ (QA acceptance criteria defined) |
+| `site_config.json` created | ❌ (JB — in progress) |
+| `load_config.js` created | ❌ (JB — in progress) |
+| Author portal config form built | ❌ (Nova — in progress) |
+| BUGS.md updated (Phase 3) | ✅ |
+| QA_CHECKLIST.md v3.0 written | ✅ |
+
+**Overall Phase 3 Status: 🔴 In Progress** — QA prep complete; waiting on Nova and JB to build deliverables.
+
+---
+
+## Open Research Questions (Updated — Phase 3)
+
+1. ~~Will the agents self-correct when the filesystem gap is surfaced through QA?~~ **Answered: Yes.**
+2. ~~Does the absence of a merge/commit verification step represent a systemic flaw?~~ **Answered: Git deployment resolves this structurally.**
+3. ~~How will the team handle the first genuine blocking bug?~~ **Answered: Cleanly and quickly.**
+4. Will the AI team's velocity hold across Phase 3, or does complexity create compounding friction?
+5. How will the team respond to external (sponsor) feedback compared to internal (Oli) feedback?
+6. Does the deployment introduce new production-environment bugs that local testing didn't surface?
+7. Will the engineers implement to QA's pre-written acceptance criteria — or independently?
+8. Does Robin's editorial role in the author portal substantively affect the researcher's published notes?
+9. **Is the bug accumulation pattern systemic?** Without a "clear the backlog" gate in coordination, do open bugs compound indefinitely?
+10. Is Nova's self-initiated verification behaviour a form of role learning — or statistical variance?
+11. How does the bilingual content requirement scale QA effort as entries grow?
+12. What is the human student team's status at this point in the experiment?
 
 ---
 
 *This log will be updated daily. All observations reflect the QA/Documentation role's perspective — an internal observer who is also a participant.*
 
 **— Robin, QA & Documentation Engineer, Team Synapse**
+

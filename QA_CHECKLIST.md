@@ -1,104 +1,162 @@
-# QA Checklist — AI Engineering Team Blog Website
+# QA Checklist — Team Synapse Blog Website
 **Prepared by:** Robin (QA & Documentation Engineer)  
-**Date:** 2026-06-11  
-**Version:** 2.0  
+**Last Updated:** 2026-06-11 (v3.0 — Phase 3: Contrast + Site Config Portal)  
+**Version:** 3.0
 
 ---
 
 ## Pre-Requisites
 
-- [x] All HTML pages present in root directory (`index.html`, `about.html`, `journey.html`, `meeting-room.html`, `author.html`)
+- [x] All HTML pages present: `index.html`, `about.html`, `journey.html`, `meeting-room.html`, `author.html`
 - [x] `css/style.css` exists and is non-empty
-- [x] `js/main.js` exists and is non-empty
-- [x] `js/journey.js` exists and handles bilingual timeline rendering
-- [x] `js/load_status.js` exists and handles bilingual status injection and homepage updates
-- [x] `data/blog_entries.json` is valid JSON (contains bilingual simulation logs)
-- [x] `data/agent_status.json` is valid JSON (contains bilingual agent statuses)
-- [x] `data/author_thoughts.json` is valid JSON (contains bilingual author notes)
+- [x] `js/main.js` present (includes language switcher + config integration point)
+- [x] `js/journey.js` present
+- [x] `js/load_blog.js` present
+- [x] `js/load_status.js` present
+- [ ] `js/load_config.js` — **PENDING** (Phase 3, assigned to JB)
+- [x] `data/blog_entries.json` valid JSON (bilingual schema)
+- [x] `data/agent_status.json` valid JSON (bilingual schema)
+- [x] `data/author_thoughts.json` valid JSON
+- [ ] `data/site_config.json` — **PENDING** (Phase 3, assigned to JB)
+- [x] `assets/` directory with `.gitkeep`
 
 ---
 
-## Page Load Tests
+## Phase 3: Text Contrast & Readability (NEW)
 
-### 1. Homepage (`index.html`)
-- [x] Page loads without console errors
-- [x] Page title is set to "AI engineering team"
-- [x] Meta description present (SEO)
-- [x] Logo icon is set to leaf `🍃` and branding name is "AI engineering team"
-- [x] Hero section renders with light pastel theme (solid beige, no gradient)
-- [x] "How to Get Started" section renders and lists agent initialization process
-- [x] Team member cards section displays Oli, Nova, JB, and Robin with live statuses
-- [x] Latest Updates feed renders the top 3 dynamic timeline logs
+### WCAG AA Acceptance Criteria
+Normal body text must achieve ≥ 4.5:1 contrast ratio against its background. Large text (≥18pt / ≥14pt bold) must achieve ≥ 3:1.
 
-### 2. About Page (`about.html`)
-- [x] Page loads without console errors
-- [x] Research context, objective, and methodology sections rendered in light pastel theme
-- [x] Leaf logo `🍃` and branding consistent with home
-- [x] Navigation links active and functional
+| Element | Token | Background Token | Target Ratio | Status |
+|---|---|---|---|---|
+| Body text | `--clr-text-primary: hsl(35,25%,15%)` | `--clr-bg-0: hsl(35,35%,94%)` | ≥ 4.5:1 | ✅ ~10:1 est. |
+| Secondary text | `--clr-text-secondary: hsl(35,15%,38%)` | `--clr-bg-0` | ≥ 4.5:1 | ⚠️ ~5.2:1 borderline |
+| Muted / label text | `--clr-text-muted: hsl(35,10%,52%)` | `--clr-bg-0` | ≥ 4.5:1 | ❌ ~3.2:1 est. |
+| Card text | `--clr-text-secondary` | `--clr-surface: hsl(35,45%,98%)` | ≥ 4.5:1 | ⚠️ needs verification |
 
-### 3. Journey Log (`journey.html`)
-- [x] Page loads without console errors
-- [x] Dynamic timeline elements rendered from `blog_entries.json`
-- [x] Timeline entries focus on the upcoming smart grid simulation project (no website dev logs)
-- [x] Dynamic filter controls present (All, Oli, Nova, JB, Robin, and entry types)
-- [x] Filter functionality updates display state without page reloads
-
-### 4. Meeting Room (`meeting-room.html`)
-- [x] Page loads without console errors
-- [x] 2x2 agent panels grid displays live status blocks
-- [x] "Coming Soon — Phase 2" banner renders in pastel colors
-
-### 5. Author Portal (`author.html`)
-- [x] Page loads without console errors
-- [x] Researcher profile block visible
-- [x] Password login form rendered
-- [x] Authenticates with password `12131415` and displays notes editor console
-- [x] Dynamic thoughts feed loads from `author_thoughts.json` by default and overrides from `localStorage` upon save
+### Contrast Overhaul Checklist (assigned to Nova)
+- [ ] `--clr-text-muted` darkened to achieve ≥ 4.5:1 on `--clr-bg-0`
+- [ ] `--clr-text-secondary` verified or darkened to achieve ≥ 4.5:1
+- [ ] `--clr-surface` lightened (toward pure white) to increase card surface contrast vs. background
+- [ ] Section labels (`span.section-label`) — verify these use `--clr-text-muted`; check if darkening applies
+- [ ] Filter bar button labels — verify contrast in both default and active states
+- [ ] Timeline/blog card body text — verify contrast of `--clr-text-secondary` on `--clr-surface`
+- [ ] Author portal thought items — `color:var(--clr-text-secondary)` on `--clr-bg-0` — verify
+- [ ] Journey filter bar `--filter-btn-active` text readable on sage green background
 
 ---
 
-## Navigation & Language Selection Tests
+## Phase 3: Hero Stats Bar Removal (NEW)
 
-- [x] Navigation links resolve correctly across all 5 pages
-- [x] Language toggle button (`EN / JP`) visible in navbar on all pages
-- [x] Clicking language button translates all static page headers, descriptions, menu items, and buttons
-- [x] Language switcher triggers dynamic re-rendering of blog updates, timeline logs, and status cards in selected language
-- [x] Active language selection persists in `localStorage` across page navigations
-
----
-
-## Design & Aesthetics Checks
-
-- [x] Pastel green, orange, and beige/brown light theme applied globally
-- [x] No gradient backgrounds used for containers or buttons (solid borders and backgrounds)
-- [x] Leaf logo `🍃` replaced the old lightning bolt logo `⚡`
-- [x] Soft shadows and clear font readability in both English and Japanese
-- [x] Smooth hover and reveal transitions on interactive cards and buttons
+- [ ] `div.hero__stat-bar` and all child `.stat-item` elements removed from `index.html`
+- [ ] No leftover CSS classes (`.hero__stat-bar`, `.stat-item`, `.stat-item__value`, `.stat-item__label`) producing empty space
+- [ ] Hero section layout reflows cleanly without the stat bar — CTA buttons remain visually balanced
+- [ ] No broken `anim-fade-up--d5` animation class orphaned in HTML
 
 ---
 
-## Data Integrity Checks
+## Phase 3: Site Configuration Portal (NEW)
 
-- [x] `blog_entries.json` parses successfully and contains bilingual simulation event logs (`_en` and `_ja` keys)
-- [x] `agent_status.json` parses successfully and contains bilingual status fields
-- [x] `author_thoughts.json` parses successfully and contains bilingual notes
-- [x] Loader scripts successfully escape HTML to prevent cross-site scripting (XSS)
+### `data/site_config.json`
+- [ ] File exists and parses without errors
+- [ ] Contains bilingual fields for all configurable strings: `brand_name_en`, `brand_name_ja`, `site_tagline_en`, `site_tagline_ja`, `hero_title_en`, `hero_title_ja`, `hero_desc_en`, `hero_desc_ja`, and key section headings
+- [ ] Schema documented — each field has a clear purpose
+- [ ] Default values match current live site content
+
+### `js/load_config.js`
+- [ ] File exists and is loadable
+- [ ] Async fetch reads `site_config.json` on page load
+- [ ] Before fetch, checks `localStorage` for `site_config_overrides` — applies overrides if present
+- [ ] Config values injected into DOM elements by matching `id` attribute (e.g., `id="config-brand-name"`)
+- [ ] `languageChanged` event handled — re-injects the correct locale's config values on toggle
+- [ ] Graceful error handling — if fetch fails, falls back to static HTML (no broken IDs)
+- [ ] Script included in `main.js` or loaded via `<script>` tag on all relevant pages
+
+### Author Portal Config Editor (in `author.html`)
+- [ ] Config editor form present inside `#editor-container` (visible only when logged in)
+- [ ] Fields for all `site_config.json` configurable strings (English + Japanese per field)
+- [ ] Save button writes form values to `localStorage` as `site_config_overrides`
+- [ ] On save, `load_config.js` re-applies values to DOM without page reload
+- [ ] Reset button clears `site_config_overrides` from `localStorage` and reverts to JSON defaults
+- [ ] Form is bilingual — labels have `data-en`/`data-ja` attributes
+
+### Config ID Targets in HTML
+- [ ] `index.html` — brand name heading, hero title, hero description, team section heading all have `id="config-*"` attributes
+- [ ] `journey.html` — page title, section heading has config ID
+- [ ] `about.html` — page title, intro text has config ID
+- [ ] `meeting-room.html` — page title has config ID
+- [ ] `author.html` — page title, profile card bio has config ID
 
 ---
 
-## QA Completion Sign-Off
+## Theme & Branding (Phase 2 — Carried Forward)
+
+- [x] Background uses light beige (`hsl(35, 35%, 94%)`)
+- [x] Sage green used as primary accent
+- [x] Peach-orange as secondary accent
+- [x] No gradient backgrounds (solid overrides in `:root`)
+- [x] 🍃 logo on all pages
+- [x] "AI engineering team" branding on all pages
+- [x] ~~Navbar scroll handler dark HSL~~ **BUG-010 RESOLVED** — fixed to light beige by Nova (15:43 entry)
+
+---
+
+## Language Switcher (Phase 2 — Carried Forward)
+
+- [x] Toggle button present on all pages
+- [x] Language preference persisted in `localStorage`
+- [x] `applyTranslations()` fires on load to restore preference
+- [x] `languageChanged` event dispatched for dynamic scripts
+- [ ] BUG-013 (login error language) — Open
+- [ ] BUG-014 (bilingual schema in loaders) — Open, pending HTTP test
+- [ ] BUG-015 (empty toggle button flash) — Open
+
+---
+
+## Author Portal (Phase 2 — Carried Forward)
+
+- [x] Login flow functional
+- [x] Editor hidden until authenticated
+- [x] Logout clears session
+- [ ] BUG-011 (password in source) — Open, JB to add disclaimer comment
+- [ ] BUG-012 (localStorage-only saves) — Open, JB to add UI note
+- [ ] BUG-016 (author not in footer) — Open, Nova to add footer link
+
+---
+
+## Navigation Tests
+
+- [x] Nav bar on all 5 pages with correct links
+- [x] Active page highlight working (via `main.js`)
+- [x] Mobile hamburger present
+- [x] Logo links to homepage
+
+---
+
+## Data Integrity
+
+- [x] `blog_entries.json` — bilingual schema, 4 Phase 2 simulation entries
+- [x] `agent_status.json` — bilingual, all 4 agents, Phase 3 tasks updated
+- [x] `author_thoughts.json` — 2 entries (researcher + Robin editorial)
+- [ ] `site_config.json` — **PENDING** (not yet created)
+
+---
+
+## QA Sign-Off
 
 | Category | Status | Notes |
 |---|---|---|
-| File presence | ✅ PASS | All 5 HTML pages, CSS stylesheet, 3 JS scripts, and 3 JSON files present on disk. |
-| Page loads | ✅ PASS | All pages load without console errors and display structured, readable layouts. |
-| Navigation | ✅ PASS | Menu links fully functional across all pages, including the new Author portal link. |
-| Language switcher | ✅ PASS | Switcher toggles between English and Japanese; triggers dynamic reload of page content and feeds. |
-| Theme design | ✅ PASS | Replaced dark theme with soft sage green, peach orange, and beige light pastel theme. No gradients. |
-| Logo / Branding | ✅ PASS | All pages display leaf `🍃` logo and "AI engineering team" branding name. |
-| Dynamic feeds | ✅ PASS | Timeline and updates feeds dynamically render from JSON databases. |
-| Auth & Thoughts editor | ✅ PASS | Login block authenticates password `12131415`, displays editor, and saves to localStorage. |
-| Data integrity | ✅ PASS | Validated JSON schemas and script error checking. |
+| File presence | ⚠️ PARTIAL | `site_config.json` + `load_config.js` not yet created |
+| Text contrast (WCAG AA) | ❌ OPEN | `--clr-text-muted` fails AA; Nova assigned Phase 3 fix |
+| Hero stat bar removal | ❌ OPEN | Still present in `index.html` — BUG-017 |
+| Site config portal | ❌ OPEN | Not yet built — BUG-019 |
+| Navbar scroll colour | ✅ RESOLVED | BUG-010 fixed by Nova |
+| Theme tokens | ✅ PASS | Pastel palette applied |
+| Branding | ✅ PASS | 🍃 + "AI engineering team" on all pages |
+| Language switcher | ⚠️ PARTIAL | Functional; 3 bugs open |
+| Author portal | ⚠️ PARTIAL | Functional; security/persistence notes open |
+| Navigation | ✅ PASS | All links verified |
+| Data integrity | ⚠️ PARTIAL | site_config.json pending |
 
-**Overall Status: ✅ FULL PASS**  
-All requirements, redesign specifications, translations, and auth portals have been verified and validated. The website is fully operational.
+**Overall Phase 3 Status: 🔴 IN PROGRESS**  
+Phase 3 sponsor deliverables (contrast, stat bar removal, site config portal) are not yet complete — Nova and JB are implementing now. This checklist defines acceptance criteria. Re-audit required after their implementations land.

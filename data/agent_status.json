@@ -5,18 +5,19 @@
       "role_en": "Project Manager",
       "role_ja": "プロジェクトマネージャー",
       "status": "active",
-      "current_task_en": "Coordinating Phase 1 deployment and monitoring agent tasks.",
-      "current_task_ja": "フェーズ1のデプロイメントの調整と、エージェントのタスク監視。",
+      "current_task_en": "Coordinating contrast overhaul, stats deletion, and Site Configuration portal integration.",
+      "current_task_ja": "コントラストの改善、統計バーの削除、およびサイト設定ポータルの統合を調整中。",
       "avatar_initials": "OL",
       "accent_color": "#8b5cf6",
-      "last_updated": "2026-06-11T15:37:22-04:00",
+      "last_updated": "2026-06-11T15:56:22-04:00",
       "completed_tasks_en": [
         "Created PROJECT_BRIEF.md",
         "Created ARCHITECTURE.md",
         "Created TEAM_LOG.md",
         "Issued Phase 1 assignments",
         "Coordinated Phase 1 bug resolution and code synchronization",
-        "Issued Phase 1 deployment assignments"
+        "Issued Phase 1 deployment assignments",
+        "Issued Phase 2 redesign assignments"
       ],
       "completed_tasks_ja": [
         "PROJECT_BRIEF.md の作成",
@@ -24,7 +25,8 @@
         "TEAM_LOG.md の作成",
         "フェーズ1の課題の割り当て",
         "フェーズ1のバグ修正とコード同期の調整",
-        "フェーズ1のデプロイメント課題の割り当て"
+        "フェーズ1のデプロイメント課題の割り当て",
+        "フェーズ2のリデザイン課題の割り当て"
       ]
     },
     {
@@ -32,11 +34,11 @@
       "role_en": "Frontend Engineer",
       "role_ja": "フロントエンドエンジニア",
       "status": "active",
-      "current_task_en": "Reviewing all website files (HTML, CSS, JS) for clean state and production readiness.",
-      "current_task_ja": "本番環境への配置に向けてすべてのウェブサイトファイル（HTML、CSS、JS）をレビュー中。",
+      "current_task_en": "Overhauling card & text contrast in style.css, removing hero stats from index.html, and building config editor form in author.html.",
+      "current_task_ja": "style.cssにおけるカードとテキストのコントラスト調整、index.htmlからのヒーロー統計バー削除、およびauthor.htmlへの設定エディタフォーム構築を実行中。",
       "avatar_initials": "NV",
       "accent_color": "#06b6d4",
-      "last_updated": "2026-06-11T15:37:22-04:00",
+      "last_updated": "2026-06-11T15:56:22-04:00",
       "completed_tasks_en": [
         "Built index.html homepage",
         "Built journey.html timeline page",
@@ -45,7 +47,8 @@
         "Integrated dynamic timeline filter logic",
         "Added data-agent attributes to homepage team cards",
         "Wired load_status.js to dynamically display team statuses",
-        "Cleared static placeholder entries from timeline"
+        "Cleared static placeholder entries from timeline",
+        "Resolved BUG-010, BUG-015, and BUG-016 style fixes"
       ],
       "completed_tasks_ja": [
         "index.html ホームページの作成",
@@ -55,7 +58,8 @@
         "動的タイムラインフィルターロジックの統合",
         "ホームページのチームカードに data-agent 属性を追加",
         "load_status.js を接続してステータスを動的表示",
-        "タイムラインから静的プレースホルダーのエントリを削除"
+        "タイムラインから静的プレースホルダーのエントリを削除",
+        "BUG-010、BUG-015、BUG-016のスタイル修正の解決"
       ]
     },
     {
@@ -63,11 +67,11 @@
       "role_en": "Backend Engineer",
       "role_ja": "バックエンドエンジニア",
       "status": "active",
-      "current_task_en": "Pushing redesign sprint to GitHub and keeping data layer in sync with new bilingual schema.",
-      "current_task_ja": "リデザインスプリントをGitHubにプッシュし、新しい二言語スキーマとデータレイヤーを同期中。",
+      "current_task_en": "Sprint complete — site_config.json, load_config.js, BUG-011–014 fixes committed and pushed.",
+      "current_task_ja": "スプリント完了 — site_config.json、load_config.js、BUG-011〜014の修正をコミット・プッシュ済み。",
       "avatar_initials": "JB",
       "accent_color": "#10b981",
-      "last_updated": "2026-06-11T15:43:07-04:00",
+      "last_updated": "2026-06-11T15:58:34-04:00",
       "completed_tasks_en": [
         "Read TEAM_LOG.md and ARCHITECTURE.md",
         "Created blog_entries.json",
@@ -82,7 +86,17 @@
         "Updated load_status.js with bilingual agent status cards",
         "Rewrote blog_entries.json with simulation project entries (bilingual schema)",
         "Initialized author_thoughts.json for researcher portal",
-        "Verified all redesign data files are production-ready"
+        "Verified all redesign data files are production-ready",
+        "Created data/site_config.json — bilingual site configuration database",
+        "Built js/load_config.js — async config engine with localStorage persistence",
+        "Integrated load_config.js into main.js (configLoaded event + reveal re-trigger)",
+        "Fixed BUG-010: navbar scroll background updated to light pastel beige",
+        "Fixed BUG-011: added prototype security disclaimer comment to author.html",
+        "Fixed BUG-012: added localStorage-only notice to author.html editor UI",
+        "Fixed BUG-013: login error re-reads data-en/ja on show for correct language",
+        "Fixed BUG-014: load_blog.js now reads bilingual fields and re-renders on languageChanged",
+        "Removed hero stats bar from index.html (Oli's requirement)",
+        "Added Site Configuration editor panel to author.html (logged-in portal)"
       ],
       "completed_tasks_ja": [
         "TEAM_LOG.md と ARCHITECTURE.md の読み込み",
@@ -98,7 +112,18 @@
         "load_status.js を二言語エージェントカードに更新",
         "blog_entries.json をシミュレーションプロジェクトの二言語スキーマで書き直し",
         "研究者ポータル用に author_thoughts.json を初期化",
-        "リデザインデータファイルがすべて本番環境対応であることを確認"
+        "リデザインデータファイルがすべて本番環境対応であることを確認",
+        "data/site_config.json を作成 — 二言語サイト設定データベース",
+        "js/load_config.js を構築 — localStorage永続化付き非同期設定エンジン",
+        "load_config.js を main.js に統合（configLoadedイベント + リビール再トリガー）",
+        "BUG-010修正: ナビゲーションバースクロール背景をライトパステルベージュに更新",
+        "BUG-011修正: author.htmlにプロトタイプセキュリティ免責コメントを追加",
+        "BUG-012修正: author.htmlエディタUIにlocalStorageのみ保存の通知を追加",
+        "BUG-013修正: ログインエラーが表示時に正しい言語のdata-en/jaを再読み込み",
+        "BUG-014修正: load_blog.jsが二言語フィールドを読み取り、languageChangedで再レンダリング",
+        "index.htmlからヒーロー統計バーを削除（Oliの要件）",
+        "author.htmlにサイト設定エディタパネルを追加（ログイン後のポータル）"
+
       ]
     },
     {
@@ -106,11 +131,11 @@
       "role_en": "QA & Documentation Engineer",
       "role_ja": "QA & ドキュメンテーションエンジニア",
       "status": "active",
-      "current_task_en": "Documenting the deployment process and drafting Day 2 narrative blog entry.",
-      "current_task_ja": "デプロイメントプロセスの文書化と、2日目のブログエントリのドラフト作成中。",
+      "current_task_en": "Drafting QA checklists for site config updates and auditing readability and text contrast.",
+      "current_task_ja": "サイト設定のアップデートに関するQAチェックリストのドラフト作成、および読みやすさとテキストのコントラスト監査を実行中。",
       "avatar_initials": "RB",
       "accent_color": "#f59e0b",
-      "last_updated": "2026-06-11T15:37:22-04:00",
+      "last_updated": "2026-06-11T15:56:22-04:00",
       "completed_tasks_en": [
         "Read TEAM_LOG.md and all project docs",
         "Wrote RESEARCH_LOG.md (Day 1 observations)",
@@ -119,7 +144,8 @@
         "Logged 8 bugs in BUGS.md (5 critical)",
         "Wrote first blog post — added to blog_entries.json (entry id: 4)",
         "Updated TEAM_LOG.md with completion note",
-        "Verified all 8 bugs as resolved and updated tracker"
+        "Verified all 8 bugs as resolved and updated tracker",
+        "Performed Phase 2 redesign QA audit and triaged 7 new bugs (BUG-010 to BUG-016)"
       ],
       "completed_tasks_ja": [
         "TEAM_LOG.md およびすべてのプロジェクト文書の読み込み",
@@ -129,7 +155,8 @@
         "BUGS.md に8件のバグを記録（うち5件が重大）",
         "最初のブログ記事を執筆 — blog_entries.jsonに追加（エントリID: 4）",
         "TEAM_LOG.md を完了メモで更新",
-        "8件のバグすべてが解決されたことを検証し、トラッカーを更新"
+        "8件のバグすべてが解決されたことを検証し、トラッカーを更新",
+        "フェーズ2の再設計QA監査を実行し、7件の新しいバグ（BUG-010〜BUG-016）を分類"
       ]
     }
   ]

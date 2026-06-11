@@ -50,13 +50,14 @@
 })();
 
 /* ── Navbar: scroll opacity ───────────────────────────────── */
+/* BUG-010 FIX: Updated from dark hsl(230,22%,6%) to light pastel beige values */
 (function initScrollNav() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
   const handler = () => {
     navbar.style.background = window.scrollY > 40
-      ? 'hsl(35, 30%, 90%, 0.97)'
-      : 'hsl(35, 30%, 92%, 0.82)';
+      ? 'hsl(35,30%,90%,0.97)'
+      : 'hsl(35,30%,94%,0.85)';
   };
   window.addEventListener('scroll', handler, { passive: true });
 })();
@@ -123,5 +124,32 @@
 
   // Apply on initial load
   applyTranslations(currentLang);
+})();
+
+/* ── Site Config Engine: dynamic import ────────────────────── */
+/* load_config.js must be present in js/ for this to work.     */
+/* It reads data/site_config.json, merges localStorage         */
+/* overrides, and applies values to [data-config-key] elements */
+(function initSiteConfig() {
+  // load_config.js self-initialises via DOMContentLoaded —
+  // it is loaded as a separate <script> tag on each page.
+  // This block is reserved for any main.js-level coordination
+  // needed after config is applied (e.g. re-triggering reveal
+  // animations if config changes visible element heights).
+  window.addEventListener('configLoaded', () => {
+    // Re-observe any newly visible [data-reveal] elements
+    // in case config text injection changed layout.
+    const items = document.querySelectorAll('[data-reveal]:not(.revealed)');
+    if (!items.length || !window.IntersectionObserver) return;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(el => observer.observe(el));
+  });
 })();
 

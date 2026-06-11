@@ -117,7 +117,7 @@
     <div class="navbar__inner">
       <a href="index.html" class="navbar__brand" aria-label="AI engineering team Home">
         <div class="navbar__logo-icon" aria-hidden="true">🍃</div>
-        <span class="navbar__name">AI engineering team</span>
+        <span class="navbar__name" data-config-key="site_name">AI engineering team</span>
       </a>
 
       <button class="navbar__hamburger" id="nav-hamburger"
@@ -131,7 +131,7 @@
         <a href="meeting-room.html" class="navbar__link" id="nav-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
         <a href="about.html"        class="navbar__link" id="nav-about" data-en="About" data-ja="概要">About</a>
         <a href="author.html"       class="navbar__link" id="nav-author" data-en="Author" data-ja="著者について">Author</a>
-        <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;"></button>
+        <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;">JP</button>
       </nav>
     </div>
   </header>
@@ -180,7 +180,7 @@
         <!-- Login Panel -->
         <div class="login-box" id="login-container">
           <h4 data-en="Author Log In" data-ja="著者ログイン">Author Log In</h4>
-          <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);" data-en="Log in to write and update field notes. Robin will review edits." data-ja="フィールドノートを執筆および更新するためにログインします。Robinが編集内容を確認します。"></p>
+          <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);" data-en="Log in to write and update field notes. (Password: 12131415 - prototype only)" data-ja="フィールドノートを執筆および更新するためにログインします。(パスワード: 12131415 - プロトタイプ用)"></p>
           <form id="login-form">
             <div class="form-group">
               <label for="password" data-en="Enter Password" data-ja="パスワードを入力">Enter Password</label>
@@ -194,6 +194,15 @@
         <!-- Editor Console (Initially Hidden) -->
         <div class="editor-section" id="editor-container" style="display: none;">
           <h4 data-en="Edit Author Field Notes" data-ja="フィールドノートの編集">Edit Author Field Notes</h4>
+          <!-- BUG-012 NOTE: Changes are saved to your browser's localStorage only.
+               They will appear immediately on this page for you, but will revert
+               to the original file content in other browsers or after clearing
+               browser data. This is a known limitation of a static site. -->
+          <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);padding:var(--sp-2) var(--sp-3);background:var(--clr-bg-0);border-left:3px solid var(--clr-cyan);border-radius:var(--radius-sm);"
+             data-en="⚠️ Changes save to your browser only (localStorage). They will not appear for other visitors." 
+             data-ja="⚠️ 変更はご利用のブラウザのみに保存されます（localStorage）。他の訪問者には表示されません。">
+            ⚠️ Changes save to your browser only (localStorage). They will not appear for other visitors.
+          </p>
           <form id="edit-form">
             <div class="form-group">
               <label for="edit-text-en" data-en="Thoughts (English)" data-ja="ノート（英語）">Thoughts (English)</label>
@@ -204,9 +213,97 @@
               <textarea id="edit-text-ja" class="form-control" rows="5" required></textarea>
             </div>
             <div style="display:flex;gap:var(--sp-3);">
-              <button type="submit" class="btn btn--primary" data-en="Save Changes" data-ja="変更を保存">Save Changes</button>
+              <button type="submit" class="btn btn--primary" data-en="Save Notes" data-ja="ノートを保存">Save Notes</button>
               <button type="button" id="logout-btn" class="btn btn--secondary" data-en="Log Out" data-ja="ログアウト">Log Out</button>
             </div>
+          </form>
+        </div>
+
+        <!-- Site Configuration Editor (Initially Hidden, shown after login) -->
+        <div class="editor-section" id="site-config-container" style="display: none; margin-top: var(--sp-6);">
+          <h4 data-en="Site Configuration" data-ja="サイト設定">Site Configuration</h4>
+          <p style="font-size:0.82rem;color:var(--clr-text-muted);margin-bottom:var(--sp-5);" data-en="Customise brand names, titles, and descriptions. Changes are saved locally and applied on next page load." data-ja="ブランド名、タイトル、説明文をカスタマイズできます。変更はローカルに保存され、次のページ読み込み時に適用されます。"></p>
+          <form id="site-config-form">
+            <div class="form-group">
+              <label for="cfg-brand-en" data-en="Brand Name (English)" data-ja="ブランド名（英語）">Brand Name (English)</label>
+              <input type="text" id="cfg-brand-en" class="form-control" placeholder="AI engineering team" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-brand-ja" data-en="Brand Name (Japanese)" data-ja="ブランド名（日本語）">Brand Name (Japanese)</label>
+              <input type="text" id="cfg-brand-ja" class="form-control" placeholder="AI engineering team" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-desc-en" data-en="Site Description (English)" data-ja="サイト説明（英語）">Site Description (English)</label>
+              <textarea id="cfg-desc-en" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-desc-ja" data-en="Site Description (Japanese)" data-ja="サイト説明（日本語）">Site Description (Japanese)</label>
+              <textarea id="cfg-desc-ja" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-hero-heading-en" data-en="Hero Heading (English)" data-ja="ヒーロー見出し（英語）">Hero Heading (English)</label>
+              <input type="text" id="cfg-hero-heading-en" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-hero-heading-ja" data-en="Hero Heading (Japanese)" data-ja="ヒーロー見出し（日本語）">Hero Heading (Japanese)</label>
+              <input type="text" id="cfg-hero-heading-ja" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-about-heading-en" data-en="About Heading (English)" data-ja="概要見出し（英語）">About Heading (English)</label>
+              <input type="text" id="cfg-about-heading-en" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-about-heading-ja" data-en="About Heading (Japanese)" data-ja="概要見出し（日本語）">About Heading (Japanese)</label>
+              <input type="text" id="cfg-about-heading-ja" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-about-desc-en" data-en="About Description (English)" data-ja="概要説明（英語）">About Description (English)</label>
+              <textarea id="cfg-about-desc-en" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-about-desc-ja" data-en="About Description (Japanese)" data-ja="概要説明（日本語）">About Description (Japanese)</label>
+              <textarea id="cfg-about-desc-ja" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-context-title-en" data-en="Context Title (English)" data-ja="背景タイトル（英語）">Context Title (English)</label>
+              <input type="text" id="cfg-context-title-en" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-context-title-ja" data-en="Context Title (Japanese)" data-ja="背景タイトル（日本語）">Context Title (Japanese)</label>
+              <input type="text" id="cfg-context-title-ja" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-context-text-en" data-en="Context Text (English)" data-ja="背景説明（英語）">Context Text (English)</label>
+              <textarea id="cfg-context-text-en" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-context-text-ja" data-en="Context Text (Japanese)" data-ja="背景説明（日本語）">Context Text (Japanese)</label>
+              <textarea id="cfg-context-text-ja" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-objective-title-en" data-en="Objective Title (English)" data-ja="目的タイトル（英語）">Objective Title (English)</label>
+              <input type="text" id="cfg-objective-title-en" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-objective-title-ja" data-en="Objective Title (Japanese)" data-ja="目的タイトル（日本語）">Objective Title (Japanese)</label>
+              <input type="text" id="cfg-objective-title-ja" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="cfg-objective-text-en" data-en="Objective Text (English)" data-ja="目的説明（英語）">Objective Text (English)</label>
+              <textarea id="cfg-objective-text-en" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cfg-objective-text-ja" data-en="Objective Text (Japanese)" data-ja="目的説明（日本語）">Objective Text (Japanese)</label>
+              <textarea id="cfg-objective-text-ja" class="form-control" rows="3"></textarea>
+            </div>
+
+            <p style="font-size:0.76rem;color:var(--clr-text-muted);margin-bottom:var(--sp-4);" data-en="⚠️ Changes are saved to your browser only (localStorage). Other visitors will not see your customisations." data-ja="⚠️ 変更はあなたのブラウザのみに保存されます（localStorage）。他の訪問者には表示されません。"></p>
+            <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;">
+              <button type="submit" class="btn btn--primary" id="cfg-save-btn" data-en="Save Configuration" data-ja="設定を保存">Save Configuration</button>
+              <button type="button" class="btn btn--secondary" id="cfg-reset-btn" data-en="Reset to Defaults" data-ja="デフォルトにリセット">Reset to Defaults</button>
+            </div>
+            <p id="cfg-saved-msg" style="display:none;color:var(--clr-cyan);font-size:0.82rem;margin-top:var(--sp-3);" data-en="✓ Configuration saved." data-ja="✓ 設定を保存しました。"></p>
           </form>
         </div>
 
@@ -221,23 +318,26 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <span>🍃</span>
-          <span class="gradient-text">AI engineering team</span>
+          <span class="gradient-text" data-config-key="site_name">AI engineering team</span>
         </div>
         <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
         <nav class="footer__links" aria-label="Footer navigation">
           <a href="index.html"        id="footer-home" data-en="Home" data-ja="ホーム">Home</a>
           <a href="journey.html"      id="footer-journey" data-en="Journey Log" data-ja="ジャーニーログ">Journey Log</a>
           <a href="about.html"        id="footer-about" data-en="About" data-ja="概要">About</a>
+          <a href="author.html"       id="footer-author" data-en="Author" data-ja="著者について">Author</a>
         </nav>
       </div>
     </div>
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="js/load_config.js" defer></script>
   <script>
     'use strict';
 
     const DATA_URL = 'data/author_thoughts.json';
+    // BUG-011: The password below is hardcoded for simulation prototype purposes only.
     const AUTH_PASS = '12131415';
 
     // UI Elements
@@ -306,13 +406,17 @@
     // Check login state on load
     function checkLoginState() {
       const isLoggedIn = sessionStorage.getItem('author_logged');
+      const siteConfigContainer = document.getElementById('site-config-container');
       if (isLoggedIn === 'true') {
         loginContainer.style.display = 'none';
         editorContainer.style.display = 'block';
+        if (siteConfigContainer) siteConfigContainer.style.display = 'block';
         populateEditor();
+        populateSiteConfigForm();
       } else {
         loginContainer.style.display = 'block';
         editorContainer.style.display = 'none';
+        if (siteConfigContainer) siteConfigContainer.style.display = 'none';
       }
     }
 
@@ -331,6 +435,44 @@
       editTextJa.value = currentItem.text_ja || '';
     }
 
+    function populateSiteConfigForm() {
+      // Use load_config.js getConfigValue if available, fallback to localStorage
+      const get = (id) => document.getElementById(id);
+      if (typeof window.getConfigValue === 'function') {
+        // Force both languages by temporarily reading from overrides directly
+        const stored = localStorage.getItem('site_config_overrides');
+        let overrides = {};
+        try { overrides = stored ? JSON.parse(stored) : {}; } catch (_) {}
+        const base = window.__siteConfig || {};
+        const getVal = (key, lang) => {
+          if (overrides[key] && overrides[key][lang] !== undefined) return overrides[key][lang];
+          if (base[key] && base[key][lang] !== undefined) return base[key][lang];
+          return '';
+        };
+        if (get('cfg-brand-en'))        get('cfg-brand-en').value        = getVal('site_name', 'en');
+        if (get('cfg-brand-ja'))        get('cfg-brand-ja').value        = getVal('site_name', 'ja');
+        if (get('cfg-desc-en'))         get('cfg-desc-en').value         = getVal('hero_subtitle', 'en');
+        if (get('cfg-desc-ja'))         get('cfg-desc-ja').value         = getVal('hero_subtitle', 'ja');
+        if (get('cfg-hero-heading-en')) get('cfg-hero-heading-en').value = getVal('hero_title', 'en');
+        if (get('cfg-hero-heading-ja')) get('cfg-hero-heading-ja').value = getVal('hero_title', 'ja');
+
+        if (get('cfg-about-heading-en')) get('cfg-about-heading-en').value = getVal('about_heading', 'en');
+        if (get('cfg-about-heading-ja')) get('cfg-about-heading-ja').value = getVal('about_heading', 'ja');
+        if (get('cfg-about-desc-en'))    get('cfg-about-desc-en').value    = getVal('about_desc', 'en');
+        if (get('cfg-about-desc-ja'))    get('cfg-about-desc-ja').value    = getVal('about_desc', 'ja');
+        
+        if (get('cfg-context-title-en')) get('cfg-context-title-en').value = getVal('about_context_title', 'en');
+        if (get('cfg-context-title-ja')) get('cfg-context-title-ja').value = getVal('about_context_title', 'ja');
+        if (get('cfg-context-text-en'))  get('cfg-context-text-en').value  = getVal('about_context_text', 'en');
+        if (get('cfg-context-text-ja'))  get('cfg-context-text-ja').value  = getVal('about_context_text', 'ja');
+        
+        if (get('cfg-objective-title-en')) get('cfg-objective-title-en').value = getVal('about_objective_title', 'en');
+        if (get('cfg-objective-title-ja')) get('cfg-objective-title-ja').value = getVal('about_objective_title', 'ja');
+        if (get('cfg-objective-text-en'))  get('cfg-objective-text-en').value  = getVal('about_objective_text', 'en');
+        if (get('cfg-objective-text-ja'))  get('cfg-objective-text-ja').value  = getVal('about_objective_text', 'ja');
+      }
+    }
+
     // Handlers
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -340,6 +482,8 @@
         passwordInput.value = '';
         checkLoginState();
       } else {
+        const lang = localStorage.getItem('lang') || 'en';
+        loginError.innerHTML = lang === 'en' ? 'Incorrect password.' : 'パスワードが正しくありません。';
         loginError.style.display = 'block';
       }
     });
@@ -366,6 +510,64 @@
       // Smooth scroll back to thoughts
       document.querySelector('.thoughts-section').scrollIntoView({ behavior: 'smooth' });
     });
+
+    // Site Configuration form handlers — using load_config.js public API
+    const siteConfigForm = document.getElementById('site-config-form');
+    const cfgSavedMsg    = document.getElementById('cfg-saved-msg');
+    const cfgResetBtn    = document.getElementById('cfg-reset-btn');
+
+    if (siteConfigForm) {
+      siteConfigForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Use load_config.js saveConfigOverride() API (JB's engine)
+        const entries = [
+          ['site_name',             document.getElementById('cfg-brand-en').value.trim(),         document.getElementById('cfg-brand-ja').value.trim()],
+          ['hero_subtitle',         document.getElementById('cfg-desc-en').value.trim(),           document.getElementById('cfg-desc-ja').value.trim()],
+          ['hero_title',            document.getElementById('cfg-hero-heading-en').value.trim(),   document.getElementById('cfg-hero-heading-ja').value.trim()],
+          ['about_heading',         document.getElementById('cfg-about-heading-en').value.trim(),   document.getElementById('cfg-about-heading-ja').value.trim()],
+          ['about_desc',            document.getElementById('cfg-about-desc-en').value.trim(),      document.getElementById('cfg-about-desc-ja').value.trim()],
+          ['about_context_title',   document.getElementById('cfg-context-title-en').value.trim(),   document.getElementById('cfg-context-title-ja').value.trim()],
+          ['about_context_text',    document.getElementById('cfg-context-text-en').value.trim(),    document.getElementById('cfg-context-text-ja').value.trim()],
+          ['about_objective_title', document.getElementById('cfg-objective-title-en').value.trim(), document.getElementById('cfg-objective-title-ja').value.trim()],
+          ['about_objective_text',  document.getElementById('cfg-objective-text-en').value.trim(),  document.getElementById('cfg-objective-text-ja').value.trim()]
+        ];
+        entries.forEach(([key, en, ja]) => {
+          if (en || ja) {
+            if (typeof window.saveConfigOverride === 'function') {
+              window.saveConfigOverride(key, en || window.getConfigValue(key) || '', ja || window.getConfigValue(key) || '');
+            }
+          }
+        });
+        if (cfgSavedMsg) {
+          cfgSavedMsg.style.display = 'block';
+          setTimeout(() => { cfgSavedMsg.style.display = 'none'; }, 3000);
+        }
+      });
+    }
+
+    if (cfgResetBtn) {
+      cfgResetBtn.addEventListener('click', () => {
+        if (typeof window.clearConfigOverrides === 'function') {
+          window.clearConfigOverrides();
+        }
+        ['cfg-brand-en','cfg-brand-ja','cfg-desc-en','cfg-desc-ja','cfg-hero-heading-en','cfg-hero-heading-ja',
+         'cfg-about-heading-en','cfg-about-heading-ja','cfg-about-desc-en','cfg-about-desc-ja',
+         'cfg-context-title-en','cfg-context-title-ja','cfg-context-text-en','cfg-context-text-ja',
+         'cfg-objective-title-en','cfg-objective-title-ja','cfg-objective-text-en','cfg-objective-text-ja'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+        if (cfgSavedMsg) {
+          const lang = localStorage.getItem('lang') || 'en';
+          cfgSavedMsg.textContent = lang === 'ja' ? '✓ デフォルトにリセットしました。' : '✓ Reset to defaults.';
+          cfgSavedMsg.style.display = 'block';
+          setTimeout(() => {
+            cfgSavedMsg.style.display = 'none';
+            cfgSavedMsg.textContent = '✓ Configuration saved.';
+          }, 2500);
+        }
+      });
+    }
 
     // Re-render thoughts on language change
     window.addEventListener('languageChanged', () => {
