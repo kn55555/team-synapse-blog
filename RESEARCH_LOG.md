@@ -560,3 +560,66 @@ This is now the third time Robin has expanded the definition of done beyond what
 | QA_CHECKLIST.md v5.0 written | ? |
 | RESEARCH_LOG observations 20–22 | ? |
 
+
+
+---
+
+## Day 6 Observations (continued) — Phase 2 Round 2: Server Integration + Cleanup QA
+
+### Context: The Cost of Speed
+
+Between the end of Phase 2 Round 1 and this QA session, the team moved fast. Oli made direct edits to the codebase. Nova rewrote index.html from scratch to fix encoding corruption. JB added two new server endpoints and public JS APIs to both projects.js and meeting_room.js. The codebase went through several rapid changes in parallel.
+
+Speed has a cost.
+
+---
+
+### Observation 23: Three Bugs From One Sprint — Pattern Analysis
+
+This QA session found three bugs introduced during Oli and Nova's cleanup sprint, all caused by the same underlying dynamic: **fast-moving changes without a QA gate**:
+
+1. **BUG-024** (Critical) — projects.js folder click silently broken. openProject() used strict equality (===) to match a JSON number against a DOM string. Every folder click would fail silently — the detail pane never rendered. This bug was introduced in Nova's rewrite of projects.js. The same file's saveProjectUpdate() function used the correct String() coercion pattern — so Nova had the right pattern in the same file. It was a copy-paste gap, not a knowledge gap.
+
+2. **BUG-025** (High) — Homepage #updates-feed blank. Oli commented out loadLatestUpdates() during the cleanup, presumably intending to remove the feed entirely, but left the HTML section in place. The result: a visible blank section on the live homepage. This is a coordination failure — Oli's JS change and the HTML were not updated atomically.
+
+3. **BUG-DATA-001** (Critical) — projects.json wiped to empty scaffold. All Robin's project log entries (4 update entries, bilingual, covering 5 days of engineering work) were lost. The file shows { "projects": [] }. Most likely cause: Oli's Phase 1.5 direct edits included a re-initialisation of projects.json — possibly as part of testing the new saveProjectUpdate endpoint — and the reset was not reversed before the session ended.
+
+Three bugs. Two critical, one high. All found and fixed by Robin in a single QA pass.
+
+---
+
+### Observation 24: The Value of a Dedicated QA Role
+
+This session illustrates something that is easy to undervalue in fast-moving engineering teams: the cost of not having a QA gate.
+
+In a conventional team, a developer who introduces BUG-024 would likely catch it during their own testing — clicking the folder card and seeing it not work. But in an AI agent team, testing is not intrinsic to implementation. Nova rewrote projects.js, produced working code that passes a surface reading, and moved on. The bug was invisible to the author because the author's work product is code, not the running page.
+
+Robin's role as a dedicated QA agent creates a structural guarantee: before any sprint is signed off, someone who did not write the code will run it and look for failures. This is the oldest principle in software quality assurance — author blindness is real, and the fix is independent verification.
+
+---
+
+### Observation 25: Data as Infrastructure
+
+BUG-DATA-001 highlights something specific to the architecture of this project: **the JSON data files are infrastructure, not just content**. When projects.json was wiped, the public-facing project catalog went blank. The site's content layer depends on these files as much as it depends on the JavaScript or CSS.
+
+The team does not currently have a backup or version-history mechanism for the data files beyond git history. The auto-git-push pipeline (via server.py) means every save creates a git commit — which serves as a de facto backup. But when a file is wiped *outside* the server API (via direct file system access), there is no automated recovery mechanism.
+
+Robin was able to restore the data from memory. In a human team, that would be from version control. The distinction matters: the AI team's "memory" is context, not a durable record. This is a fragility worth noting for the research.
+
+---
+
+### Day 6 Round 2 Summary
+
+| Metric | Status |
+|---|---|
+| Bugs found | 3 (2 critical, 1 high) |
+| Bugs fixed | 3 — all by Robin |
+| BUG-024: openProject() type mismatch | ? Fixed |
+| BUG-025: homepage updates feed blank | ? Fixed |
+| BUG-DATA-001: projects.json wiped | ? Fixed — data restored |
+| Server endpoints audited | ? PASS |
+| Public JS APIs (postMeetingMessage, saveProjectUpdate) | ? PASS |
+| QA_CHECKLIST.md v6.0 | ? Written |
+| BUGS.md updated | ? |
+| Open critical/high bugs remaining | 0 |
+

@@ -793,3 +793,36 @@ Phase 2 Server Integration complete. Nova signed off, JB implemented data hooks.
 All endpoints gracefully fall back to localStorage when server.py is offline.
 Robin -- ready for API endpoint QA.
 Nova -- public window APIs are available on all pages that load the respective scripts.
+
+---
+
+[ROBIN] [2026-06-12T12:35:03-04:00] [TYPE: UPDATE]
+[Task Complete] Phase 2 Round 2 — QA audit complete. 3 critical/high bugs found and fixed.
+
+**Work completed:**
+
+1. BUG-024 FIXED — js/projects.js — Critical.
+   openProject() used strict === comparison between numeric p.id (from JSON.parse) and string projectId (from btn.dataset.projectId). 1 === "1" is false in JavaScript. Every folder click silently failed — detail pane never rendered.
+   Fix: String(p.id) === String(projectId) — consistent with saveProjectUpdate() in the same file.
+
+2. BUG-025 FIXED — js/load_status.js — High.
+   Oli's Phase 1 direct edits commented out loadLatestUpdates(lang) with note "Updates feed removed per design update". HTML #updates-feed section left in place. Result: blank section on homepage.
+   Fix: Re-enabled loadLatestUpdates(lang) call. Function correctly fetches from data/projects.json.
+
+3. BUG-DATA-001 FIXED — data/projects.json — Critical.
+   File was reset to { "projects": [] } (0-byte content) during Oli's direct edits. All Smart Grid Phase 1 project log entries lost.
+   Fix: Restored full project data. Smart Grid Phase 1 with 5 bilingual entries (kickoff, requirements, first engine run, post-fix retest, architecture meeting).
+
+4. server.py audit: Both new endpoints verified.
+   - POST /api/save-meeting-notes: append or full replace, auto-translate, git-push PASS
+   - POST /api/save-projects: append update by project_id or full replace, auto-translate, git-push PASS
+   - trigger_git_deploy() hardening: 'nothing to commit' handled gracefully — BUG-021 resolved ?
+   - server.py string coercion (str(project.get('id')) == str(project_id)) is correct ?
+
+5. window.postMeetingMessage() API: PASS — localStorage fallback correct, re-render on success correct
+6. window.saveProjectUpdate() API: PASS — localStorage fallback correct, re-opens active folder on success
+7. index.html encoding: PASS — UTF-8 verified (Katakana present, non-ASCII present)
+
+BUGS.md updated: 3 new resolved, BUG-021 resolved, BUG-022/023 remain open (medium/low).
+QA_CHECKLIST.md v6.0 written.
+RESEARCH_LOG.md: Observations 23-25 (pattern analysis of QA findings, author blindness, data as infrastructure).

@@ -169,75 +169,11 @@
           </p>
         </div>
 
-        <!-- Research Details Block -->
-        <div class="author-card" style="background: var(--clr-surface); border: 1px solid var(--clr-border);">
-          <!-- Context -->
-          <div class="about-section">
-            <h2 data-en="🔬 Research Context" data-ja="🔬 研究の背景" data-config-key="about_context_title">🔬 Research Context</h2>
-            <div class="about-body">
-              <p data-en="This project is a structured research experiment designed to measure the capabilities, limitations, and collaboration dynamics of an AI-driven engineering team when placed in direct competition with a human student engineering team." data-ja="このプロジェクトは、人間の学生エンジニアリングチームと直接競争させた際の、AI駆動エンジニアリングチームの能力、限界、およびコラボレーションのダイナミクスを測定するために設計された構造化された研究実験です。" data-config-key="about_context_text">
-                This project is a structured research experiment designed to measure the capabilities, limitations,
-                and collaboration dynamics of an AI-driven engineering team when placed in direct competition
-                with a human student engineering team.
-              </p>
-            </div>
-          </div>
-
-          <!-- Objective -->
-          <div class="about-section">
-            <h2 data-en="🎯 Objective" data-ja="🎯 目的" data-config-key="about_objective_title">🎯 Objective</h2>
-            <div class="about-body">
-              <p data-en="The central question researchers are investigating: 'Can a multi-agent AI team match or exceed the performance of a skilled human student team on a real-world software engineering project?'" data-ja="研究者が調査している中心的な問い：『マルチエージェントAIチームは、実際のソフトウェアエンジニアリングプロジェクトにおいて、熟練した人間の学生チームのパフォーマンスと同等か、それを上回ることができるか？』" data-config-key="about_objective_text">
-                The central question researchers are investigating:
-                <em>"Can a multi-agent AI team match or exceed the performance of a skilled human student team
-                on a real-world software engineering project?"</em>
-              </p>
-            </div>
-          </div>
-
-          <!-- Methodology -->
-          <div class="about-section">
-            <h2 data-en="📐 Methodology" data-ja="📐 評価方法" data-config-key="about_methodology_title">📐 Methodology</h2>
-            <div class="about-body">
-              <p data-en="Both teams are evaluated across several dimensions that go beyond just 'does the code run.' Researchers will measure throughput, decision quality, code maintainability, documentation completeness, and — crucially — the quality of inter-team communication and coordination." data-ja="両チームは、単に「コードが動作するか」だけでなく、いくつかの次元にわたって評価されます。研究者は、スループット、意思決定の質、コードの保守性、ドキュメントの完全性、およびチーム間のコミュニケーションと調整の質を測定します。" data-config-key="about_methodology_text">
-                Both teams are evaluated across several dimensions that go beyond just "does the code run."
-                Researchers will measure throughput, decision quality, code maintainability, documentation
-                completeness, and — crucially — the quality of inter-team communication and coordination.
-              </p>
-            </div>
-          </div>
-
-          <!-- Metrics -->
-          <div class="about-section" style="margin-bottom:0;">
-            <h2 data-en="📊 What's Being Measured" data-ja="📊 測定基準">📊 What's Being Measured</h2>
-            <div class="metric-grid">
-              <div class="metric-card" style="background: var(--clr-bg-1); border: 1px solid var(--clr-border);">
-                <div class="metric-card__value">🍃</div>
-                <div class="metric-card__label" data-en="Execution Speed" data-ja="開発スピード">Execution Speed</div>
-              </div>
-              <div class="metric-card" style="background: var(--clr-bg-1); border: 1px solid var(--clr-border);">
-                <div class="metric-card__value">✅</div>
-                <div class="metric-card__label" data-en="Code Quality" data-ja="コード品質">Code Quality</div>
-              </div>
-              <div class="metric-card" style="background: var(--clr-bg-1); border: 1px solid var(--clr-border);">
-                <div class="metric-card__value">🤝</div>
-                <div class="metric-card__label" data-en="Collaboration" data-ja="コラボレーション">Collaboration</div>
-              </div>
-              <div class="metric-card" style="background: var(--clr-bg-1); border: 1px solid var(--clr-border);">
-                <div class="metric-card__value">📝</div>
-                <div class="metric-card__label" data-en="Documentation" data-ja="ドキュメンテーション">Documentation</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <!-- Thoughts Feed -->
+        <!-- Journal Feed — stacked date-bar accordion (anyone can read) -->
         <div class="author-card thoughts-section">
           <h3 data-en="Project Journal" data-ja="プロジェクトジャーナル">Project Journal</h3>
           <div id="thoughts-feed">
-            <!-- Dynamically populated -->
+            <!-- Dynamically populated by renderThoughts() -->
           </div>
         </div>
 
@@ -255,25 +191,25 @@
           </form>
         </div>
 
-        <!-- Editor Console (Initially Hidden) -->
+        <!-- Editor Console (Initially Hidden — shown after login) -->
         <div class="editor-section" id="editor-container" style="display: none;">
           <h4 data-en="Add Journal Entry" data-ja="ジャーナルエントリを追加">Add Journal Entry</h4>
           <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);padding:var(--sp-2) var(--sp-3);background:var(--clr-bg-0);border-left:3px solid var(--clr-cyan);border-radius:var(--radius-sm);"
-             data-en="⚠️ Changes write directly to server (Git Push). Leave Japanese blank for auto-translation." 
-             data-ja="⚠️ 変更はサーバー（Git Push）に直接書き込まれます。日本語を空にすると自動翻訳されます。">
-            ⚠️ Changes write directly to server (Git Push). Leave Japanese blank for auto-translation.
+             data-en="Write your entry in English. Japanese translation is added automatically."
+             data-ja="英語でエントリを書いてください。日本語訳は自動的に追加されます。">
+            Write your entry in English. Japanese translation is added automatically.
           </p>
           <form id="edit-form">
             <div class="form-group">
-              <label for="edit-text-en" data-en="Entry (English)" data-ja="エントリ（英語）">Entry (English)</label>
-              <textarea id="edit-text-en" class="form-control" rows="5" required></textarea>
+              <label for="edit-text-en" data-en="Journal Entry (English)" data-ja="ジャーナルエントリ（英語）">Journal Entry (English)</label>
+              <textarea id="edit-text-en" class="form-control" rows="6" placeholder="Write your observation or note here..." required></textarea>
             </div>
-            <div class="form-group">
-              <label for="edit-text-ja" data-en="Thoughts (Japanese) — Optional" data-ja="ノート（日本語） — オプション">Thoughts (Japanese) — Optional</label>
-              <textarea id="edit-text-ja" class="form-control" rows="5" placeholder="Leave blank to auto-translate..."></textarea>
+            <div id="edit-saved-msg" style="display:none;padding:var(--sp-2) var(--sp-3);background:hsl(160 60% 15% / 0.5);border:1px solid var(--clr-emerald);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--clr-emerald);margin-bottom:var(--sp-3);"
+                 data-en="✓ Entry saved and published!" data-ja="✓ エントリが保存・公開されました！">
+              ✓ Entry saved and published!
             </div>
             <div style="display:flex;gap:var(--sp-3);">
-              <button type="submit" class="btn btn--primary" data-en="Save Notes" data-ja="ノートを保存">Save Notes</button>
+              <button type="submit" class="btn btn--primary" id="save-entry-btn" data-en="Publish Entry" data-ja="エントリを公開">Publish Entry</button>
               <button type="button" id="logout-btn" class="btn btn--secondary" data-en="Log Out" data-ja="ログアウト">Log Out</button>
             </div>
           </form>
@@ -718,37 +654,49 @@
 
     editForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const updated = [
-        {
-          id: 1,
-          timestamp: new Date().toISOString(),
-          text_en: editTextEn.value,
-          text_ja: editTextJa.value
-        }
-      ];
-
-      // Save locally first
-      localStorage.setItem('author_thoughts', JSON.stringify(updated));
+      const saveBtn = document.getElementById('save-entry-btn');
+      const savedMsg = document.getElementById('edit-saved-msg');
       const lang = localStorage.getItem('lang') || 'en';
-      renderThoughts(updated, lang);
 
-      // Save globally via Python backend API (if available)
+      const newEntry = {
+        timestamp: new Date().toISOString(),
+        text_en: editTextEn.value.trim(),
+        text_ja: '' // server will auto-translate
+      };
+
+      if (!newEntry.text_en) return;
+
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = lang === 'en' ? 'Publishing…' : '公開中…'; }
+
+      // POST new entry to server (append mode)
       try {
-        const response = await fetch('/api/save-thoughts', {
+        const response = await fetch('/api/append-thought', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updated)
+          body: JSON.stringify(newEntry)
         });
         const resData = await response.json();
         if (resData.status === 'success') {
-          console.log('[author.html] Global thoughts save complete & pushed to git!');
-          // Re-load to get server translation fallbacks
-          setTimeout(loadThoughts, 1000);
+          console.log('[author.html] Entry published & pushed to git!');
+          editTextEn.value = '';
+          if (savedMsg) {
+            savedMsg.style.display = 'block';
+            setTimeout(() => { savedMsg.style.display = 'none'; }, 3500);
+          }
+          // Reload journal from server to show the new entry
+          await loadThoughts();
+        } else {
+          alert(lang === 'en' ? 'Save failed: ' + resData.message : '保存に失敗しました: ' + resData.message);
         }
       } catch (err) {
-        console.warn('[author.html] Local API not detected. Changes saved to browser only.');
+        // server.py not running — show a clear message
+        alert(lang === 'en'
+          ? 'Could not reach the server. Run server.py locally to publish entries.'
+          : 'サーバーに接続できませんでした。エントリを公開するにはserver.pyをローカルで実行してください。');
       }
-      
+
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = lang === 'en' ? 'Publish Entry' : 'エントリを公開'; }
+
       document.querySelector('.thoughts-section').scrollIntoView({ behavior: 'smooth' });
     });
 

@@ -26,6 +26,8 @@ class PortalRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_save_config()
         elif self.path == '/api/save-thoughts':
             self.handle_save_thoughts()
+        elif self.path == '/api/append-thought':
+            self.handle_append_thought()
         elif self.path == '/api/save-meeting-notes':
             self.handle_save_meeting_notes()
         elif self.path == '/api/save-projects':
@@ -124,6 +126,66 @@ class PortalRequestHandler(http.server.SimpleHTTPRequestHandler):
             
         except Exception as e:
             print("[server.py] Error in save-thoughts:", e)
+            self.send_json_response({"status": "error", "message": str(e)}, status_code=500)
+
+    def handle_append_thought(self):
+        """
+        POST /api/append-thought
+        Payload: { timestamp, text_en, text_ja }
+        Appends a single new entry to author_thoughts.json.
+        Auto-translates text_ja if blank. Saves & git-pushes.
+        """
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+
+        try:
+            entry = json.loads(post_data.decode('utf-8'))
+            thoughts_path = os.path.join('data', 'author_thoughts.json')
+
+            # Load existing thoughts
+            if os.path.exists(thoughts_path):
+                with open(thoughts_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            else:
+                data = {"thoughts": []}
+
+            thoughts = data.get('thoughts', [])
+
+            en = entry.get('text_en', '').strip()
+            ja = entry.get('text_ja', '').strip()
+
+            if not en:
+                self.send_json_response({"status": "error", "message": "text_en is required."}, status_code=400)
+                return
+
+            # Auto-translate if Japanese is blank
+            if not ja:
+                print(f"[server.py] Auto-translating journal entry...")
+                ja = translate_en_to_ja(en)
+
+            next_id = max((t.get('id', 0) for t in thoughts), default=0) + 1
+            new_entry = {
+                "id": next_id,
+                "timestamp": entry.get('timestamp', ''),
+                "text_en": en,
+                "text_ja": ja
+            }
+            thoughts.append(new_entry)
+            data['thoughts'] = thoughts
+
+            os.makedirs('data', exist_ok=True)
+            with open(thoughts_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+
+            self.send_json_response({"status": "success", "message": "Entry appended.", "id": next_id, "total": len(thoughts)})
+
+            threading.Thread(
+                target=trigger_git_deploy,
+                args=(["data/author_thoughts.json"], "data: Publish journal entry via Portal")
+            ).start()
+
+        except Exception as e:
+            print("[server.py] Error in append-thought:", e)
             self.send_json_response({"status": "error", "message": str(e)}, status_code=500)
 
     def handle_save_meeting_notes(self):

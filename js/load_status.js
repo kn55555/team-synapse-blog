@@ -134,7 +134,7 @@
 
     injectAgentStatuses(agents, lang);
     populateStatusBar(agents, lang);
-    // loadLatestUpdates(lang); // Updates feed removed per design update
+    loadLatestUpdates(lang); // Populates #updates-feed from projects.json
   }
 
   /**

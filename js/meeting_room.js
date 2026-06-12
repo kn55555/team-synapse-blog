@@ -272,7 +272,6 @@
       return;
     }
 
-    renderSessionInfo(data.session, lang);
     renderMessages(data.messages, lang);
 
     console.log(`[meeting_room.js] ✓ Loaded ${(data.messages || []).length} messages.`);

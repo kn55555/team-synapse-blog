@@ -139,7 +139,7 @@
       b.classList.toggle('is-active', isActive);
     });
 
-    const project = allProjects.find(p => p.id === projectId);
+    const project = allProjects.find(p => String(p.id) === String(projectId));
     if (!project) return;
 
     pane.style.display = 'block';
