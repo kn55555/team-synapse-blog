@@ -485,12 +485,12 @@ All sponsor requirements have been successfully built, validated by QA, and depl
 Phase 3 Redline verification complete. All files audited, staged, and pushed to GitHub.
 
 **Files verified and confirmed correct:**
-- server.py — Python local dev server with /api/save-config + /api/save-thoughts REST endpoints, auto-translation via Google Translate API, auto-git-push pipeline. Port 3000.
-- data/projects.json — Projects catalog DB with 1 active project (Smart Grid Load Balancer Phase 1). 4 bilingual Robin log entries. Schema: title_en/ja, status_en/ja, desc_en/ja, updates[].
-- js/projects.js — Async projects loader. Renders project folders + Robin's update timeline. Bilingual, re-renders on languageChanged.
-- projects.html — New Projects page replacing journey.html. Proper navbar (Home | Projects | Meeting Room | About Author), footer links aligned, load_config.js + projects.js wired.
-- data/site_config.json — password_hash key added (SHA-256 of 12131415). Full bilingual config including about/context/objective/methodology/started keys.
-- author.html — Full Phase 3 Redline: SHA-256 hashing via Web Crypto API, hash loaded from site_config.json on boot, site config editor with all extended keys, /api/save-config + /api/save-thoughts POST integration, password change flow.
+- server.py ï¿½ Python local dev server with /api/save-config + /api/save-thoughts REST endpoints, auto-translation via Google Translate API, auto-git-push pipeline. Port 3000.
+- data/projects.json ï¿½ Projects catalog DB with 1 active project (Smart Grid Load Balancer Phase 1). 4 bilingual Robin log entries. Schema: title_en/ja, status_en/ja, desc_en/ja, updates[].
+- js/projects.js ï¿½ Async projects loader. Renders project folders + Robin's update timeline. Bilingual, re-renders on languageChanged.
+- projects.html ï¿½ New Projects page replacing journey.html. Proper navbar (Home | Projects | Meeting Room | About Author), footer links aligned, load_config.js + projects.js wired.
+- data/site_config.json ï¿½ password_hash key added (SHA-256 of 12131415). Full bilingual config including about/context/objective/methodology/started keys.
+- author.html ï¿½ Full Phase 3 Redline: SHA-256 hashing via Web Crypto API, hash loaded from site_config.json on boot, site config editor with all extended keys, /api/save-config + /api/save-thoughts POST integration, password change flow.
 
 **Files removed by Nova (staged deletions):**
 - journey.html, about.html, js/journey.js, js/load_blog.js, data/blog_entries.json
@@ -500,7 +500,7 @@ Phase 3 Redline verification complete. All files audited, staged, and pushed to 
 - Commit: "Phase 3 Redline: projects page, server API, SHA-256 auth, extended config"
 - Pushed to: https://github.com/kn55555/team-synapse-blog
 
-Netlify will auto-deploy from main. Note: server.py is a local development tool — Netlify deploys static files only. The author portal falls back to localStorage when server.py is not running.
+Netlify will auto-deploy from main. Note: server.py is a local development tool ï¿½ Netlify deploys static files only. The author portal falls back to localStorage when server.py is not running.
 
 JB status: all sprints complete. Standing by for next task from Oli.
 
@@ -529,9 +529,9 @@ Post-launch audit and Projects page data population complete.
 
 Work completed:
 
-- data/projects.json: Populated with first project entry — "Smart Grid Load Balancer Phase 1" (bilingual EN/JP). 4 log entries written in Robin's QA narrator voice covering: project kickoff and requirements (Day 1), requirements spec v1.0 and QA test design (Day 2), JB's first simulation engine results — 9/18 tests passing, 4 bugs filed (Day 3), post-fix retest — 15/18 passing, 3 remaining with root cause analysis (Day 5).
+- data/projects.json: Populated with first project entry ï¿½ "Smart Grid Load Balancer Phase 1" (bilingual EN/JP). 4 log entries written in Robin's QA narrator voice covering: project kickoff and requirements (Day 1), requirements spec v1.0 and QA test design (Day 2), JB's first simulation engine results ï¿½ 9/18 tests passing, 4 bugs filed (Day 3), post-fix retest ï¿½ 15/18 passing, 3 remaining with root cause analysis (Day 5).
 
-- BUGS.md: Phase 4 update. BUG-011 closed (password now SHA-256 hashed in site_config.json). BUG-012 closed (server.py provides real write-back + git push — localStorage no longer only persistence). 3 new Phase 4 bugs: BUG-021 (git deploy silent failure — medium), BUG-022 (unofficial translation API — medium), BUG-023 (empty state language switch in projects.js — low).
+- BUGS.md: Phase 4 update. BUG-011 closed (password now SHA-256 hashed in site_config.json). BUG-012 closed (server.py provides real write-back + git push ï¿½ localStorage no longer only persistence). 3 new Phase 4 bugs: BUG-021 (git deploy silent failure ï¿½ medium), BUG-022 (unofficial translation API ï¿½ medium), BUG-023 (empty state language switch in projects.js ï¿½ low).
 
 - QA_CHECKLIST.md v4.0: Full audit of projects.html, projects.js, projects.json content, and all server.py endpoints. Navigation consistency table updated for 4-page structure. Phase 4 overall status: PASS.
 
@@ -542,6 +542,32 @@ QA findings summary:
 - Bilingual rendering and languageChanged hook correct ?
 - server.py auto-translation fallback is safe (returns English, not crash) ?
 - Git deploy pipeline runs in background thread, non-blocking ?
-- BUG-021: git failure is silent — recommend pre-check and response delay
-- BUG-022: unofficial translation endpoint — document as known limitation
-- BUG-023: empty state language hardcoded in JS — minor
+- BUG-021: git failure is silent ï¿½ recommend pre-check and response delay
+- BUG-022: unofficial translation endpoint ï¿½ document as known limitation
+- BUG-023: empty state language hardcoded in JS ï¿½ minor
+
+---
+
+[Oli] [2026-06-12T09:58:00-04:00] [TYPE: UPDATE]
+Phase 2 Kickoff: Virtual Meeting Room construction.
+
+The sponsor has approved the implementation plan for Phase 2. We are building a Virtual Meeting Room on the website to support simulated real-time collaboration.
+
+**Assignments:**
+
+- **Nova (Frontend)**:
+  - Build cartoon-style SVG avatars for each team member (Oli, Nova, JB, Robin) in code.
+  - Implement the 2x2 video-call grid in `meeting-room.html` and design a side-by-side / responsive chat layout.
+  - Write CSS animations in `style.css` for idle states (breathing, body-swaying, head-tilting, blinking) and active speaking indicators (leaning forward, panel glow, soundwave bars).
+
+- **JB (Backend & Data)**:
+  - Create the `data/meeting_notes.json` database schema for storing conversations.
+  - Write JavaScript code (e.g. in `js/meeting_room.js`) to load and dynamically render messages.
+  - Implement auto-scroll to the latest message on load.
+  - Implement active speaker highlighting logic that targets the agent who sent the most recent message.
+
+- **Robin (QA & Documentation)**:
+  - Write a comprehensive, detailed, and realistic sample session for `data/meeting_notes.json` (at least 20 messages of detailed engineering brainstorming between all 4 agents resolving a structural problem).
+  - Perform QA audit and update checklist.
+
+**Next steps:** Nova to begin designing the SVG avatars and setting up the meeting room layout.
