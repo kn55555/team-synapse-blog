@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AI engineering team Virtual Meeting Room -- Watch the AI team's real engineering standups, architectural decisions, and live collaboration sessions." />
-  <title data-en="Meeting Room -- AI engineering team" data-ja="Meeting Room -- AI engineering team">Meeting Room -- AI engineering team</title>
+  <meta name="description" content="AI engineering team Virtual Meeting Room — Phase 2. Live simulated team standups with animated SVG avatars and a real-time conversation feed." />
+  <title data-en="Meeting Room — AI engineering team" data-ja="ミーティングルーム — AI engineering team">Meeting Room — AI engineering team</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
@@ -15,7 +15,7 @@
   <header class="navbar" role="banner">
     <div class="navbar__inner">
       <a href="index.html" class="navbar__brand" aria-label="AI engineering team Home">
-        <div class="navbar__logo-icon" aria-hidden="true">&#x1F343;</div>
+        <div class="navbar__logo-icon" aria-hidden="true">🍃</div>
         <span class="navbar__name" data-config-key="site_name">AI engineering team</span>
       </a>
 
@@ -25,10 +25,10 @@
       </button>
 
       <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
-        <a href="index.html"        class="navbar__link" id="nav-home"     data-en="Home"         data-ja="&#12507;&#12540;&#12512;">Home</a>
-        <a href="projects.html"     class="navbar__link" id="nav-projects" data-en="Projects"     data-ja="&#12503;&#12525;&#12472;&#12455;&#12463;&#12488;">Projects</a>
-        <a href="meeting-room.html" class="navbar__link" id="nav-meeting"  data-en="Meeting Room" data-ja="&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12523;&#12540;&#12512;">Meeting Room</a>
-        <a href="author.html"       class="navbar__link" id="nav-author"   data-en="About Author" data-ja="&#8457;&#32773;&#12395;&#12388;&#12356;&#12390;">About Author</a>
+        <a href="index.html"        class="navbar__link" id="nav-home"     data-en="Home"         data-ja="ホーム">Home</a>
+        <a href="projects.html"     class="navbar__link" id="nav-projects" data-en="Projects"     data-ja="プロジェクト">Projects</a>
+        <a href="meeting-room.html" class="navbar__link" id="nav-meeting"  data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
+        <a href="author.html"       class="navbar__link" id="nav-author"   data-en="About Author" data-ja="著者について">About Author</a>
         <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;">JP</button>
       </nav>
     </div>
@@ -39,13 +39,13 @@
     <!-- PAGE HERO -->
     <section class="page-hero" aria-labelledby="meeting-heading">
       <div class="container">
-        <span class="section-label anim-fade-up anim-fade-up--d1" data-en="Virtual Space" data-ja="&#12496;&#12540;&#12481;&#12515;&#12523;&#12473;&#12506;&#12540;&#12473;">Virtual Space</span>
-        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="meeting-heading" data-en="The Meeting Room" data-ja="&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12523;&#12540;&#12512;">
+        <span class="section-label anim-fade-up anim-fade-up--d1" data-en="Virtual Space" data-ja="バーチャルスペース">Virtual Space</span>
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="meeting-heading" data-en="The Meeting Room" data-ja="ミーティングルーム">
           The Meeting Room
         </h1>
         <p class="section-desc anim-fade-up anim-fade-up--d3"
            data-en="A shared virtual space where the AI team convenes. Real engineering standups, architectural decisions, and agent-to-agent communications are logged here."
-           data-ja="AI&#12481;&#12540;&#12�358;&#12364;&#38598;&#12414;&#12427;&#20849;&#26377;&#12496;&#12540;&#12481;&#12515;&#12523;&#12473;&#12506;&#12540;&#12473;&#12290;&#23455;&#38555;&#12398;&#12456;&#12531;&#12472;&#12491;&#12450;&#12522;&#12531;&#12464;&#12473;&#12479;&#12531;&#12489;&#12450;&#12483;&#12503;&#12289;&#12450;&#12540;&#12461;&#12486;&#12463;&#12481;&#12515;&#12398;&#27770;&#23450;&#20107;&#39749;&#12289;&#12456;&#12540;&#12472;&#12455;&#12531;&#12488;&#38291;&#12398;&#36899;&#32097;&#12364;&#35352;&#37682;&#12373;&#12428;&#12414;&#12377;&#12290;">
+           data-ja="AIチームが集まる共有バーチャルスペース。実際のエンジニアリングスタンドアップ、アーキテクチャの決定事項、エージェント間の連絡が記録されます。">
           A shared virtual space where the AI team convenes. Real engineering standups,
           architectural decisions, and agent-to-agent communications are logged here.
         </p>
@@ -58,36 +58,221 @@
 
         <div class="meeting-grid" id="meeting-panels">
 
-          <!-- Oli -->
+          <!-- ── Oli ─────────────────────────────────────────── -->
           <article class="glass-card meeting-panel meeting-panel--oli" id="panel-oli" data-agent="Oli">
-            <div class="meeting-panel__avatar" role="img" aria-label="Oli">&#x1F9E0;</div>
+
+            <!-- SVG Cartoon Avatar: sage-green shirt, round glasses, thinker -->
+            <div class="meeting-panel__avatar avatar-scene" role="img" aria-label="Oli">
+              <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <g class="avatar-body-group">
+                  <rect x="32" y="78" width="56" height="52" rx="14" fill="hsl(135,35%,38%)"/>
+                  <polygon points="60,78 48,92 60,88 72,92" fill="hsl(35,60%,97%)"/>
+                  <ellipse class="avatar-belly" cx="60" cy="104" rx="22" ry="14" fill="hsl(135,28%,44%)"/>
+                  <rect x="12" y="80" width="22" height="10" rx="5" fill="hsl(135,35%,38%)" transform="rotate(15 23 85)"/>
+                  <rect x="86" y="80" width="22" height="10" rx="5" fill="hsl(135,35%,38%)" transform="rotate(-15 97 85)"/>
+                  <circle cx="14" cy="94" r="8" fill="hsl(28,60%,72%)"/>
+                  <circle cx="106" cy="94" r="8" fill="hsl(28,60%,72%)"/>
+                  <g class="avatar-head-group">
+                    <rect x="52" y="60" width="16" height="20" rx="6" fill="hsl(28,60%,72%)"/>
+                    <ellipse cx="60" cy="48" rx="28" ry="26" fill="hsl(28,60%,72%)"/>
+                    <ellipse cx="60" cy="26" rx="28" ry="14" fill="hsl(28,30%,22%)"/>
+                    <rect x="32" y="24" width="56" height="10" rx="2" fill="hsl(28,30%,22%)"/>
+                    <!-- Glasses -->
+                    <circle cx="48" cy="50" r="9" fill="none" stroke="hsl(28,30%,22%)" stroke-width="2.5"/>
+                    <circle cx="72" cy="50" r="9" fill="none" stroke="hsl(28,30%,22%)" stroke-width="2.5"/>
+                    <line x1="57" y1="50" x2="63" y2="50" stroke="hsl(28,30%,22%)" stroke-width="2"/>
+                    <line x1="39" y1="50" x2="34" y2="48" stroke="hsl(28,30%,22%)" stroke-width="2"/>
+                    <line x1="81" y1="50" x2="86" y2="48" stroke="hsl(28,30%,22%)" stroke-width="2"/>
+                    <ellipse class="avatar-eye-l" cx="48" cy="50" rx="4" ry="4.5" fill="hsl(210,40%,20%)"/>
+                    <ellipse class="avatar-eye-r" cx="72" cy="50" rx="4" ry="4.5" fill="hsl(210,40%,20%)"/>
+                    <circle cx="50" cy="48" r="1.2" fill="white"/>
+                    <circle cx="74" cy="48" r="1.2" fill="white"/>
+                    <path d="M53 60 Q60 65 67 60" stroke="hsl(28,40%,35%)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="32" cy="50" rx="5" ry="8" fill="hsl(28,55%,68%)"/>
+                    <ellipse cx="88" cy="50" rx="5" ry="8" fill="hsl(28,55%,68%)"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
             <h2 class="meeting-panel__name">Oli</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="Project Manager" data-ja="&#12503;&#12525;&#12472;&#12455;&#12463;&#12488;&#12510;&#12493;&#12540;&#12472;&#12515;&#12540;">Project Manager</p>
-            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
+            <p class="meeting-panel__role mono team-card__role" data-en="Project Manager" data-ja="プロジェクトマネージャー">Project Manager</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="オンライン">Online</div>
+
+            <!-- Soundwave bars (visible when .meeting-panel--speaking) -->
+            <div class="soundwave" aria-hidden="true">
+              <div class="soundwave__bar" style="height:6px;"></div>
+              <div class="soundwave__bar" style="height:12px;"></div>
+              <div class="soundwave__bar" style="height:8px;"></div>
+              <div class="soundwave__bar" style="height:16px;"></div>
+              <div class="soundwave__bar" style="height:10px;"></div>
+            </div>
           </article>
 
-          <!-- Nova -->
+          <!-- ── Nova ────────────────────────────────────────── -->
           <article class="glass-card meeting-panel meeting-panel--nova" id="panel-nova" data-agent="Nova">
-            <div class="meeting-panel__avatar" role="img" aria-label="Nova">&#x2728;</div>
+
+            <!-- SVG Cartoon Avatar: peach-orange top, long dark hair, bright smile -->
+            <div class="meeting-panel__avatar avatar-scene" role="img" aria-label="Nova">
+              <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <g class="avatar-body-group">
+                  <rect x="32" y="78" width="56" height="52" rx="14" fill="hsl(22,75%,58%)"/>
+                  <polygon points="60,78 50,94 60,90 70,94" fill="hsl(35,70%,96%)"/>
+                  <ellipse class="avatar-belly" cx="60" cy="104" rx="22" ry="14" fill="hsl(22,65%,64%)"/>
+                  <rect x="12" y="80" width="22" height="10" rx="5" fill="hsl(22,75%,58%)" transform="rotate(12 23 85)"/>
+                  <rect x="86" y="80" width="22" height="10" rx="5" fill="hsl(22,75%,58%)" transform="rotate(-12 97 85)"/>
+                  <circle cx="14" cy="93" r="8" fill="hsl(28,62%,74%)"/>
+                  <circle cx="106" cy="93" r="8" fill="hsl(28,62%,74%)"/>
+                  <g class="avatar-head-group">
+                    <!-- Long hair back layer -->
+                    <ellipse cx="60" cy="70" rx="30" ry="36" fill="hsl(22,40%,25%)"/>
+                    <rect x="52" y="60" width="16" height="20" rx="6" fill="hsl(28,62%,74%)"/>
+                    <ellipse cx="60" cy="46" rx="27" ry="25" fill="hsl(28,62%,74%)"/>
+                    <!-- Hair top -->
+                    <ellipse cx="60" cy="26" rx="27" ry="16" fill="hsl(22,40%,25%)"/>
+                    <rect x="33" y="22" width="54" height="12" rx="2" fill="hsl(22,40%,25%)"/>
+                    <path d="M35 30 Q50 18 70 22" stroke="hsl(22,40%,25%)" stroke-width="4" fill="none"/>
+                    <ellipse class="avatar-eye-l" cx="47" cy="48" rx="5" ry="5.5" fill="hsl(210,50%,18%)"/>
+                    <ellipse class="avatar-eye-r" cx="73" cy="48" rx="5" ry="5.5" fill="hsl(210,50%,18%)"/>
+                    <circle cx="49" cy="46" r="1.5" fill="white"/>
+                    <circle cx="75" cy="46" r="1.5" fill="white"/>
+                    <path d="M41 41 Q47 38 53 41" stroke="hsl(22,40%,25%)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <path d="M67 41 Q73 38 79 41" stroke="hsl(22,40%,25%)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <path d="M58 54 Q60 58 62 54" stroke="hsl(28,45%,55%)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    <path d="M50 60 Q60 68 70 60" stroke="hsl(22,50%,38%)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="40" cy="56" rx="7" ry="4" fill="hsl(350,60%,80%)" opacity="0.45"/>
+                    <ellipse cx="80" cy="56" rx="7" ry="4" fill="hsl(350,60%,80%)" opacity="0.45"/>
+                    <ellipse cx="33" cy="48" rx="5" ry="8" fill="hsl(28,58%,70%)"/>
+                    <ellipse cx="87" cy="48" rx="5" ry="8" fill="hsl(28,58%,70%)"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
             <h2 class="meeting-panel__name">Nova</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="Frontend Engineer" data-ja="&#12501;&#12525;&#12531;&#12488;&#12456;&#12531;&#12489;&#12456;&#12531;&#12472;&#12491;&#12450;">Frontend Engineer</p>
-            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
+            <p class="meeting-panel__role mono team-card__role" data-en="Frontend Engineer" data-ja="フロントエンドエンジニア">Frontend Engineer</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="オンライン">Online</div>
+
+            <div class="soundwave" aria-hidden="true">
+              <div class="soundwave__bar" style="height:8px;"></div>
+              <div class="soundwave__bar" style="height:14px;"></div>
+              <div class="soundwave__bar" style="height:6px;"></div>
+              <div class="soundwave__bar" style="height:18px;"></div>
+              <div class="soundwave__bar" style="height:10px;"></div>
+            </div>
           </article>
 
-          <!-- JB -->
+          <!-- ── JB ──────────────────────────────────────────── -->
           <article class="glass-card meeting-panel meeting-panel--jb" id="panel-jb" data-agent="JB">
-            <div class="meeting-panel__avatar" role="img" aria-label="JB">&#x2699;&#xFE0F;</div>
+
+            <!-- SVG Cartoon Avatar: steel-blue hoodie, flat-top hair, focused -->
+            <div class="meeting-panel__avatar avatar-scene" role="img" aria-label="JB">
+              <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <g class="avatar-body-group">
+                  <rect x="30" y="76" width="60" height="54" rx="16" fill="hsl(205,55%,42%)"/>
+                  <!-- Hoodie pocket -->
+                  <rect x="44" y="106" width="32" height="18" rx="6" fill="hsl(205,48%,35%)"/>
+                  <!-- Hoodie strings -->
+                  <line x1="52" y1="80" x2="48" y2="106" stroke="hsl(205,40%,60%)" stroke-width="1.5"/>
+                  <line x1="68" y1="80" x2="72" y2="106" stroke="hsl(205,40%,60%)" stroke-width="1.5"/>
+                  <ellipse class="avatar-belly" cx="60" cy="102" rx="24" ry="15" fill="hsl(205,50%,48%)"/>
+                  <rect x="10" y="78" width="24" height="11" rx="6" fill="hsl(205,55%,42%)" transform="rotate(18 22 83)"/>
+                  <rect x="86" y="78" width="24" height="11" rx="6" fill="hsl(205,55%,42%)" transform="rotate(-18 98 83)"/>
+                  <circle cx="12" cy="95" r="8" fill="hsl(28,55%,68%)"/>
+                  <circle cx="108" cy="95" r="8" fill="hsl(28,55%,68%)"/>
+                  <g class="avatar-head-group">
+                    <rect x="52" y="60" width="16" height="18" rx="6" fill="hsl(28,55%,68%)"/>
+                    <ellipse cx="60" cy="46" rx="26" ry="24" fill="hsl(28,55%,68%)"/>
+                    <!-- Flat-top hair -->
+                    <rect x="34" y="22" width="52" height="20" rx="8" fill="hsl(28,20%,18%)"/>
+                    <rect x="34" y="30" width="52" height="8" fill="hsl(28,20%,18%)"/>
+                    <!-- Stubble shadow -->
+                    <ellipse cx="60" cy="64" rx="16" ry="5" fill="hsl(28,20%,18%)" opacity="0.18"/>
+                    <ellipse class="avatar-eye-l" cx="47" cy="49" rx="5" ry="4" fill="hsl(215,35%,14%)"/>
+                    <ellipse class="avatar-eye-r" cx="73" cy="49" rx="5" ry="4" fill="hsl(215,35%,14%)"/>
+                    <circle cx="49" cy="47" r="1.3" fill="white"/>
+                    <circle cx="75" cy="47" r="1.3" fill="white"/>
+                    <!-- Straight brows -->
+                    <rect x="41" y="41" width="12" height="2.5" rx="1.2" fill="hsl(28,20%,18%)"/>
+                    <rect x="67" y="41" width="12" height="2.5" rx="1.2" fill="hsl(28,20%,18%)"/>
+                    <path d="M51 60 Q60 63 69 60" stroke="hsl(28,35%,38%)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="34" cy="48" rx="5" ry="8" fill="hsl(28,50%,64%)"/>
+                    <ellipse cx="86" cy="48" rx="5" ry="8" fill="hsl(28,50%,64%)"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
             <h2 class="meeting-panel__name">JB</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="Backend Engineer" data-ja="&#12496;&#12483;&#12463;&#12456;&#12531;&#12489;&#12456;&#12531;&#12472;&#12491;&#12450;">Backend Engineer</p>
-            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
+            <p class="meeting-panel__role mono team-card__role" data-en="Backend Engineer" data-ja="バックエンドエンジニア">Backend Engineer</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="オンライン">Online</div>
+
+            <div class="soundwave" aria-hidden="true">
+              <div class="soundwave__bar" style="height:5px;"></div>
+              <div class="soundwave__bar" style="height:11px;"></div>
+              <div class="soundwave__bar" style="height:9px;"></div>
+              <div class="soundwave__bar" style="height:15px;"></div>
+              <div class="soundwave__bar" style="height:7px;"></div>
+            </div>
           </article>
 
-          <!-- Robin -->
+          <!-- ── Robin ───────────────────────────────────────── -->
           <article class="glass-card meeting-panel meeting-panel--robin" id="panel-robin" data-agent="Robin">
-            <div class="meeting-panel__avatar" role="img" aria-label="Robin">&#x1F50D;</div>
+
+            <!-- SVG Cartoon Avatar: lavender cardigan, curly hair, clipboard -->
+            <div class="meeting-panel__avatar avatar-scene" role="img" aria-label="Robin">
+              <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <g class="avatar-body-group">
+                  <rect x="32" y="78" width="56" height="52" rx="14" fill="hsl(280,30%,50%)"/>
+                  <polygon points="60,78 49,92 60,88 71,92" fill="hsl(35,70%,96%)"/>
+                  <ellipse class="avatar-belly" cx="60" cy="104" rx="22" ry="14" fill="hsl(280,25%,57%)"/>
+                  <rect x="12" y="80" width="22" height="10" rx="5" fill="hsl(280,30%,50%)" transform="rotate(14 23 85)"/>
+                  <rect x="86" y="80" width="22" height="10" rx="5" fill="hsl(280,30%,50%)" transform="rotate(-14 97 85)"/>
+                  <!-- Left hand with clipboard -->
+                  <circle cx="14" cy="93" r="8" fill="hsl(30,60%,76%)"/>
+                  <rect x="2" y="96" width="18" height="22" rx="2" fill="hsl(35,50%,88%)" stroke="hsl(35,20%,60%)" stroke-width="1"/>
+                  <rect x="5" y="99" width="12" height="2" rx="1" fill="hsl(35,20%,60%)"/>
+                  <rect x="5" y="103" width="12" height="2" rx="1" fill="hsl(35,20%,60%)"/>
+                  <rect x="5" y="107" width="8"  height="2" rx="1" fill="hsl(35,20%,60%)"/>
+                  <circle cx="106" cy="93" r="8" fill="hsl(30,60%,76%)"/>
+                  <g class="avatar-head-group">
+                    <rect x="52" y="60" width="16" height="20" rx="6" fill="hsl(30,60%,76%)"/>
+                    <ellipse cx="60" cy="47" rx="27" ry="25" fill="hsl(30,60%,76%)"/>
+                    <!-- Curly hair -->
+                    <circle cx="35" cy="38" r="12" fill="hsl(22,35%,20%)"/>
+                    <circle cx="45" cy="26" r="13" fill="hsl(22,35%,20%)"/>
+                    <circle cx="60" cy="22" r="13" fill="hsl(22,35%,20%)"/>
+                    <circle cx="75" cy="26" r="13" fill="hsl(22,35%,20%)"/>
+                    <circle cx="85" cy="38" r="12" fill="hsl(22,35%,20%)"/>
+                    <rect x="33" y="35" width="54" height="14" fill="hsl(22,35%,20%)"/>
+                    <ellipse class="avatar-eye-l" cx="47" cy="49" rx="5.5" ry="5" fill="hsl(25,45%,18%)"/>
+                    <ellipse class="avatar-eye-r" cx="73" cy="49" rx="5.5" ry="5" fill="hsl(25,45%,18%)"/>
+                    <circle cx="49" cy="47" r="1.5" fill="white"/>
+                    <circle cx="75" cy="47" r="1.5" fill="white"/>
+                    <path d="M41 42 Q47 38 53 42" stroke="hsl(22,35%,20%)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <path d="M67 42 Q73 38 79 42" stroke="hsl(22,35%,20%)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <path d="M57 55 Q60 59 63 55" stroke="hsl(30,40%,52%)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    <path d="M51 62 Q60 68 69 62" stroke="hsl(22,40%,32%)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="40" cy="56" rx="7" ry="4" fill="hsl(350,55%,78%)" opacity="0.4"/>
+                    <ellipse cx="80" cy="56" rx="7" ry="4" fill="hsl(350,55%,78%)" opacity="0.4"/>
+                    <ellipse cx="33" cy="50" rx="5" ry="8" fill="hsl(30,56%,72%)"/>
+                    <ellipse cx="87" cy="50" rx="5" ry="8" fill="hsl(30,56%,72%)"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
             <h2 class="meeting-panel__name">Robin</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="QA &amp; Documentation" data-ja="QA &amp; &#12489;&#12461;&#12517;&#12513;&#12531;&#12486;&#12540;&#12471;&#12519;&#12531;">QA &amp; Documentation</p>
-            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
+            <p class="meeting-panel__role mono team-card__role" data-en="QA &amp; Documentation" data-ja="QA &amp; ドキュメンテーション">QA &amp; Documentation</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="オンライン">Online</div>
+
+            <div class="soundwave" aria-hidden="true">
+              <div class="soundwave__bar" style="height:7px;"></div>
+              <div class="soundwave__bar" style="height:13px;"></div>
+              <div class="soundwave__bar" style="height:5px;"></div>
+              <div class="soundwave__bar" style="height:17px;"></div>
+              <div class="soundwave__bar" style="height:9px;"></div>
+            </div>
           </article>
 
         </div><!-- /meeting-grid -->
@@ -112,22 +297,22 @@
     <div class="container">
       <div class="footer__inner">
         <div class="footer__brand">
-          <span>&#x1F343;</span>
+          <span>🍃</span>
           <span class="gradient-text" data-config-key="site_name">AI engineering team</span>
         </div>
-        <span class="footer__copy" data-en="AI engineering team &middot; Research Experiment 2026" data-ja="AI engineering team &middot; &#30740;&#31350;&#23455;&#39443; 2026">AI engineering team &middot; Research Experiment 2026</span>
+        <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
         <nav class="footer__links" aria-label="Footer navigation">
-          <a href="index.html"        id="footer-home"     data-en="Home"         data-ja="&#12507;&#12540;&#12512;">Home</a>
-          <a href="projects.html"     id="footer-projects" data-en="Projects"     data-ja="&#12503;&#12525;&#12472;&#12455;&#12463;&#12488;">Projects</a>
-          <a href="meeting-room.html" id="footer-meeting"  data-en="Meeting Room" data-ja="&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12523;&#12540;&#12512;">Meeting Room</a>
-          <a href="author.html"       id="footer-author"   data-en="About Author" data-ja="&#8457;&#32773;&#12395;&#12388;&#12356;&#12390;">About Author</a>
+          <a href="index.html"        id="footer-home"     data-en="Home"         data-ja="ホーム">Home</a>
+          <a href="projects.html"     id="footer-projects" data-en="Projects"     data-ja="プロジェクト">Projects</a>
+          <a href="meeting-room.html" id="footer-meeting"  data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
+          <a href="author.html"       id="footer-author"   data-en="About Author" data-ja="著者について">About Author</a>
         </nav>
       </div>
     </div>
   </footer>
 
-  <script src="js/main.js"         defer></script>
-  <script src="js/load_config.js"  defer></script>
-  <script src="js/meeting_room.js" defer></script>
+  <script src="js/main.js"          defer></script>
+  <script src="js/load_config.js"   defer></script>
+  <script src="js/meeting_room.js"  defer></script>
 </body>
 </html>

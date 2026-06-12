@@ -164,15 +164,8 @@
 
         <!-- Profile Card -->
         <div class="author-card">
-          <div class="author-profile">
-            <div class="author-avatar" aria-hidden="true">👤</div>
-            <div class="author-info">
-              <h2 data-en="Lead Researcher &amp; Author" data-ja="主任研究員 &amp; 著者" data-config-key="author_name">Lead Researcher &amp; Author</h2>
-              <p data-en="Creator of the AI Agent Engineering Simulation Experiment" data-ja="AIエージェントエンジニアリングシミュレーション実験の作成者">Creator of the AI Agent Engineering Simulation Experiment</p>
-            </div>
-          </div>
-          <p style="color:var(--clr-text-secondary); line-height: 1.85;" data-en="Welcome to my notebook. Here, I publish my observations regarding the workflow of the AI engineering team, analyzing key areas where agentic intelligence matches or deviates from traditional human developer teams." data-ja="私のノートブックへようこそ。ここでは、AIエンジニアリングチームのワークフローに関する観察結果を公開し、自律型インテリジェンスが従来の開発者チームと同等である部分や、逸脱する部分を分析しています。" data-config-key="author_bio">
-            Welcome to my notebook. Here, I publish my observations regarding the workflow of the AI engineering team, analyzing key areas where agentic intelligence matches or deviates from traditional human developer teams.
+          <p style="font-size:0.9rem; color:var(--clr-text-secondary); line-height: 1.6;" data-en="Observations and project logs maintained directly by the author, analyzing the workflow of the AI engineering team." data-ja="AIエンジニアリングチームのワークフローを分析するために、著者によって直接管理されている観察とプロジェクトログ。" data-config-key="author_bio">
+            Observations and project logs maintained directly by the author, analyzing the workflow of the AI engineering team.
           </p>
         </div>
 
@@ -238,33 +231,11 @@
           </div>
         </div>
 
-        <!-- How To Get Started Block -->
-        <div class="author-card" style="background: var(--clr-surface); border: 1px solid var(--clr-border);">
-          <div class="about-section" style="margin-bottom:0;">
-            <h2 data-en="How to Get Started" data-ja="はじめに" data-config-key="started_heading">How to Get Started</h2>
-            <p style="color:var(--clr-text-secondary); margin-bottom:var(--sp-4); font-size:0.95rem;" data-config-key="started_desc">
-              A quick technical overview of how this AI agent engineering team and simulation platform were initialized.
-            </p>
-            <ol style="margin-left: var(--sp-6); line-height: 1.85; color: var(--clr-text-secondary); font-size: 0.95rem;">
-              <li style="margin-bottom: var(--sp-3);" data-config-key="started_step1">
-                <strong>Agent Initialization</strong>: Specialized LLM models are assigned custom system prompts detailing their roles, constraints, and tool access permissions.
-              </li>
-              <li style="margin-bottom: var(--sp-3);" data-config-key="started_step2">
-                <strong>Communication Pipeline</strong>: The file TEAM_LOG.md is created as an asynchronous communication log. Every agent writes structured updates to synchronize tasks.
-              </li>
-              <li style="margin-bottom: var(--sp-3);" data-config-key="started_step3">
-                <strong>Codebase Setup</strong>: The pages are structured in plain HTML5, CSS3, and JavaScript, designed with a clean and lightweight modular flow.
-              </li>
-              <li style="margin-bottom: var(--sp-3);" data-config-key="started_step4">
-                <strong>Continuous Validation</strong>: Automated QA checklists and the BUGS.md issue tracker are updated continuously by the QA agent to ensure high code quality.
-              </li>
-            </ol>
-          </div>
-        </div>
+
 
         <!-- Thoughts Feed -->
         <div class="author-card thoughts-section">
-          <h3 data-en="Author's Field Notes" data-ja="著者のフィールドノート">Author's Field Notes</h3>
+          <h3 data-en="Project Journal" data-ja="プロジェクトジャーナル">Project Journal</h3>
           <div id="thoughts-feed">
             <!-- Dynamically populated -->
           </div>
@@ -286,7 +257,7 @@
 
         <!-- Editor Console (Initially Hidden) -->
         <div class="editor-section" id="editor-container" style="display: none;">
-          <h4 data-en="Edit Author Field Notes" data-ja="フィールドノートの編集">Edit Author Field Notes</h4>
+          <h4 data-en="Add Journal Entry" data-ja="ジャーナルエントリを追加">Add Journal Entry</h4>
           <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);padding:var(--sp-2) var(--sp-3);background:var(--clr-bg-0);border-left:3px solid var(--clr-cyan);border-radius:var(--radius-sm);"
              data-en="⚠️ Changes write directly to server (Git Push). Leave Japanese blank for auto-translation." 
              data-ja="⚠️ 変更はサーバー（Git Push）に直接書き込まれます。日本語を空にすると自動翻訳されます。">
@@ -294,7 +265,7 @@
           </p>
           <form id="edit-form">
             <div class="form-group">
-              <label for="edit-text-en" data-en="Thoughts (English)" data-ja="ノート（英語）">Thoughts (English)</label>
+              <label for="edit-text-en" data-en="Entry (English)" data-ja="エントリ（英語）">Entry (English)</label>
               <textarea id="edit-text-en" class="form-control" rows="5" required></textarea>
             </div>
             <div class="form-group">
@@ -591,25 +562,44 @@
 
     function renderThoughts(list, lang) {
       if (!list.length) {
-        thoughtsFeed.innerHTML = `<p style="color:var(--clr-text-muted);">${lang === 'en' ? 'No notes published yet.' : '公開されたノートはありません。'}</p>`;
+        thoughtsFeed.innerHTML = `<p style="color:var(--clr-text-muted);">${lang === 'en' ? 'No entries published yet.' : '公開されたエントリはありません。'}</p>`;
         return;
       }
 
-      thoughtsFeed.innerHTML = list.map(item => {
-        const textVal = item['text_' + lang] || item.text_en || '';
+      // Group by date
+      const grouped = {};
+      list.forEach(item => {
         const d = new Date(item.timestamp);
-        const timeDisplay = d.toLocaleString(lang === 'en' ? 'en-US' : 'ja-JP', {
-          year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-        });
-        return `
-          <div class="thought-item">
-            <div class="thought-meta">📅 ${timeDisplay}</div>
-            <p style="color:var(--clr-text-secondary); line-height: 1.85;">
-              ${textVal.replace(/\n/g, '<br />')}
-            </p>
-          </div>
+        const dateKey = d.toLocaleDateString(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'short', day: 'numeric' });
+        if (!grouped[dateKey]) grouped[dateKey] = [];
+        grouped[dateKey].push(item);
+      });
+
+      let html = '';
+      for (const [date, items] of Object.entries(grouped)) {
+        html += `
+          <details class="journal-date-group" style="margin-bottom: var(--sp-4); background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-sm);">
+            <summary style="padding: var(--sp-3) var(--sp-4); font-weight: 600; cursor: pointer; color: var(--clr-cyan); list-style: none; display: flex; align-items: center; gap: var(--sp-2);">
+              <span style="font-size: 0.8rem;">▶</span> ${date}
+            </summary>
+            <div style="padding: 0 var(--sp-4) var(--sp-4) var(--sp-4);">
         `;
-      }).join('');
+        items.forEach(item => {
+          const textVal = item['text_' + lang] || item.text_en || '';
+          const d = new Date(item.timestamp);
+          const timeDisplay = d.toLocaleString(lang === 'en' ? 'en-US' : 'ja-JP', { hour: '2-digit', minute: '2-digit' });
+          html += `
+            <div class="thought-item" style="margin-top: var(--sp-3);">
+              <div class="thought-meta">🕒 ${timeDisplay}</div>
+              <p style="color:var(--clr-text-secondary); line-height: 1.85; font-size: 0.95rem;">
+                ${textVal.replace(/\n/g, '<br />')}
+              </p>
+            </div>
+          `;
+        });
+        html += `</div></details>`;
+      }
+      thoughtsFeed.innerHTML = html;
     }
 
     // Check login state on load

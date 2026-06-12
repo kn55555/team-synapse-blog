@@ -33,53 +33,10 @@
   };
 
   /**
-   * Builds the HTML block to inject into a team card.
+   * Status block removed per design update.
    */
   function buildStatusBlock(agent, lang) {
-    const cfg = STATUS_CONFIG[lang] || STATUS_CONFIG.en;
-    const statusCfg = cfg[agent.status] || { label: agent.status, color: "#94a3b8", dot: "⚪" };
-
-    const completedTasks = agent['completed_tasks_' + lang] || agent.completed_tasks || [];
-    const completedCount = completedTasks.length;
-    const currentTask = agent['current_task_' + lang] || agent.current_task || '';
-
-    // Completed tasks list (collapsed to save space; show up to 3)
-    const taskListHtml = completedTasks
-      .slice(0, 3)
-      .map((t) => `<li class="completed-task-item">✓ ${t}</li>`)
-      .join("");
-
-    const moreLabel = lang === 'en' ? 'more' : '件以上';
-    const moreCount = completedCount > 3 ? `<li class="task-more">+${completedCount - 3} ${moreLabel}</li>` : "";
-
-    const currentlyLabel = lang === 'en' ? 'Currently:' : '現在:';
-    const completedLabel = lang === 'en' 
-      ? `${completedCount} task${completedCount !== 1 ? "s" : ""} completed`
-      : `${completedCount} 件のタスク完了`;
-
-    return `
-      <div class="agent-status-block" data-status="${agent.status}">
-        <div class="status-header">
-          <span class="status-indicator" style="background:${statusCfg.color};box-shadow:0 0 8px ${statusCfg.color}80;">
-          </span>
-          <span class="status-label" style="color:${statusCfg.color};">${statusCfg.label}</span>
-        </div>
-        <div class="current-task">
-          <span class="current-task-label">${currentlyLabel}</span>
-          <span class="current-task-text">${currentTask}</span>
-        </div>
-        ${
-          completedCount > 0
-            ? `<details class="completed-tasks-details">
-                <summary class="completed-tasks-summary">${completedLabel}</summary>
-                <ul class="completed-tasks-list">
-                  ${taskListHtml}
-                  ${moreCount}
-                </ul>
-              </details>`
-            : ""
-        }
-      </div>`;
+    return "";
   }
 
   /**
@@ -110,8 +67,8 @@
         card.style.setProperty("--agent-accent", agent.accent_color);
         card.style.borderColor = `${agent.accent_color}50`;
       }
-
-      card.insertAdjacentHTML("beforeend", buildStatusBlock(agent, lang));
+      // Status block removed per design update
+      // card.insertAdjacentHTML("beforeend", buildStatusBlock(agent, lang));
       injected++;
     });
   }
@@ -177,7 +134,7 @@
 
     injectAgentStatuses(agents, lang);
     populateStatusBar(agents, lang);
-    loadLatestUpdates(lang);
+    // loadLatestUpdates(lang); // Updates feed removed per design update
   }
 
   /**

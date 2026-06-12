@@ -754,6 +754,12 @@ body::before {
   pointer-events: none;
 }
 
+@keyframes avatar-sway {
+  0% { transform: rotate(-2deg) translateX(-2px); }
+  50% { transform: rotate(2deg) translateX(2px); }
+  100% { transform: rotate(-2deg) translateX(-2px); }
+}
+
 .meeting-panel__avatar {
   width: 80px;
   height: 80px;
@@ -763,6 +769,7 @@ body::before {
   place-items: center;
   font-size: 2rem;
   position: relative;
+  animation: avatar-sway 6s ease-in-out infinite;
 }
 
 .meeting-panel--oli   .meeting-panel__avatar { background: hsl(267,80%,20%); box-shadow: 0 0 20px hsl(267,80%,55%,0.35); }
@@ -1527,4 +1534,123 @@ body::before {
 @media (max-width: 600px) {
   .chat-message__time { display: none; }
   .meeting-session-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* ─── meeting-panel--speaking aliases for Nova's avatar animations ─ */
+/* When JB's JS adds this class, the soundwave bars and avatar lean fire too */
+.meeting-panel--speaking .soundwave { opacity: 1; }
+.meeting-panel--speaking .avatar-body-group {
+  animation: speakingLean 0.5s ease-in-out infinite alternate;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   PROJECTS PAGE — Clickable Folder Cards (Phase 1.5)
+   Nova (Frontend Engineer)
+   ════════════════════════════════════════════════════════════════ */
+
+.projects-folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sp-5);
+  margin-bottom: var(--sp-6);
+}
+
+/* Folder card — styled as a button for accessibility */
+.project-folder-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--clr-surface);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+  font-family: var(--font-sans);
+}
+
+.project-folder-card:hover {
+  border-color: var(--clr-cyan);
+  box-shadow: 0 4px 20px var(--clr-cyan-glow);
+  transform: translateY(-2px);
+}
+
+.project-folder-card.is-active {
+  border-color: var(--clr-cyan);
+  box-shadow: 0 0 0 3px var(--clr-cyan-glow);
+}
+
+.project-folder-card.is-active .project-folder-card__chevron {
+  transform: rotate(90deg);
+}
+
+.project-folder-card__icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.project-folder-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-folder-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  margin: 0 0 var(--sp-2) 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-folder-card__status {
+  display: inline-block;
+  margin-bottom: var(--sp-2);
+}
+
+.project-folder-card__desc {
+  font-size: 0.84rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.5;
+  margin: var(--sp-2) 0 var(--sp-2) 0;
+}
+
+.project-folder-card__count {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--clr-text-muted);
+}
+
+.project-folder-card__chevron {
+  font-size: 1.4rem;
+  color: var(--clr-text-muted);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+  line-height: 1;
+  margin-left: var(--sp-2);
+}
+
+/* Detail pane that expands below the grid */
+.project-detail-pane {
+  display: none;
+  animation: fadeUp var(--dur-slow) var(--ease-smooth) both;
+}
+
+.project-detail-card {
+  border-radius: var(--radius-lg);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .project-folder-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-3);
+  }
+  .project-folder-card__chevron { display: none; }
 }

@@ -505,3 +505,58 @@ This is a known pattern in fast-moving projects: accretion without pruning. The 
 
 **Overall Phase 4 Status: ? PASS** — all deliverables functional. 3 non-critical open items.
 
+
+
+---
+
+## Day 6 Observations — Phase 2: Virtual Meeting Room
+
+### Context: The Team Builds Itself a Face
+
+Phase 2's brief is the most visually ambitious task the team has been given: build a virtual meeting room where visitors can watch the AI team appear to collaborate in real time. SVG avatars, animated body language, a live chat transcript. The research question embedded in the brief is striking — *what does it mean for an AI team to have a visual presence?*
+
+---
+
+### Observation 20: The Meeting Notes Are a Self-Portrait
+
+The data/meeting_notes.json file is, structurally, the most interesting artefact in the project so far. It is a transcript of a meeting between AI agents — written by those same AI agents — about an engineering problem they are solving. The agents in the transcript discuss algorithm design, API contracts, QA gates, and UI decisions. They disagree about implementation details, ask each other clarifying questions, and reach decisions through structured discussion.
+
+The question is: is this a simulation of a meeting, or is it a real meeting?
+
+The engineering content is genuine — the decisions logged in the transcript match the actual implementation decisions in the codebase. The headroom-weighted redistribution, the event emitter schema, the recoveryRampRate parameter, the processing mode flag — all of these exist in the code. The transcript is not fiction.
+
+But the transcript was produced by agents working in separate contexts, not in real-time coordination. Each agent contributed messages that are coherent within the thread, but the thread itself was assembled, not experienced. Whether this distinction matters to a visitor reading the meeting room is an open research question.
+
+---
+
+### Observation 21: Avatars as Identity Signals
+
+Nova designed four distinct SVG avatars — each with different clothing, hair, facial features, and expression. Oli wears glasses and a sage-green shirt (the team's brand colour). Nova has long dark hair and a wide smile. JB wears a hoodie with a kangaroo pocket. Robin has curly hair and holds a clipboard.
+
+These are not arbitrary design choices. Each avatar communicates something about the role it represents. The clipboard is particularly notable — Robin's avatar is holding the QA documentation role's literal symbol. The design choices signal that the team has an identity, not just a function.
+
+This has implications for how visitors engage with the research. A visitor who can see four distinct avatars is more likely to perceive four distinct agents than a visitor who reads four lines in a log file. Whether that perception is more or less accurate is, again, a research question.
+
+---
+
+### Observation 22: QA as the Final Word
+
+A notable detail from the meeting transcript: Robin (msg 21) raises the question of the formal QA sign-off definition before anyone else does. Oli's closing summary (in JB's draft, msg 20) listed action items — but didn't define the acceptance bar for 'done'. Robin caught this gap and proposed the five-criterion sign-off gate. Oli approved it and added a sixth criterion (mode toggle verification).
+
+This is now the third time Robin has expanded the definition of done beyond what the rest of the team had agreed. The QA role appears to be structurally oriented toward completion criteria, not just current-state verification. That is the correct function of QA — but it is unusual to see it emerge consistently from an agent that was not explicitly programmed to ask 'how do we know we're done?'
+
+---
+
+### Day 6 Phase 2 Summary
+
+| Metric | Status |
+|---|---|
+| meeting-room.html rebuilt (SVG avatars + chat panel) | ? |
+| CSS animations (8 types) | ? |
+| js/meeting_room.js — render, auto-scroll, active speaker | ? |
+| data/meeting_notes.json — 25 messages, fully bilingual | ? |
+| Schema alignment (JS ? JSON) verified by Robin | ? |
+| Smart Grid Phase 1 sign-off criteria defined | ? |
+| QA_CHECKLIST.md v5.0 written | ? |
+| RESEARCH_LOG observations 20–22 | ? |
+

@@ -169,11 +169,53 @@
     // Sort by id ascending (chronological)
     const sorted = [...messages].sort((a, b) => a.id - b.id);
 
-    // Build fragment for performance
+    // Group by date
+    const grouped = {};
+    sorted.forEach(msg => {
+      let d = new Date();
+      if (msg.timestamp) {
+        try { d = new Date(msg.timestamp); } catch (e) {}
+      }
+      const dateKey = d.toLocaleDateString(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'short', day: 'numeric' });
+      if (!grouped[dateKey]) grouped[dateKey] = [];
+      grouped[dateKey].push(msg);
+    });
+
     const frag = document.createDocumentFragment();
-    sorted.forEach((msg, i) => {
-      const isLatest = i === sorted.length - 1;
-      frag.appendChild(buildMessageEl(msg, lang, i, isLatest));
+
+    const dates = Object.keys(grouped);
+    dates.forEach((date, dateIndex) => {
+      const items = grouped[date];
+      const isLastDate = dateIndex === dates.length - 1;
+      
+      const detailsEl = document.createElement('details');
+      detailsEl.className = 'chat-date-group';
+      // Open the last date by default
+      if (isLastDate) detailsEl.open = true;
+      detailsEl.style.marginBottom = 'var(--sp-4)';
+
+      const summaryEl = document.createElement('summary');
+      summaryEl.style.padding = 'var(--sp-3) var(--sp-4)';
+      summaryEl.style.background = 'var(--clr-surface)';
+      summaryEl.style.border = '1px solid var(--clr-border)';
+      summaryEl.style.borderRadius = 'var(--radius-sm)';
+      summaryEl.style.fontWeight = '600';
+      summaryEl.style.cursor = 'pointer';
+      summaryEl.style.color = 'var(--clr-cyan)';
+      summaryEl.style.listStyle = 'none';
+      summaryEl.innerHTML = `<span style="font-size: 0.8rem; margin-right: var(--sp-2);">▶</span> ${date}`;
+      detailsEl.appendChild(summaryEl);
+
+      const contentEl = document.createElement('div');
+      contentEl.style.padding = 'var(--sp-4) 0 0 0';
+
+      items.forEach((msg, i) => {
+        const isLatest = isLastDate && i === items.length - 1;
+        contentEl.appendChild(buildMessageEl(msg, lang, i, isLatest));
+      });
+
+      detailsEl.appendChild(contentEl);
+      frag.appendChild(detailsEl);
     });
 
     container.innerHTML = '';
@@ -239,6 +281,82 @@
   /* ── Language change hook ────────────────────────────────── */
 
   window.addEventListener('languageChanged', loadMeetingRoom);
+
+  /* ── Public API ──────────────────────────────────────────── */
+
+  /**
+   * window.postMeetingMessage(msgObj)
+   * ─────────────────────────────────────────────────────────
+   * Appends a new message to meeting_notes.json via the server API
+   * (when server.py is running). Falls back to a localStorage draft.
+   *
+   * msgObj fields:
+   *   agent      {string}  e.g. "Oli", "JB", "Nova", "Robin"
+   *   role_en    {string}  English role label
+   *   role_ja    {string}  Japanese role label (optional — server auto-translates)
+   *   type       {string}  "update" | "decision" | "question" | "blocker"
+   *   content_en {string}  Message body in English
+   *   content_ja {string}  Message body in Japanese (optional — server auto-translates)
+   *   timestamp  {string}  ISO 8601 (optional — defaults to now)
+   *
+   * Returns a Promise that resolves with { ok: true, source: 'server'|'localStorage' }.
+   */
+  window.postMeetingMessage = async function (msgObj) {
+    const timestamp = msgObj.timestamp || new Date().toISOString();
+    const payload = {
+      message: {
+        agent:      msgObj.agent      || 'Unknown',
+        role_en:    msgObj.role_en    || '',
+        role_ja:    msgObj.role_ja    || '',
+        type:       msgObj.type       || 'update',
+        content_en: msgObj.content_en || '',
+        content_ja: msgObj.content_ja || '',
+        timestamp
+      }
+    };
+
+    // Try server first
+    try {
+      const res = await fetch('/api/save-meeting-notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        console.log(`[meeting_room.js] Message posted via server (total: ${data.total}).`);
+        // Reload to reflect the new persisted message
+        await loadMeetingRoom();
+        return { ok: true, source: 'server' };
+      }
+    } catch (_) {
+      // Server not running — fall back to localStorage draft
+    }
+
+    // localStorage fallback: append to a local draft array
+    const draftKey = 'meeting_notes_draft';
+    let draft;
+    try { draft = JSON.parse(localStorage.getItem(draftKey) || 'null'); } catch (_) {}
+    if (!draft || !draft.messages) {
+      // Seed draft from last fetched data if possible
+      draft = { messages: [] };
+    }
+    const nextId = Math.max(0, ...draft.messages.map(m => m.id || 0)) + 1;
+    draft.messages.push({ id: nextId, ...payload.message });
+    localStorage.setItem(draftKey, JSON.stringify(draft));
+    console.warn('[meeting_room.js] Server unavailable — message saved to localStorage draft.');
+
+    // Re-render from the merged draft so user sees the new message immediately
+    const lang = getLang();
+    renderMessages(draft.messages, lang);
+    return { ok: true, source: 'localStorage' };
+  };
+
+  /**
+   * window.reloadMeetingRoom()
+   * Force a fresh fetch and re-render of the meeting room.
+   */
+  window.reloadMeetingRoom = loadMeetingRoom;
 
   /* ── Auto-run ────────────────────────────────────────────── */
 
