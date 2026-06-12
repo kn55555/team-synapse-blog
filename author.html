@@ -194,20 +194,31 @@
         <!-- Editor Console (Initially Hidden — shown after login) -->
         <div class="editor-section" id="editor-container" style="display: none;">
           <h4 data-en="Add Journal Entry" data-ja="ジャーナルエントリを追加">Add Journal Entry</h4>
-          <p style="font-size:0.8rem;color:var(--clr-text-secondary);margin-bottom:var(--sp-4);padding:var(--sp-2) var(--sp-3);background:var(--clr-bg-0);border-left:3px solid var(--clr-cyan);border-radius:var(--radius-sm);"
-             data-en="Write your entry in English. Japanese translation is added automatically."
-             data-ja="英語でエントリを書いてください。日本語訳は自動的に追加されます。">
-            Write your entry in English. Japanese translation is added automatically.
-          </p>
+
+          <!-- GitHub Token (stored in sessionStorage, never sent anywhere except GitHub API) -->
+          <div class="form-group" id="gh-token-group">
+            <label for="gh-token" style="font-size:0.82rem;color:var(--clr-text-muted);"
+                   data-en="GitHub Token (one-time per session)" data-ja="GitHubトークン（セッションごとに一回）">GitHub Token (one-time per session)</label>
+            <input type="password" id="gh-token" class="form-control"
+                   placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                   style="font-family:var(--font-mono);font-size:0.8rem;" />
+            <p style="font-size:0.72rem;color:var(--clr-text-muted);margin-top:var(--sp-1);">
+              <span data-en="Needed to publish entries. Create a" data-ja="エントリを公開するために必要です。">Needed to publish entries. Create a</span>
+              <a href="https://github.com/settings/tokens/new?scopes=repo&description=team-synapse-blog" target="_blank" style="color:var(--clr-cyan);">GitHub Fine-Grained Token</a>
+              <span data-en="with Contents write access. Stored only in your browser session." data-ja="を作成してください（Contents書き込みアクセス）。ブラウザのセッションにのみ保存されます。">with Contents write access. Stored only in your browser session.</span>
+            </p>
+          </div>
+
           <form id="edit-form">
             <div class="form-group">
               <label for="edit-text-en" data-en="Journal Entry (English)" data-ja="ジャーナルエントリ（英語）">Journal Entry (English)</label>
               <textarea id="edit-text-en" class="form-control" rows="6" placeholder="Write your observation or note here..." required></textarea>
             </div>
             <div id="edit-saved-msg" style="display:none;padding:var(--sp-2) var(--sp-3);background:hsl(160 60% 15% / 0.5);border:1px solid var(--clr-emerald);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--clr-emerald);margin-bottom:var(--sp-3);"
-                 data-en="✓ Entry saved and published!" data-ja="✓ エントリが保存・公開されました！">
-              ✓ Entry saved and published!
+                 data-en="✓ Entry published! Page will refresh in a moment." data-ja="✓ エントリが公開されました！まもなくページが更新されます。">
+              ✓ Entry published! Page will refresh in a moment.
             </div>
+            <div id="edit-error-msg" style="display:none;padding:var(--sp-2) var(--sp-3);background:hsl(0 60% 15% / 0.5);border:1px solid #ef4444;border-radius:var(--radius-sm);font-size:0.8rem;color:#ef4444;margin-bottom:var(--sp-3);"></div>
             <div style="display:flex;gap:var(--sp-3);">
               <button type="submit" class="btn btn--primary" id="save-entry-btn" data-en="Publish Entry" data-ja="エントリを公開">Publish Entry</button>
               <button type="button" id="logout-btn" class="btn btn--secondary" data-en="Log Out" data-ja="ログアウト">Log Out</button>
@@ -654,50 +665,98 @@
 
     editForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const saveBtn = document.getElementById('save-entry-btn');
-      const savedMsg = document.getElementById('edit-saved-msg');
+      const saveBtn    = document.getElementById('save-entry-btn');
+      const savedMsg   = document.getElementById('edit-saved-msg');
+      const errorMsg   = document.getElementById('edit-error-msg');
+      const tokenInput = document.getElementById('gh-token');
       const lang = localStorage.getItem('lang') || 'en';
 
-      const newEntry = {
-        timestamp: new Date().toISOString(),
-        text_en: editTextEn.value.trim(),
-        text_ja: '' // server will auto-translate
-      };
+      const entryText = editTextEn.value.trim();
+      if (!entryText) return;
 
-      if (!newEntry.text_en) return;
+      // Retrieve or save token from sessionStorage
+      let token = sessionStorage.getItem('gh_token') || (tokenInput && tokenInput.value.trim());
+      if (token && tokenInput) sessionStorage.setItem('gh_token', token);
 
-      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = lang === 'en' ? 'Publishing…' : '公開中…'; }
+      if (!token) {
+        if (errorMsg) { errorMsg.textContent = lang === 'en' ? 'Please enter your GitHub Token above first.' : 'GitHubトークンを入力してください。'; errorMsg.style.display = 'block'; }
+        if (tokenInput) tokenInput.focus();
+        return;
+      }
 
-      // POST new entry to server (append mode)
+      if (savedMsg) savedMsg.style.display = 'none';
+      if (errorMsg) errorMsg.style.display = 'none';
+      if (saveBtn)  { saveBtn.disabled = true; saveBtn.textContent = lang === 'en' ? 'Publishing…' : '公開中…'; }
+
+      const GITHUB_OWNER = 'kn55555';
+      const GITHUB_REPO  = 'team-synapse-blog';
+      const FILE_PATH    = 'data/author_thoughts.json';
+      const API_BASE     = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+
       try {
-        const response = await fetch('/api/append-thought', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newEntry)
+        // 1. Fetch current file from GitHub
+        const getRes = await fetch(API_BASE, {
+          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
         });
-        const resData = await response.json();
-        if (resData.status === 'success') {
-          console.log('[author.html] Entry published & pushed to git!');
-          editTextEn.value = '';
-          if (savedMsg) {
-            savedMsg.style.display = 'block';
-            setTimeout(() => { savedMsg.style.display = 'none'; }, 3500);
-          }
-          // Reload journal from server to show the new entry
-          await loadThoughts();
-        } else {
-          alert(lang === 'en' ? 'Save failed: ' + resData.message : '保存に失敗しました: ' + resData.message);
+        if (!getRes.ok) throw new Error(`GitHub GET failed: ${getRes.status} ${getRes.statusText}`);
+        const fileData = await getRes.json();
+        const currentContent = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+
+        // 2. Append new entry
+        const thoughts = currentContent.thoughts || [];
+        const nextId   = Math.max(0, ...thoughts.map(t => t.id || 0)) + 1;
+        thoughts.push({
+          id: nextId,
+          timestamp: new Date().toISOString(),
+          text_en: entryText,
+          text_ja: '' // auto-translation placeholder
+        });
+        currentContent.thoughts = thoughts;
+
+        // 3. Commit back to GitHub
+        const newContentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(currentContent, null, 2))));
+        const putRes = await fetch(API_BASE, {
+          method: 'PUT',
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: 'data: Publish journal entry via Author Portal',
+            content: newContentB64,
+            sha: fileData.sha
+          })
+        });
+        if (!putRes.ok) {
+          const errData = await putRes.json().catch(() => ({}));
+          throw new Error(errData.message || `GitHub PUT failed: ${putRes.status}`);
         }
+
+        // 4. Success
+        editTextEn.value = '';
+        if (savedMsg) { savedMsg.style.display = 'block'; }
+        // Update local display immediately
+        defaultThoughts = thoughts;
+        renderThoughts(thoughts, lang);
+        // Reload from server after ~8s (give Netlify time to deploy)
+        setTimeout(loadThoughts, 8000);
+        document.querySelector('.thoughts-section').scrollIntoView({ behavior: 'smooth' });
+
       } catch (err) {
-        // server.py not running — show a clear message
-        alert(lang === 'en'
-          ? 'Could not reach the server. Run server.py locally to publish entries.'
-          : 'サーバーに接続できませんでした。エントリを公開するにはserver.pyをローカルで実行してください。');
+        console.error('[author.html] GitHub API error:', err);
+        if (errorMsg) {
+          errorMsg.textContent = (lang === 'en' ? 'Error: ' : 'エラー: ') + err.message;
+          errorMsg.style.display = 'block';
+        }
+        // Clear bad token from session so user can re-enter
+        if (err.message && (err.message.includes('401') || err.message.includes('403') || err.message.includes('Bad credentials'))) {
+          sessionStorage.removeItem('gh_token');
+          if (tokenInput) { tokenInput.value = ''; tokenInput.focus(); }
+        }
       }
 
       if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = lang === 'en' ? 'Publish Entry' : 'エントリを公開'; }
-
-      document.querySelector('.thoughts-section').scrollIntoView({ behavior: 'smooth' });
     });
 
     // Site Configuration form handlers — using load_config.js public API & server.py
