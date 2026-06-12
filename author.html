@@ -193,7 +193,7 @@
 
         <!-- Editor Console (Initially Hidden — shown after login) -->
         <div class="editor-section" id="editor-container" style="display: none;">
-          <h4 data-en="Add Journal Entry" data-ja="ジャーナルエントリを追加">Add Journal Entry</h4>
+          <h4 data-en="Add Journal Entry" data-ja="ジャーナルエントリを追加" id="editor-heading">Add Journal Entry</h4>
 
           <!-- GitHub Token (stored in sessionStorage, never sent anywhere except GitHub API) -->
           <div class="form-group" id="gh-token-group">
@@ -211,16 +211,17 @@
 
           <form id="edit-form">
             <div class="form-group">
-              <label for="edit-text-en" data-en="Journal Entry (English)" data-ja="ジャーナルエントリ（英語）">Journal Entry (English)</label>
+              <label for="edit-text-en" id="entry-form-label" data-en="Journal Entry (English)" data-ja="ジャーナルエントリ（英語）">Journal Entry (English)</label>
               <textarea id="edit-text-en" class="form-control" rows="6" placeholder="Write your observation or note here..." required></textarea>
             </div>
             <div id="edit-saved-msg" style="display:none;padding:var(--sp-2) var(--sp-3);background:hsl(160 60% 15% / 0.5);border:1px solid var(--clr-emerald);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--clr-emerald);margin-bottom:var(--sp-3);"
-                 data-en="✓ Entry published! Page will refresh in a moment." data-ja="✓ エントリが公開されました！まもなくページが更新されます。">
-              ✓ Entry published! Page will refresh in a moment.
+                 data-en="✓ Saved!" data-ja="✓ 保存されました！">
+              ✓ Saved!
             </div>
             <div id="edit-error-msg" style="display:none;padding:var(--sp-2) var(--sp-3);background:hsl(0 60% 15% / 0.5);border:1px solid #ef4444;border-radius:var(--radius-sm);font-size:0.8rem;color:#ef4444;margin-bottom:var(--sp-3);"></div>
-            <div style="display:flex;gap:var(--sp-3);">
+            <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;">
               <button type="submit" class="btn btn--primary" id="save-entry-btn" data-en="Publish Entry" data-ja="エントリを公開">Publish Entry</button>
+              <button type="button" id="cancel-edit-btn" class="btn btn--secondary" style="display:none;" onclick="resetFormToNewMode()" data-en="Cancel Edit" data-ja="編集をキャンセル">Cancel Edit</button>
               <button type="button" id="logout-btn" class="btn btn--secondary" data-en="Log Out" data-ja="ログアウト">Log Out</button>
             </div>
           </form>
@@ -507,17 +508,24 @@
       }
     }
 
+    let editingEntryId = null; // null = new entry, number = editing existing
+
     function renderThoughts(list, lang) {
-      if (!list.length) {
-        thoughtsFeed.innerHTML = `<p style="color:var(--clr-text-muted);">${lang === 'en' ? 'No entries published yet.' : '公開されたエントリはありません。'}</p>`;
+      if (!list || !list.length) {
+        thoughtsFeed.innerHTML = `<p style="color:var(--clr-text-muted);font-style:italic;">${lang === 'en' ? 'No entries published yet.' : '公開されたエントリはまだありません。'}</p>`;
         return;
       }
 
+      const isLoggedIn = sessionStorage.getItem('author_logged') === 'true';
+
+      // Sort newest-first within each date group
+      const sorted = [...list].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
       // Group by date
       const grouped = {};
-      list.forEach(item => {
+      sorted.forEach(item => {
         const d = new Date(item.timestamp);
-        const dateKey = d.toLocaleDateString(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'short', day: 'numeric' });
+        const dateKey = d.toLocaleDateString(lang === 'en' ? 'en-US' : 'ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
         if (!grouped[dateKey]) grouped[dateKey] = [];
         grouped[dateKey].push(item);
       });
@@ -525,28 +533,70 @@
       let html = '';
       for (const [date, items] of Object.entries(grouped)) {
         html += `
-          <details class="journal-date-group" style="margin-bottom: var(--sp-4); background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-sm);">
+          <details class="journal-date-group" open style="margin-bottom: var(--sp-4); background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-sm);">
             <summary style="padding: var(--sp-3) var(--sp-4); font-weight: 600; cursor: pointer; color: var(--clr-cyan); list-style: none; display: flex; align-items: center; gap: var(--sp-2);">
-              <span style="font-size: 0.8rem;">▶</span> ${date}
+              <span style="font-size: 0.8rem;">&#9658;</span> ${date}
             </summary>
             <div style="padding: 0 var(--sp-4) var(--sp-4) var(--sp-4);">
         `;
         items.forEach(item => {
           const textVal = item['text_' + lang] || item.text_en || '';
           const d = new Date(item.timestamp);
-          const timeDisplay = d.toLocaleString(lang === 'en' ? 'en-US' : 'ja-JP', { hour: '2-digit', minute: '2-digit' });
+          const timeDisplay = d.toLocaleTimeString(lang === 'en' ? 'en-US' : 'ja-JP', { hour: '2-digit', minute: '2-digit' });
+          const editBtn = isLoggedIn
+            ? `<button
+                 onclick="startEditEntry(${item.id})"
+                 style="margin-left:auto;padding:2px 10px;font-size:0.72rem;background:transparent;border:1px solid var(--clr-border);border-radius:var(--radius-sm);color:var(--clr-text-muted);cursor:pointer;transition:all 0.15s;"
+                 onmouseover="this.style.borderColor='var(--clr-cyan)';this.style.color='var(--clr-cyan)';"
+                 onmouseout="this.style.borderColor='var(--clr-border)';this.style.color='var(--clr-text-muted)';"
+               >&#9998; Edit</button>`
+            : '';
           html += `
-            <div class="thought-item" style="margin-top: var(--sp-3);">
-              <div class="thought-meta">🕒 ${timeDisplay}</div>
-              <p style="color:var(--clr-text-secondary); line-height: 1.85; font-size: 0.95rem;">
-                ${textVal.replace(/\n/g, '<br />')}
-              </p>
+            <div class="thought-item" id="entry-${item.id}" style="margin-top:var(--sp-4);padding-top:var(--sp-3);border-top:1px solid var(--clr-border);">
+              <div style="display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-2);">
+                <span class="thought-meta" style="font-size:0.75rem;color:var(--clr-text-muted);font-family:var(--font-mono);">&#128336; ${timeDisplay}</span>
+                ${editBtn}
+              </div>
+              <p style="color:var(--clr-text-secondary); line-height: 1.85; font-size: 0.95rem; white-space:pre-wrap;">${textVal.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
             </div>
           `;
         });
         html += `</div></details>`;
       }
       thoughtsFeed.innerHTML = html;
+    }
+
+    // Called when user clicks Edit on an entry
+    window.startEditEntry = function(entryId) {
+      const entry = defaultThoughts.find(t => t.id === entryId);
+      if (!entry) return;
+      editingEntryId = entryId;
+      editTextEn.value = entry.text_en || '';
+      // Update form UI to show edit mode
+      const saveBtn   = document.getElementById('save-entry-btn');
+      const formLabel = document.getElementById('entry-form-label');
+      const cancelBtn = document.getElementById('cancel-edit-btn');
+      if (saveBtn)   saveBtn.textContent   = localStorage.getItem('lang') === 'ja' ? 'エントリを更新' : 'Update Entry';
+      if (formLabel) formLabel.textContent = localStorage.getItem('lang') === 'ja' ? 'エントリを編集（英語）' : 'Edit Entry (English)';
+      if (cancelBtn) cancelBtn.style.display = 'inline-flex';
+      editorContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      editTextEn.focus();
+    };
+
+    function resetFormToNewMode() {
+      editingEntryId = null;
+      editTextEn.value = '';
+      const saveBtn   = document.getElementById('save-entry-btn');
+      const formLabel = document.getElementById('entry-form-label');
+      const cancelBtn = document.getElementById('cancel-edit-btn');
+      const savedMsg  = document.getElementById('edit-saved-msg');
+      const errorMsg  = document.getElementById('edit-error-msg');
+      const lang = localStorage.getItem('lang') || 'en';
+      if (saveBtn)   { saveBtn.textContent = lang === 'ja' ? 'エントリを公開' : 'Publish Entry'; saveBtn.disabled = false; }
+      if (formLabel) formLabel.textContent = lang === 'ja' ? 'ジャーナルエントリ（英語）' : 'Journal Entry (English)';
+      if (cancelBtn) cancelBtn.style.display = 'none';
+      if (savedMsg)  savedMsg.style.display  = 'none';
+      if (errorMsg)  errorMsg.style.display  = 'none';
     }
 
     // Check login state on load
@@ -673,7 +723,8 @@
 
       if (savedMsg) savedMsg.style.display = 'none';
       if (errorMsg) errorMsg.style.display = 'none';
-      if (saveBtn)  { saveBtn.disabled = true; saveBtn.textContent = lang === 'en' ? 'Publishing…' : '公開中…'; }
+      const isEditing = editingEntryId !== null;
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = lang === 'en' ? (isEditing ? 'Saving…' : 'Publishing…') : (isEditing ? '保存中…' : '公開中…'); }
 
       const GITHUB_OWNER = 'kn55555';
       const GITHUB_REPO  = 'team-synapse-blog';
@@ -688,16 +739,30 @@
         if (!getRes.ok) throw new Error(`GitHub GET failed: ${getRes.status} ${getRes.statusText}`);
         const fileData = await getRes.json();
         const currentContent = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+        let thoughts = currentContent.thoughts || [];
 
-        // 2. Append new entry
-        const thoughts = currentContent.thoughts || [];
-        const nextId   = Math.max(0, ...thoughts.map(t => t.id || 0)) + 1;
-        thoughts.push({
-          id: nextId,
-          timestamp: new Date().toISOString(),
-          text_en: entryText,
-          text_ja: '' // auto-translation placeholder
-        });
+        let commitMsg;
+        if (isEditing) {
+          // 2a. UPDATE existing entry in-place
+          const idx = thoughts.findIndex(t => t.id === editingEntryId);
+          if (idx === -1) throw new Error(`Entry id ${editingEntryId} not found in file.`);
+          thoughts[idx] = {
+            ...thoughts[idx],
+            text_en: entryText,
+            text_ja: '' // clear stale translation; will auto-translate on next server-side pass
+          };
+          commitMsg = `data: Edit journal entry #${editingEntryId} via Author Portal`;
+        } else {
+          // 2b. APPEND new entry
+          const nextId = Math.max(0, ...thoughts.map(t => t.id || 0)) + 1;
+          thoughts.push({
+            id: nextId,
+            timestamp: new Date().toISOString(),
+            text_en: entryText,
+            text_ja: ''
+          });
+          commitMsg = 'data: Publish journal entry via Author Portal';
+        }
         currentContent.thoughts = thoughts;
 
         // 3. Commit back to GitHub
@@ -709,25 +774,18 @@
             Accept: 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            message: 'data: Publish journal entry via Author Portal',
-            content: newContentB64,
-            sha: fileData.sha
-          })
+          body: JSON.stringify({ message: commitMsg, content: newContentB64, sha: fileData.sha })
         });
         if (!putRes.ok) {
           const errData = await putRes.json().catch(() => ({}));
           throw new Error(errData.message || `GitHub PUT failed: ${putRes.status}`);
         }
 
-        // 4. Success
-        editTextEn.value = '';
-        if (savedMsg) { savedMsg.style.display = 'block'; }
-        // Update local display immediately
+        // 4. Success — update local data and re-render immediately
         defaultThoughts = thoughts;
         renderThoughts(thoughts, lang);
-        // Reload from server after ~8s (give Netlify time to deploy)
-        setTimeout(loadThoughts, 8000);
+        resetFormToNewMode();
+        if (savedMsg) { savedMsg.style.display = 'block'; setTimeout(() => { savedMsg.style.display = 'none'; }, 3000); }
         document.querySelector('.thoughts-section').scrollIntoView({ behavior: 'smooth' });
 
       } catch (err) {
@@ -736,14 +794,13 @@
           errorMsg.textContent = (lang === 'en' ? 'Error: ' : 'エラー: ') + err.message;
           errorMsg.style.display = 'block';
         }
-        // Clear bad token from session so user can re-enter
         if (err.message && (err.message.includes('401') || err.message.includes('403') || err.message.includes('Bad credentials'))) {
           sessionStorage.removeItem('gh_token');
           if (tokenInput) { tokenInput.value = ''; tokenInput.focus(); }
         }
       }
 
-      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = lang === 'en' ? 'Publish Entry' : 'エントリを公開'; }
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = editingEntryId !== null ? (lang === 'ja' ? 'エントリを更新' : 'Update Entry') : (lang === 'ja' ? 'エントリを公開' : 'Publish Entry'); }
     });
 
     // Site Configuration form handlers — using load_config.js public API & server.py
