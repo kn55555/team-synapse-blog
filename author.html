@@ -557,7 +557,8 @@
         loginContainer.style.display = 'none';
         editorContainer.style.display = 'block';
         if (siteConfigContainer) siteConfigContainer.style.display = 'block';
-        populateEditor();
+        // Always start with a blank textarea — we append, never edit
+        editTextEn.value = '';
         populateSiteConfigForm();
       } else {
         loginContainer.style.display = 'block';
@@ -566,20 +567,6 @@
       }
     }
 
-    function populateEditor() {
-      const stored = localStorage.getItem('author_thoughts');
-      let currentItem = { text_en: '', text_ja: '' };
-      if (stored) {
-        try {
-          const list = JSON.parse(stored);
-          if (list.length) currentItem = list[0];
-        } catch (_) {}
-      } else if (defaultThoughts.length) {
-        currentItem = defaultThoughts[0];
-      }
-      editTextEn.value = currentItem.text_en || '';
-      editTextJa.value = currentItem.text_ja || '';
-    }
 
     function populateSiteConfigForm() {
       const get = (id) => document.getElementById(id);
