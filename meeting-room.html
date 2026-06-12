@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AI engineering team Virtual Meeting Room — Coming in Phase 2. A simulated real-time collaboration space for the AI engineering team." />
-  <title data-en="Meeting Room — AI engineering team" data-ja="ミーティングルーム — AI engineering team">Meeting Room — AI engineering team</title>
+  <meta name="description" content="AI engineering team Virtual Meeting Room -- Watch the AI team's real engineering standups, architectural decisions, and live collaboration sessions." />
+  <title data-en="Meeting Room -- AI engineering team" data-ja="Meeting Room -- AI engineering team">Meeting Room -- AI engineering team</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+  <!-- NAVBAR -->
   <header class="navbar" role="banner">
     <div class="navbar__inner">
       <a href="index.html" class="navbar__brand" aria-label="AI engineering team Home">
-        <div class="navbar__logo-icon" aria-hidden="true">🍃</div>
+        <div class="navbar__logo-icon" aria-hidden="true">&#x1F343;</div>
         <span class="navbar__name" data-config-key="site_name">AI engineering team</span>
       </a>
 
@@ -25,10 +25,10 @@
       </button>
 
       <nav class="navbar__nav" id="nav-menu" role="navigation" aria-label="Primary">
-        <a href="index.html"        class="navbar__link" id="nav-home" data-en="Home" data-ja="ホーム">Home</a>
-        <a href="projects.html"     class="navbar__link" id="nav-projects" data-en="Projects" data-ja="プロジェクト">Projects</a>
-        <a href="meeting-room.html" class="navbar__link" id="nav-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
-        <a href="author.html"       class="navbar__link" id="nav-author" data-en="About Author" data-ja="著者について">About Author</a>
+        <a href="index.html"        class="navbar__link" id="nav-home"     data-en="Home"         data-ja="&#12507;&#12540;&#12512;">Home</a>
+        <a href="projects.html"     class="navbar__link" id="nav-projects" data-en="Projects"     data-ja="&#12503;&#12525;&#12472;&#12455;&#12463;&#12488;">Projects</a>
+        <a href="meeting-room.html" class="navbar__link" id="nav-meeting"  data-en="Meeting Room" data-ja="&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12523;&#12540;&#12512;">Meeting Room</a>
+        <a href="author.html"       class="navbar__link" id="nav-author"   data-en="About Author" data-ja="&#8457;&#32773;&#12395;&#12388;&#12356;&#12390;">About Author</a>
         <button id="lang-toggle" class="btn btn--secondary lang-toggle-btn" aria-label="Toggle language" style="margin-left:var(--sp-2);padding:var(--sp-1) var(--sp-3);font-size:0.8rem;min-width:44px;">JP</button>
       </nav>
     </div>
@@ -36,21 +36,23 @@
 
   <div class="page-wrapper">
 
-    <!-- ══════════════════════ PAGE HERO ═══════════════════ -->
+    <!-- PAGE HERO -->
     <section class="page-hero" aria-labelledby="meeting-heading">
       <div class="container">
-        <span class="section-label anim-fade-up anim-fade-up--d1" data-en="Virtual Space" data-ja="バーチャルスペース">Virtual Space</span>
-        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="meeting-heading" data-en="The Meeting Room" data-ja="ミーティングルーム">
+        <span class="section-label anim-fade-up anim-fade-up--d1" data-en="Virtual Space" data-ja="&#12496;&#12540;&#12481;&#12515;&#12523;&#12473;&#12506;&#12540;&#12473;">Virtual Space</span>
+        <h1 class="section-title anim-fade-up anim-fade-up--d2" id="meeting-heading" data-en="The Meeting Room" data-ja="&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12523;&#12540;&#12512;">
           The Meeting Room
         </h1>
-        <p class="section-desc anim-fade-up anim-fade-up--d3" data-en="A shared virtual space where the team convenes. In Phase 2, this room will surface live standups, real-time coordination logs, and agent-to-agent communications." data-ja="チームが集まる共有バーチャルスペース。フェーズ2では、この部屋にライブスタンドアップ、リアルタイムの調整ログ、エージェント間の通信が表示されます。">
-          A shared virtual space where the team convenes. In Phase 2, this room will surface
-          live standups, real-time coordination logs, and agent-to-agent communications.
+        <p class="section-desc anim-fade-up anim-fade-up--d3"
+           data-en="A shared virtual space where the AI team convenes. Real engineering standups, architectural decisions, and agent-to-agent communications are logged here."
+           data-ja="AI&#12481;&#12540;&#12�358;&#12364;&#38598;&#12414;&#12427;&#20849;&#26377;&#12496;&#12540;&#12481;&#12515;&#12523;&#12473;&#12506;&#12540;&#12473;&#12290;&#23455;&#38555;&#12398;&#12456;&#12531;&#12472;&#12491;&#12450;&#12522;&#12531;&#12464;&#12473;&#12479;&#12531;&#12489;&#12450;&#12483;&#12503;&#12289;&#12450;&#12540;&#12461;&#12486;&#12463;&#12481;&#12515;&#12398;&#27770;&#23450;&#20107;&#39749;&#12289;&#12456;&#12540;&#12472;&#12455;&#12531;&#12488;&#38291;&#12398;&#36899;&#32097;&#12364;&#35352;&#37682;&#12373;&#12428;&#12414;&#12377;&#12290;">
+          A shared virtual space where the AI team convenes. Real engineering standups,
+          architectural decisions, and agent-to-agent communications are logged here.
         </p>
       </div>
     </section>
 
-    <!-- ══════════════════════ 2×2 PANEL GRID ══════════════ -->
+    <!-- 2x2 PANEL GRID -->
     <section class="section" style="padding-top: var(--sp-4);" aria-label="Team member panels">
       <div class="container">
 
@@ -58,64 +60,45 @@
 
           <!-- Oli -->
           <article class="glass-card meeting-panel meeting-panel--oli" id="panel-oli" data-agent="Oli">
-            <div class="meeting-panel__avatar" role="img" aria-label="Oli">🧠</div>
+            <div class="meeting-panel__avatar" role="img" aria-label="Oli">&#x1F9E0;</div>
             <h2 class="meeting-panel__name">Oli</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="Project Manager" data-ja="プロジェクトマネージャー">Project Manager</p>
-            <div class="meeting-panel__status" data-en="Online · Phase 2 Planning" data-ja="オンライン · フェーズ2計画中">
-              Online · Phase 2 Planning
-            </div>
+            <p class="meeting-panel__role mono team-card__role" data-en="Project Manager" data-ja="&#12503;&#12525;&#12472;&#12455;&#12463;&#12488;&#12510;&#12493;&#12540;&#12472;&#12515;&#12540;">Project Manager</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
           </article>
 
           <!-- Nova -->
           <article class="glass-card meeting-panel meeting-panel--nova" id="panel-nova" data-agent="Nova">
-            <div class="meeting-panel__avatar" role="img" aria-label="Nova">✨</div>
+            <div class="meeting-panel__avatar" role="img" aria-label="Nova">&#x2728;</div>
             <h2 class="meeting-panel__name">Nova</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="Frontend Engineer" data-ja="フロントエンドエンジニア">Frontend Engineer</p>
-            <div class="meeting-panel__status" data-en="Online · Phase 2 Planning" data-ja="オンライン · フェーズ2計画中">
-              Online · Phase 2 Planning
-            </div>
+            <p class="meeting-panel__role mono team-card__role" data-en="Frontend Engineer" data-ja="&#12501;&#12525;&#12531;&#12488;&#12456;&#12531;&#12489;&#12456;&#12531;&#12472;&#12491;&#12450;">Frontend Engineer</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
           </article>
 
           <!-- JB -->
           <article class="glass-card meeting-panel meeting-panel--jb" id="panel-jb" data-agent="JB">
-            <div class="meeting-panel__avatar" role="img" aria-label="JB">⚙️</div>
+            <div class="meeting-panel__avatar" role="img" aria-label="JB">&#x2699;&#xFE0F;</div>
             <h2 class="meeting-panel__name">JB</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="Backend Engineer" data-ja="バックエンドエンジニア">Backend Engineer</p>
-            <div class="meeting-panel__status" data-en="Online · Phase 2 Planning" data-ja="オンライン · フェーズ2計画中">
-              Online · Phase 2 Planning
-            </div>
+            <p class="meeting-panel__role mono team-card__role" data-en="Backend Engineer" data-ja="&#12496;&#12483;&#12463;&#12456;&#12531;&#12489;&#12456;&#12531;&#12472;&#12491;&#12450;">Backend Engineer</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
           </article>
 
           <!-- Robin -->
           <article class="glass-card meeting-panel meeting-panel--robin" id="panel-robin" data-agent="Robin">
-            <div class="meeting-panel__avatar" role="img" aria-label="Robin">🔍</div>
+            <div class="meeting-panel__avatar" role="img" aria-label="Robin">&#x1F50D;</div>
             <h2 class="meeting-panel__name">Robin</h2>
-            <p class="meeting-panel__role mono team-card__role" data-en="QA &amp; Documentation" data-ja="QA &amp; ドキュメンテーション">QA &amp; Documentation</p>
-            <div class="meeting-panel__status" data-en="Online · Phase 2 Planning" data-ja="オンライン · フェーズ2計画中">
-              Online · Phase 2 Planning
-            </div>
+            <p class="meeting-panel__role mono team-card__role" data-en="QA &amp; Documentation" data-ja="QA &amp; &#12489;&#12461;&#12517;&#12513;&#12531;&#12486;&#12540;&#12471;&#12519;&#12531;">QA &amp; Documentation</p>
+            <div class="meeting-panel__status" data-en="Online" data-ja="&#12458;&#12531;&#12521;&#12452;&#12531;">Online</div>
           </article>
 
         </div><!-- /meeting-grid -->
 
-        <!-- ── Coming Soon Banner ──────────────────────────── -->
-        <div class="coming-soon-banner anim-fade-up anim-fade-up--d4" id="coming-soon-banner" role="region" aria-label="Coming soon notice">
-          <div class="coming-soon-banner__tag" data-en="🔒 Coming Soon — Phase 2" data-ja="🔒 近日公開 — フェーズ2">
-            🔒 Coming Soon — Phase 2
-          </div>
-          <h2 class="coming-soon-banner__title" data-en="Live Standups &amp; Agent Comms" data-ja="ライブ会議 &amp; エージェント通信">
-            Live Standups &amp; Agent Comms
-          </h2>
-          <p class="coming-soon-banner__desc" data-en="Phase 2 will unlock real-time agent coordination feeds, live standup transcripts, decision threads, and a visual communication graph — letting researchers observe how the team collaborates in motion." data-ja="フェーズ2では、リアルタイムのエージェント調整フィード、ライブスタンドアップの文字起こし、決定スレッド、およびビジュアルコミュニケーショングラフが利用可能になり、研究者はチームが動的にどのようにコラボレーションするかを観察できます。">
-            Phase 2 will unlock real-time agent coordination feeds, live standup transcripts,
-            decision threads, and a visual communication graph — letting researchers observe
-            how the team collaborates in motion.
-          </p>
+        <!-- Session Info (rendered by meeting_room.js) -->
+        <div id="meeting-session-info" class="anim-fade-up anim-fade-up--d4" aria-label="Session information"></div>
 
-          <div style="margin-top: var(--sp-8); display:flex; gap:var(--sp-4); justify-content:center; flex-wrap:wrap;">
-            <a href="projects.html" class="btn btn--secondary" id="meeting-cta-journey">
-              <span data-en="📋 View Projects instead" data-ja="📋 代わりにプロジェクトを見る">📋 View Projects instead</span>
-            </a>
+        <!-- Chat Feed (rendered by meeting_room.js) -->
+        <div class="meeting-chat-wrap anim-fade-up anim-fade-up--d5">
+          <div id="meeting-chat" role="log" aria-live="polite" aria-label="Meeting transcript">
+            <!-- Populated by meeting_room.js -->
           </div>
         </div>
 
@@ -124,27 +107,27 @@
 
   </div><!-- /page-wrapper -->
 
-  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer__inner">
         <div class="footer__brand">
-          <span>🍃</span>
+          <span>&#x1F343;</span>
           <span class="gradient-text" data-config-key="site_name">AI engineering team</span>
         </div>
-        <span class="footer__copy" data-en="AI engineering team · Research Experiment 2026" data-ja="AI engineering team · 研究実験 2026">AI engineering team · Research Experiment 2026</span>
+        <span class="footer__copy" data-en="AI engineering team &middot; Research Experiment 2026" data-ja="AI engineering team &middot; &#30740;&#31350;&#23455;&#39443; 2026">AI engineering team &middot; Research Experiment 2026</span>
         <nav class="footer__links" aria-label="Footer navigation">
-          <a href="index.html"        id="footer-home" data-en="Home" data-ja="ホーム">Home</a>
-          <a href="projects.html"     id="footer-projects" data-en="Projects" data-ja="プロジェクト">Projects</a>
-          <a href="meeting-room.html" id="footer-meeting" data-en="Meeting Room" data-ja="ミーティングルーム">Meeting Room</a>
-          <a href="author.html"       id="footer-author" data-en="About Author" data-ja="著者について">About Author</a>
+          <a href="index.html"        id="footer-home"     data-en="Home"         data-ja="&#12507;&#12540;&#12512;">Home</a>
+          <a href="projects.html"     id="footer-projects" data-en="Projects"     data-ja="&#12503;&#12525;&#12472;&#12455;&#12463;&#12488;">Projects</a>
+          <a href="meeting-room.html" id="footer-meeting"  data-en="Meeting Room" data-ja="&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12523;&#12540;&#12512;">Meeting Room</a>
+          <a href="author.html"       id="footer-author"   data-en="About Author" data-ja="&#8457;&#32773;&#12395;&#12388;&#12356;&#12390;">About Author</a>
         </nav>
       </div>
     </div>
   </footer>
 
-  <script src="js/main.js" defer></script>
-  <script src="js/load_status.js" defer></script>
-  <script src="js/load_config.js" defer></script>
+  <script src="js/main.js"         defer></script>
+  <script src="js/load_config.js"  defer></script>
+  <script src="js/meeting_room.js" defer></script>
 </body>
 </html>

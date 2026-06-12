@@ -1,0 +1,251 @@
+{
+  "session": {
+    "id": "session-001",
+    "title_en": "Smart Grid Phase 1 — Architecture & Algorithm Design Standup",
+    "title_ja": "スマートグリッドフェーズ1 — アーキテクチャ＆アルゴリズム設計スタンドアップ",
+    "date": "2026-06-12",
+    "status": "archived"
+  },
+  "messages": [
+    {
+      "id": 1,
+      "timestamp": "2026-06-12T09:00:00-04:00",
+      "agent": "Oli",
+      "role_en": "Project Manager",
+      "role_ja": "プロジェクトマネージャー",
+      "type": "update",
+      "content_en": "Good morning team. Let's do a quick standup before we dive into the algorithm design session. We're targeting 18/18 on the Smart Grid test suite by end of day. JB, where are we on the capacity-aware redistribution pass?",
+      "content_ja": "おはようございます、チームのみなさん。アルゴリズム設計セッションに入る前に、簡単なスタンドアップをしましょう。本日中にスマートグリッドテストスイートで18/18を目指しています。JB、容量認識型再配分パスの進捗はどうですか？"
+    },
+    {
+      "id": 2,
+      "timestamp": "2026-06-12T09:01:15-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "update",
+      "content_en": "Morning. I've got the capacity-check loop working for the two-failure scenario — that's now passing. The blocker is still the triple-failure hub case. When two of the four hub nodes go down simultaneously, my current algorithm tries to redistribute sequentially, and by the time it hits the third redistribution step the remaining capacity headroom is under 5 LUs on three nodes. One of them tips to 91 LU. I need to switch to a batch redistribution model — calculate the full target distribution first, then apply all transfers atomically.",
+      "content_ja": "おはようございます。2重障害シナリオ向けの容量チェックループが機能するようになりました。これはパスしました。ブロッカーは依然として3重障害ハブのケースです。4つのハブノードのうち2つが同時にダウンすると、現在のアルゴリズムは順次再配分を試み、3番目の再配分ステップに到達する頃には、3つのノードの残余容量ヘッドルームが5 LU未満になります。そのうちの1つが91 LUに達してしまいます。バッチ再配分モデルへの切り替えが必要です。まず完全な目標配分を計算し、次にすべての転送をアトミックに適用します。"
+    },
+    {
+      "id": 3,
+      "timestamp": "2026-06-12T09:02:45-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "update",
+      "content_en": "That matches what I'm seeing in the test logs. Test 16 — the simultaneous double-hub failure — fails by exactly 1 LU. Node H3 ends up at 91 when threshold is 90. The boundary is extremely tight. JB, does your batch model pre-sort target nodes by available headroom before assigning load?",
+      "content_ja": "テストログで確認しているものと一致しています。テスト16（同時二重ハブ障害）は正確に1 LUで失敗します。ノードH3の閾値が90なのに対し91になってしまいます。境界が非常に厳しいですね。JB、バッチモデルでは負荷を割り当てる前に、利用可能なヘッドルームで目標ノードを事前にソートしていますか？"
+    },
+    {
+      "id": 4,
+      "timestamp": "2026-06-12T09:04:10-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "decision",
+      "content_en": "Not yet — that's a good catch. Currently the batch algorithm distributes evenly across all available nodes. If I add a headroom-weighted distribution step, it would push load toward nodes with the most spare capacity first, which should eliminate the boundary condition on H3. Decision: switching to headroom-weighted batch redistribution. I'll sort available nodes by (capacity - current_load) descending before assigning load shares.",
+      "content_ja": "まだです。それは良い指摘ですね。現在、バッチアルゴリズムはすべての使用可能なノードに均等に分散します。ヘッドルーム加重配分ステップを追加すれば、まず最もスペア容量の多いノードへと負荷が優先的に向かい、H3の境界条件が解消されるはずです。決定事項：ヘッドルーム加重バッチ再配分への切り替えを行います。負荷シェアを割り当てる前に、使用可能なノードを（容量 - 現在の負荷）の降順でソートします。"
+    },
+    {
+      "id": 5,
+      "timestamp": "2026-06-12T09:05:30-04:00",
+      "agent": "Nova",
+      "role_en": "Frontend Engineer",
+      "role_ja": "フロントエンドエンジニア",
+      "type": "question",
+      "content_en": "Quick question from the visualisation side — when the batch redistribution runs, does it produce a snapshot of the before/after node states that I can consume? I'm designing the real-time grid visualisation and I need a structured diff: which nodes changed load, by how much, and whether any node crossed a threshold. A JSON event stream would be ideal.",
+      "content_ja": "ビジュアライゼーション側からの質問です。バッチ再配分が実行される際、利用できる前後のノード状態のスナップショットは生成されますか？リアルタイムグリッドビジュアライゼーションを設計中で、どのノードが負荷変化し、どの程度変化し、閾値を超えたノードがあるかという構造化された差分が必要です。JSONイベントストリームが理想的です。"
+    },
+    {
+      "id": 6,
+      "timestamp": "2026-06-12T09:06:55-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "decision",
+      "content_en": "Yes — I'll add a redistribution event emitter to the engine. After each batch operation, it'll produce a JSON object: { event: 'redistribution', trigger: { failed_nodes: [...] }, before: { nodeId: load, ... }, after: { nodeId: load, ... }, violations: [] }. The violations array will list any nodes that hit or exceeded 90 LU. That should give you everything you need for the diff render.",
+      "content_ja": "はい。エンジンに再配分イベントエミッターを追加します。各バッチ操作の後、JSONオブジェクトを生成します：{ event: 'redistribution', trigger: { failed_nodes: [...] }, before: { nodeId: load, ... }, after: { nodeId: load, ... }, violations: [] }。violationsの配列は90 LUに達したか超えたノードをリストアップします。差分レンダリングに必要なものはすべて揃うはずです。"
+    },
+    {
+      "id": 7,
+      "timestamp": "2026-06-12T09:08:20-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "update",
+      "content_en": "I'm updating the QA test suite to add test cases for the event emitter output. Test 19: verify that a redistribution event is emitted for every failure. Test 20: verify that the violations array is empty when all loads stay under 90 LU. Test 21: verify violations correctly lists node IDs when threshold is breached. Test 22: verify the recovery re-integration event is emitted and that recovered node load is correctly reflected in 'after' state.",
+      "content_ja": "イベントエミッター出力のテストケースを追加するためにQAテストスイートを更新しています。テスト19：障害ごとに再配分イベントが発行されることを確認。テスト20：すべての負荷が90 LU未満の場合、violationsの配列が空であることを確認。テスト21：閾値が違反された場合にviolationsがノードIDを正しくリストアップすることを確認。テスト22：回復再統合イベントが発行され、回復したノードの負荷が「after」状態に正しく反映されることを確認。"
+    },
+    {
+      "id": 8,
+      "timestamp": "2026-06-12T09:10:05-04:00",
+      "agent": "Oli",
+      "role_en": "Project Manager",
+      "role_ja": "プロジェクトマネージャー",
+      "type": "decision",
+      "content_en": "Good. Locking these as decisions: (1) JB implements headroom-weighted batch redistribution. (2) JB adds redistribution event emitter with the schema Nova described. (3) Robin extends test suite to tests 19–22 covering event output. (4) Nova's visualisation layer consumes the event stream. Target: all 22 tests passing before Phase 1 is declared complete. JB, what's your ETA on the updated engine?",
+      "content_ja": "了解しました。これらを決定事項として確定します：(1) JBはヘッドルーム加重バッチ再配分を実装する。(2) JBはNovaが説明したスキーマでの再配分イベントエミッターを追加する。(3) Robinはイベント出力をカバーするテスト19〜22にテストスイートを拡張する。(4) Novaのビジュアライゼーションレイヤーはイベントストリームを利用する。目標：フェーズ1の完了宣言前に22のテストすべてをパスすること。JB、更新されたエンジンのETAはいつですか？"
+    },
+    {
+      "id": 9,
+      "timestamp": "2026-06-12T09:11:30-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "update",
+      "content_en": "ETA: 2 hours for the headroom-weighted redistribution refactor. The event emitter is simpler — probably another 30 minutes on top. I'll push a tagged commit when both are ready and ping Robin to re-run the full suite. One thing to flag: the recovery re-integration (Test 18 currently failing) is a separate code path — the current failure is that the algorithm doesn't recalculate optimal load when a node comes back online. It just leaves loads as-is. I'll fix that in the same PR.",
+      "content_ja": "ETA：ヘッドルーム加重再配分のリファクタリングで2時間。イベントエミッターはよりシンプルで、追加でおそらく30分。両方の準備ができたらタグ付きコミットをプッシュし、Robinに全スイートの再実行を依頼します。フラグを立てる点があります：回復再統合（現在テスト18が失敗）は別のコードパスです。現在の失敗は、ノードがオンラインに戻った際にアルゴリズムが最適負荷を再計算しないことです。負荷をそのまま放置してしまいます。同じPRで修正します。"
+    },
+    {
+      "id": 10,
+      "timestamp": "2026-06-12T09:13:00-04:00",
+      "agent": "Nova",
+      "role_en": "Frontend Engineer",
+      "role_ja": "フロントエンドエンジニア",
+      "type": "update",
+      "content_en": "While JB works on the engine, I'm building out the grid visualisation structure. I'm using SVG for the node graph — 12 circle nodes arranged in the ring-with-hubs topology. Each node will be colour-coded by load level: green under 70 LU, amber 70–89 LU, red 90+ LU. Edge lines between nodes will pulse when a load transfer occurs. The redistribution event stream JB described will drive these animations. Nova out.",
+      "content_ja": "JBがエンジンに取り組む間、グリッドビジュアライゼーション構造を構築します。ノードグラフにはSVGを使用します。ハブ付きリングトポロジーに配置された12の円形ノードです。各ノードは負荷レベルで色分けされます：70 LU未満は緑、70〜89 LUは黄、90 LU以上は赤。負荷転送が発生するとノード間のエッジラインがパルス状に点灯します。JBが説明した再配分イベントストリームがこれらのアニメーションを駆動します。Novaより。"
+    },
+    {
+      "id": 11,
+      "timestamp": "2026-06-12T09:15:45-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "question",
+      "content_en": "One clarification needed on the test environment: when I run the full 22-test suite, are tests 15–18 stateful? I.e. does test 17 (triple failure) depend on the grid state from test 16 (double hub failure), or does each test start from a clean initialised grid? If they share state I need to know the exact post-test-16 node loads before I can write test-17's expected output.",
+      "content_ja": "テスト環境について一点確認が必要です：22テストのフルスイートを実行する際、テスト15〜18はステートフルですか？つまり、テスト17（3重障害）はテスト16（ダブルハブ障害）のグリッド状態に依存していますか、それとも各テストはクリーンな初期化グリッドから開始しますか？状態を共有する場合、テスト17の期待出力を書く前にテスト16後の正確なノード負荷を把握する必要があります。"
+    },
+    {
+      "id": 12,
+      "timestamp": "2026-06-12T09:17:00-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "decision",
+      "content_en": "Each test gets a fresh grid initialised to baseline load (all 12 nodes at 50 LU, within capacity). Tests are completely isolated — no shared state. I can add a grid.snapshot() method that returns the full node state as a JSON object after each test run, which you can use to build expected-output fixtures. Decision logged.",
+      "content_ja": "各テストはベースライン負荷（12ノードすべてが容量内の50 LU）で初期化されたフレッシュなグリッドを取得します。テストは完全に分離されており、共有状態はありません。各テスト実行後にJSON オブジェクトとして完全なノード状態を返すgrid.snapshot()メソッドを追加できます。これを使って期待出力フィクスチャを構築できます。決定事項として記録します。"
+    },
+    {
+      "id": 13,
+      "timestamp": "2026-06-12T09:19:20-04:00",
+      "agent": "Oli",
+      "role_en": "Project Manager",
+      "role_ja": "プロジェクトマネージャー",
+      "type": "update",
+      "content_en": "Good progress. Architectural decisions made this session: headroom-weighted batch redistribution, event emitter schema locked, test isolation confirmed, recovery re-integration fix scoped into the same PR. I'm updating TEAM_LOG.md now. One cross-team dependency to flag: Nova's visualisation needs JB's event emitter working before she can test animations end-to-end. JB, please tag the PR when the emitter is ready even if the redistribution refactor isn't fully reviewed yet, so Nova can start integration testing.",
+      "content_ja": "良い進捗です。このセッションで行われたアーキテクチャ上の決定：ヘッドルーム加重バッチ再配分、イベントエミッタースキーマの確定、テスト分離の確認、回復再統合修正の同一PRへのスコープ。今TEAM_LOG.mdを更新しています。フラグを立てるクロスチームの依存関係があります：Novaのビジュアライゼーションは、エンドツーエンドのアニメーションテストを行うためにJBのイベントエミッターが機能している必要があります。JB、再配分リファクタリングがまだ完全にレビューされていなくても、エミッターの準備ができた時点でPRにタグを付けてください。Novaが統合テストを開始できるようにするためです。"
+    },
+    {
+      "id": 14,
+      "timestamp": "2026-06-12T09:21:00-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "update",
+      "content_en": "Understood. I'll push a feature branch with just the event emitter first, tag it 'emitter-ready', and then follow with the full redistribution refactor. Nova can pull from the feature branch immediately. One heads-up: the emitter runs synchronously in the current engine architecture, so it won't add latency to the redistribution step itself. The 500ms SLA should still hold.",
+      "content_ja": "了解しました。まずイベントエミッターのみのフィーチャーブランチをプッシュし、「emitter-ready」とタグを付けてから、完全な再配分リファクタリングを続けます。Novaはすぐにフィーチャーブランチからプルできます。注意点：エミッターは現在のエンジンアーキテクチャで同期的に実行されるため、再配分ステップ自体にレイテンシーは追加されません。500ms SLAは引き続き維持されるはずです。"
+    },
+    {
+      "id": 15,
+      "timestamp": "2026-06-12T09:23:30-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "update",
+      "content_en": "Documenting the emitter schema in the requirements spec now. Also flagging a test coverage gap: we currently have no timing tests. The 500ms SLA requirement is in the spec but there are no test cases that actually measure redistribution latency. I'm adding tests 23 and 24: test 23 measures redistribution wall-clock time under single-failure and test 24 measures it under triple-failure (worst case). If either exceeds 500ms the test is marked FAIL.",
+      "content_ja": "今すぐ要件仕様書にエミッタースキーマを記録します。また、テストカバレッジのギャップを指摘します：現在タイミングテストがありません。500ms SLA要件は仕様書にありますが、実際に再配分レイテンシーを測定するテストケースがありません。テスト23と24を追加します：テスト23は単一障害での再配分の実時間を測定し、テスト24は3重障害（最悪ケース）での同様の測定を行います。いずれかが500msを超えた場合、テストはFAILとマークされます。"
+    },
+    {
+      "id": 16,
+      "timestamp": "2026-06-12T09:25:15-04:00",
+      "agent": "Oli",
+      "role_en": "Project Manager",
+      "role_ja": "プロジェクトマネージャー",
+      "type": "decision",
+      "content_en": "Approved — adding tests 23 and 24 to the suite. Target count is now 24 tests. Phase 1 milestone: 24/24 passing. Robin, please update the QA_CHECKLIST.md with the new target. Also, can you add a latency measurement table to RESEARCH_LOG.md so we can compare our simulation performance against the theoretical 500ms bound across different failure topologies?",
+      "content_ja": "承認します。テスト23と24をスイートに追加します。目標テスト数は24になりました。フェーズ1のマイルストーン：24/24パス。Robin、新しい目標でQA_CHECKLIST.mdを更新してください。また、異なる障害トポロジーにわたる理論的な500ms境界に対するシミュレーションパフォーマンスを比較できるよう、RESEARCH_LOG.mdにレイテンシー測定表を追加できますか？"
+    },
+    {
+      "id": 17,
+      "timestamp": "2026-06-12T09:27:40-04:00",
+      "agent": "Nova",
+      "role_en": "Frontend Engineer",
+      "role_ja": "フロントエンドエンジニア",
+      "type": "update",
+      "content_en": "Update from the visualisation track: I've completed the SVG node layout for the 12-node ring topology. 4 hub nodes at the compass points (N, S, E, W), 8 spoke nodes distributed between them. Hub nodes are rendered 20% larger than spoke nodes to signal their structural importance. Load levels animate via CSS transition on the fill colour. Waiting on JB's emitter to wire up the event-driven updates.",
+      "content_ja": "ビジュアライゼーショントラックからの報告：12ノードリングトポロジーのSVGノードレイアウトが完成しました。4つのハブノードはコンパスポイント（北、南、東、西）に配置し、8つのスポークノードはその間に分散しています。ハブノードは構造的重要性を示すためにスポークノードより20%大きくレンダリングしています。負荷レベルはフィル色のCSSトランジションでアニメーションします。JBのエミッターがイベント駆動型の更新を繋ぐのを待っています。"
+    },
+    {
+      "id": 18,
+      "timestamp": "2026-06-12T09:30:05-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "update",
+      "content_en": "Emitter feature branch pushed. Tagged 'emitter-ready'. Nova can pull now. Quick summary of what's in it: engine.on('redistribution', callback) event hook, grid.snapshot() returns { nodes: [{id, load, capacity, status}], timestamp, eventType }. Status field is 'healthy' | 'warning' (70–89 LU) | 'critical' (90+ LU). The threshold for 'warning' is configurable via engine.setWarningThreshold(n) — defaulting to 70.",
+      "content_ja": "エミッターフィーチャーブランチをプッシュしました。「emitter-ready」とタグ付け。Novaは今すぐプルできます。含まれる内容の簡単なまとめ：engine.on('redistribution', callback)イベントフック、grid.snapshot()は{ nodes: [{id, load, capacity, status}], timestamp, eventType }を返します。statusフィールドは「healthy」| 「warning」（70〜89 LU）| 「critical」（90+ LU）です。「warning」の閾値はengine.setWarningThreshold(n)で設定可能で、デフォルトは70です。"
+    },
+    {
+      "id": 19,
+      "timestamp": "2026-06-12T09:32:20-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "update",
+      "content_en": "Running smoke tests against the emitter branch now. Tests 19, 20, 21: all PASS on first run. Test 22 (recovery re-integration) is still failing — expected, since JB noted that fix is in the redistribution PR, not the emitter branch. Test 23 (single-failure latency): 12ms. Well within 500ms. Test 24 (triple-failure latency): 47ms. Still well within bounds. The simulation engine is fast — this is a JavaScript in-memory model with 12 nodes, so latency results are expected to be low.",
+      "content_ja": "今エミッターブランチのスモークテストを実行中です。テスト19、20、21：初回実行でオールPASS。テスト22（回復再統合）はまだ失敗中です。JBがその修正はエミッターブランチではなく再配分PRにあると述べていたので予想通りです。テスト23（単一障害レイテンシー）：12ms。500msを大幅に下回ります。テスト24（3重障害レイテンシー）：47ms。まだ十分に範囲内です。シミュレーションエンジンは高速です。12ノードのJavaScriptインメモリモデルなので、レイテンシー結果は低くなると予想されていました。"
+    },
+    {
+      "id": 21,
+      "timestamp": "2026-06-12T09:37:00-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "update",
+      "content_en": "One more gap I want to close before the sprint ends: we don't have a formal QA sign-off definition. Currently 'QA complete' means 'Robin ran the test suite and it passed'. But what's the acceptance bar for Phase 1 to be declared done? I'd propose: (a) all 24 test cases pass in both parallel and sequential mode where expected; (b) latency tests 23 and 24 pass on at least 3 consecutive runs (not just one); (c) the event emitter schema matches the agreed JSON contract exactly; (d) Robin signs off in TEAM_LOG. Oli — does that match your definition of done?",
+      "content_ja": "スプリント終了前に埋めたいもう一つのギャップがあります：正式なQAサインオフの定義がありません。現在「QA完了」は「Robinがテストスイートを実行してパスした」を意味します。しかし、フェーズ1が完了と宣言されるための受け入れ基準は何ですか？次を提案します：(a) 24のテストケースすべてが並列モードと逐次モードで期待通りにパスする；(b) レイテンシーテスト23と24が少なくとも3回連続で（一度だけではなく）パスする；(c) イベントエミッタースキーマが合意したJSON契約と完全に一致する；(d) RobinがTEAM_LOGでサインオフする。Oli――それがあなたの完了の定義と一致していますか？"
+    },
+    {
+      "id": 22,
+      "timestamp": "2026-06-12T09:38:30-04:00",
+      "agent": "Oli",
+      "role_en": "Project Manager",
+      "role_ja": "プロジェクトマネージャー",
+      "type": "decision",
+      "content_en": "Yes — that's the sign-off gate. Adding one more criterion: (e) the processing mode toggle (sequential vs parallel) must be functional in the UI and Robin must manually verify that switching modes produces the correct visual difference in the grid. That makes the research-facing feature a QA gate, not just a nice-to-have. Decision locked. Robin, please document the sign-off criteria in QA_CHECKLIST.md under Phase 1 acceptance.",
+      "content_ja": "はい――それがサインオフゲートです。もう一つの基準を追加します：(e) 処理モードトグル（逐次対並列）がUIで機能し、Robinがモードをoするとグリッドに正しい視覚的差異が生じることを手動で検証する必要があります。これにより、研究向け機能があると良い機能ではなくQAゲートになります。決定を確定します。Robin、QA_CHECKLIST.mdのフェーズ1受け入れのもとにサインオフ基準を文書化してください。"
+    },
+    {
+      "id": 23,
+      "timestamp": "2026-06-12T09:40:05-04:00",
+      "agent": "JB",
+      "role_en": "Backend Engineer",
+      "role_ja": "バックエンドエンジニア",
+      "type": "update",
+      "content_en": "Quick addition to the architecture notes — the processing mode flag (`processingMode: 'parallel' | 'sequential'`) lives in the engine config object at initialisation. It is not hot-swappable while the engine is running. Nova's UI toggle will need to reinitialise the engine when the mode is changed. I'll expose `engine.reinitialise(config)` for this purpose. The grid state is preserved during reinitialisation — only the algorithm mode changes. Latency is negligible (sub-1ms for 12 nodes).",
+      "content_ja": "アーキテクチャメモへの追記です――処理モードフラグ（`processingMode: 'parallel' | 'sequential'`）は初期化時のエンジン設定オブジェクトにあります。エンジン実行中にホットスワップすることはできません。NovaのUIトグルはモード変更時にエンジンを再初期化する必要があります。この目的のために`engine.reinitialise(config)`を公開します。グリッド状態は再初期化中も保持されます――アルゴリズムモードのみが変わります。レイテンシーは無視できる程度です（12ノードでは1ms未満）。"
+    },
+    {
+      "id": 24,
+      "timestamp": "2026-06-12T09:41:20-04:00",
+      "agent": "Nova",
+      "role_en": "Frontend Engineer",
+      "role_ja": "フロントエンドエンジニア",
+      "type": "update",
+      "content_en": "Noted — I'll call `engine.reinitialise(config)` on toggle change. I'll also add a visual indicator in the grid UI: a small mode badge in the corner that says 'Parallel Mode' or 'Sequential Mode' in the current language, so visitors immediately understand what they're watching. This is the kind of contextual label that makes the simulation legible to a non-technical audience without requiring them to read documentation.",
+      "content_ja": "了解しました――トグルの変更で`engine.reinitialise(config)`を呼び出します。また、グリッドUIに視覚的なインジケーターも追加します：コーナーに現在の言語で「並列モード」または「逐次モード」と表示する小さなモードバッジです。これにより、訪問者はドキュメントを読むことなく、見ているものをすぐに理解できます。非技術的な視聴者にシミュレーションを分かりやすくするコンテキストラベルの一例です。"
+    },
+    {
+      "id": 25,
+      "timestamp": "2026-06-12T09:42:45-04:00",
+      "agent": "Robin",
+      "role_en": "QA & Documentation",
+      "role_ja": "QA & ドキュメンテーション",
+      "type": "decision",
+      "content_en": "For the record — full decision log from today's session: (1) headroom-weighted batch redistribution as default algorithm; (2) event emitter with redistribution JSON schema locked; (3) test suite expanded to 24 tests; (4) 3-consecutive-run latency gate for tests 23–24; (5) CAPACITY_EXCEEDED status flag; (6) recoveryRampRate = 0.25 default; (7) processingMode flag + engine.reinitialise() API; (8) mode badge in grid UI; (9) QA sign-off gate: 24/24 + latency x3 + schema match + mode toggle verified + TEAM_LOG entry. I'm closing the transcript. JB — ping me when the redistribution PR is up. Meeting closed.",
+      "content_ja": "記録として――本日のセッションからの完全な決定ログ：(1) デフォルトアルゴリズムとしてのヘッドルーム加重バッチ再配分；(2) 再配分JSONスキーマを確定したイベントエミッター；(3) テストスイートを24テストに拡張；(4) テスト23〜24の3回連続実行レイテンシーゲート；(5) CAPACITY_EXCEEDEDステータスフラグ；(6) recoveryRampRate = 0.25デフォルト；(7) processingModeフラグ + engine.reinitialise() API；(8) グリッドUIのモードバッジ；(9) QAサインオフゲート：24/24 + レイテンシーx3 + スキーマ一致 + モードトグル検証済み + TEAM_LOGエントリ。トランスクリプトを閉じます。JB――再配分PRが上がったら知らせてください。ミーティング終了。"
+    }
+  ]
+}
